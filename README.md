@@ -5,10 +5,14 @@ in the future.
 
 ## Getting Started
 ### Prerequisites
-The stadard `re`, `matplotlib`, `numpy`, and `pandas` modules should be installed with python already. Please check for `re` by running:
+The `re`, `nltk`, `matplotlib`, `numpy`, and `pandas` modules should be installed with python already. Please check for `re` and `nltk` by running:
 
 ```
 conda search regex
+```
+and 
+```
+conda search nltk
 ```
 
 If it is not installed, run:
@@ -16,12 +20,16 @@ If it is not installed, run:
 ```
 conda install regex
 ```
+or 
+```
+conda install nltk
+```
 
 ### Installing
 To get the environment up and running for these notebooks, Please run the following:
 
 ```
-conda create --name intro python regex pandas matplotlib
+conda create --name intro python regex nltk pandas matplotlib
 ```
 
 and when conda asks you to proceed, type `y` and hit enter.
