@@ -12,7 +12,9 @@ INSTRUCTIONS:
 
 
 FILE: main.py
-    - decription: main file that runs the program.
+
+    - description: main file that runs the program.
+    
     FUNCTIONS:
         1) main(): function that takes in config file and imports other python files to preprocess, run algs, visualize, etc.
             - input:
@@ -20,23 +22,35 @@ FILE: main.py
    
    
 FOLDER: CONFIGURATION
+
     FILE:
 
+
 FOLDER:
+
     FILE:
+    
     FILE:
     
 
 FOLDER:
-    FILE:
-    FILE:
 
-FOLDER:
-    FILE:
     FILE:
     
-FOLDER:
     FILE:
+
+
+FOLDER:
+
+    FILE:
+    
+    FILE:
+    
+    
+FOLDER:
+
+    FILE:
+    
     FILE:
       
     
