@@ -18,7 +18,7 @@ from preprocessing import text_import as timp, complete_tokenize as ctknz
 from algorithms import BOW
 
 
-
+### DIRECTORY STRUCTURE ###
 FILE: main.py
 
     - description: main file that runs the program.
