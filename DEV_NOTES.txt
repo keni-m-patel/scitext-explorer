@@ -12,9 +12,9 @@ INSTRUCTIONS:
 
 
 
-### IMPORTS ###
+### IMPORTS ###  (just copy paste any new imports you need as lines of code)
 import yaml
-from preprocessing import text_import as timp, complete_tokenize as ctknz
+from preprocessing import text_import as timp, complete_tokenize as ctkn
 from algorithms import BOW
 
 
