@@ -1,0 +1,25 @@
+# notional (yaml) configuration file
+
+# this specifies the data sources I'd like to use
+data:
+  - 'pride_and_prejudice.txt'
+  # - 'text_file2.txt'
+  # - 'pdf_file1.pdf'
+  # - 'excel_file1.xlxs'
+  
+# here's where I'll assign the preprocessing steps I'd like to execute
+preprocessing:
+  complete_tokenize: True
+  stop_words: False
+  lower_case: False
+  punctuation: False
+  
+# now choose the algorithms!
+algorithms:
+  BOW: True
+  LSA: False
+  LDA: False
+  Word2Vec: True  
+
+visualization: 
+  WordCloud: True
