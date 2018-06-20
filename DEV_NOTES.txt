@@ -8,6 +8,14 @@ INSTRUCTIONS:
 1) enter your file names under the correct section (representing directories/folders)
 2) for each .py file, write description of file and list function names
 3) under each function, list function description (what does it do), input type (i.e. string, dict, etc), and output type.
+4) add any imports you need to the imports section
+
+
+
+### IMPORTS ###
+import yaml
+from preprocessing import text_import as timp, complete_tokenize as ctknz
+from algorithms import BOW
 
 
 
