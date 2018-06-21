@@ -22,8 +22,7 @@ DEBUG = 1  # if true, print debugging statements
 
 ### IMPORTS ###
 import yaml
-import glob # ?? import here or in each file??
-from preprocessing import text_import as timp, complete_tokenize as ctknz
+from preprocessing import text_import as txt_imp, complete_tokenize as ctokenize
 from algorithms import BOW
 
 
