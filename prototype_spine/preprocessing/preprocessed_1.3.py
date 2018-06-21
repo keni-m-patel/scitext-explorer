@@ -104,12 +104,14 @@ def complete_tokenize(documents):
 
 def stem_tokens(documents):  
     ps = PorterStemmer()
+    stem_words=list()
     stem_docs=list()
     for tokens in documents:
         for item in tokens:
             stem_item = ps.stem(item)
-        stem_docs.append(stem_item)
-        return stem_docs
+            stem_words.append(stem_item)
+        stem_docs.append(stem_words)
+    return stem_docs
 
 
 #Lemmatizes tokens
