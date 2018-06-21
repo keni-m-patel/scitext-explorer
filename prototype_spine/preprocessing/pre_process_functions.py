@@ -54,8 +54,6 @@ def complete_tokenize(documents):
 
 #Stems tokens
 #List of strings
-import nltk 
-from nltk.stem import PorterStemmer
 
 def stem_tokens(documents):  
     ps = PorterStemmer()

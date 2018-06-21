@@ -17,6 +17,12 @@ import yaml
 from preprocessing import text_import as timp, complete_tokenize as ctkn
 from algorithms import BOW
 
+### WORD STEMMING ###
+import nltk 
+from nltk.stem import PorterStemmer
+
+### BAG OF WORDS ###
+from collections import Counter
 
 ### DIRECTORY STRUCTURE ###
 FILE: main.py
