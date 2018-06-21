@@ -54,15 +54,19 @@ def complete_tokenize(documents):
 
 #Stems tokens
 #List of strings
+import nltk 
+from nltk.stem import PorterStemmer
 
 def stem_tokens(documents):  
     ps = PorterStemmer()
     stem_docs=list()
-    for tokens in documents:
-        for item in tokens:
+    for i in documents:
+        for item in i:
             ps.stem(item)
-        stem_docs.append(tokens)
+            stem_docs.append(ps.stem(item))
     return stem_docs
+    
+stem_tokens(tokens)
 
 #Lemmatizes tokens
 #List of strings
