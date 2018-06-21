@@ -94,6 +94,7 @@ def apply_algorithms(data):
     # do algs
     if algorithms['BOW']:
         output = bow_from_tokens(output)
+        print(output)
     # apply other algs/have more options here
     else:
         print('NO ALG SELECTED')
@@ -107,6 +108,7 @@ def run_visualizations(data):
     output = data
     # do viz
     if visualization['WordCloud']:
+        
         # import and apply WC alg
         # immport WC_viz function
         # output = WC_viz(processed_data)
