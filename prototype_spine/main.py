@@ -19,11 +19,23 @@ using those parameters.
 
 ### CONSTANTS ###
 DEBUG = 1  # if true, print debugging statements
+DATA_PATH = 'data/'
 
 ### IMPORTS ###
+# config
 import yaml
-from preprocessing import text_import as txt_imp, complete_tokenize as ctokenize
+
+# preprocessing
+from preprocessing import pre_process_functions
+from pre_process_functions import complete_tokenize, stem_tokens, lemma as lemmatize_tokens
+
+# algs
 from algorithms import BOW
+from BOW import bow_from_tokens
+
+# viz
+
+
 
 
 
@@ -48,7 +60,7 @@ def read_config_file():
         print('user config dict (k,v) pairs: ', str([(k,user_config[k]) for k in user_config.keys()]) )
 
     # extract each section's parameters as list or dict
-    data = user_config['data']
+    user_data_path = user_config['data']
     preprocessing = user_config['preprocessing']
     algorithms = user_config['algorithms']
     visualization =  user_config['visualization']
@@ -60,15 +72,10 @@ def preprocess_data(data, preprocessing, algorithms, visualization)
     # ASSUMPTION: for now we assume only one text file inputted, 
     #             but text will be a list of strings that are filenames
 
-    path  = 'data/{}'.format(text)
+    path = DATA_PATH + user_data_path
 
-    if DEBUG:
-        print(path, filenames)
-
-
-
-    # text import/text to string
-    files_as_strings = text_import(path, text)
+    # text import, get list of string, each is a document 
+    files_as_strings = text_import(path)
     output = files_as_strings
     
 
@@ -76,35 +83,34 @@ def preprocess_data(data, preprocessing, algorithms, visualization)
     # later this will have multiple if statements , or some other way of organizing
     # do this for each possibility
     if preprocessing['complete_tokenize']:
-        ## IMPORT step from preprocessing file
-        import complete_tokenize
-        output = complete_tokenize(files_as_strings)
+        output = complete_tokenize(output)
+    if preprocessing['stem']:
+        output = stem_tokens(output)
+    elif preprocessing['lemmatize']:
+        output = lemmatize_tokens(output)
 
-    # if preprocessing['stopwords']:
-    #    do this other thing ...
-
-    # for 
-
-
-
-    return output
+    return output # this will be a list of lists of tokens, each list represents a document's tokens
 
 
 def apply_algorithms(data):
+    output = data
 
     # do algs
     if algorithms['BOW']:
-        # import and apply BOW alg
-        # immport bow alg
-        # output = bow_alg(data)
+        output = bow_from_tokens(output)
+    # apply other algs/have more options here
+    else:
+        print('NO ALG SELECTED')
+        print('input: ', data)
+        print('algs selected: ', algorithms)
 
-    # apply other algs maybe??
+    
 
     return output
 
 
 def run_visualizations(data):
-
+    output = data
     # do viz
     if visualization['WordCloud']:
         # import and apply WC alg
