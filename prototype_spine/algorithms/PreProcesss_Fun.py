@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[8]:
+# In[ ]:
 
 
 #Import different documents from a file
@@ -37,29 +37,6 @@ def text_import(path):
 
 def complete_tokenize(documents):
     tokenized_documents=list()
-    stop = set(stopwords.words('english'))
-    Add_Stop = int(input('To Add a Stop Word Enter 1. Press 2 if not. '))
-    while Add_Stop == 1:
-        look_at_stop = int(input("Press 1 to look at set of stop words. Press 2 if not. "))
-        if look_at_stop == 1:
-            print(stop)
-        stop_word_added = input('Enter a stop word to add: ')
-        if stop_word_added not in stop:
-            stop.add(stop_word_added)
-        else:
-            print("That word is alredy in the set of stop words!")
-        Add_Stop = int(input('To Add Another Stop Word Enter 1. Press 2 if not. '))
-    Remove_Stop = int(input('To Remove a Stop Word Enter 1. Press 2 if not. '))
-    while Remove_Stop == 1:
-        look_at_stop_1 = int(input("Press 1 to look at set of stop words. Press 2 if not."))
-        if look_at_stop_1 == 1:
-            print(stop)
-        stop_word_removed = input('Enter a stop word to remove: ')
-        if stop_word_removed in stop:
-            stop.remove(stop_word_removed)
-        else:
-            print("That word is not in the set of stop words!")
-        Remove_Stop = int(input('To Remove Another Stop Word Enter 1. Press 2 if not. '))
     for text in documents:   
         # TO DO: word_tokenize chapter_one
         tokens = word_tokenize(text)   
@@ -68,7 +45,7 @@ def complete_tokenize(documents):
         # Retain alphabetic words: alpha_only
         alpha_only = [t for t in lower_tokens if t.isalpha()]
         ## Retrieve list of NLTK Stopwords for English
-    
+        stop = set(stopwords.words('english'))
         # Remove all stop words: no_stops
         no_stops = [w for w in alpha_only if w not in stop]       
         tokenized_documents.append(no_stops)
@@ -80,13 +57,12 @@ def complete_tokenize(documents):
 
 def stem_tokens(documents):  
     ps = PorterStemmer()
-    stem_words=list()
     stem_docs=list()
     for tokens in documents:
         for item in tokens:
-            stem_words.append(ps.stem(item))
+            ps.stem(item)
+        stem_docs.append(tokens)
     return stem_docs
-
 
 #Lemmatizes tokens
 #List of strings
@@ -97,6 +73,7 @@ def lemma(documents):
     for no_stops in documents:
         for t in no_stops:
             lemmatized = wordnet_lemmatizer.lemmatize(t)
-            lem_docs.append(lemmatized)
+            bow = Counter(lemmatized)
+            lem_docs.append(bow)
     return lem_docs
 

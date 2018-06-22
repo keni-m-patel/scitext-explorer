@@ -16,6 +16,25 @@ INSTRUCTIONS:
 import yaml
 from preprocessing import text_import as timp, complete_tokenize as ctkn
 from algorithms import BOW
+import pandas as pd
+import numpy as np
+
+import nltk
+from nltk.tokenize import sent_tokenize
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from nltk.stem import PorterStemmer
+
+import glob
+import PyPDF2
+
+import re
+from collections import Counter
+
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+from os import path
 
 
 ### DIRECTORY STRUCTURE ###
