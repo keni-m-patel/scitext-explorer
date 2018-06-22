@@ -8,7 +8,14 @@
 #Must give path
 #Works for text files and PDFs
 #Turns files into a list of strings
-
+import pandas as pd
+import numpy as np
+import nltk
+from nltk.tokenize import sent_tokenize
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+import glob
+import PyPDF2
 
 def text_import(path):
     files = glob.glob(path + '*')

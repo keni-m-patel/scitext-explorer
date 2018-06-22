@@ -38,13 +38,12 @@ import glob
 import PyPDF2
 
 # preprocessing
-from preprocessing.pre_process_functions import complete_tokenize, stem_tokens, lemma as lemmatize_tokens
+from preprocessing.pre_process_functions import text_import, complete_tokenize, stem_tokens, lemma as lemmatize_tokens
 
 # alg required imports:
-from collections import Counter
 
 # algs
-from algorithms.algorithms_functions import bow_from_tokens
+from algorithms.algorithms_functions import bow as bow_from_tokens
 
 # viz
 # from visualization import viz_functions as viz
@@ -77,13 +76,13 @@ def read_config_file():
     # extract each section's parameters as list or dict
     user_data_path = user_config['data']
     preprocessing = user_config['preprocessing']
-    algorithms = user_config['algorithms']
+    user_algs= user_config['algorithms']
     visualization =  user_config['visualization']
 
-    return user_data_path, preprocessing, algorithms, visualization
+    return user_data_path, preprocessing, user_algs, visualization
 
 
-def preprocess_data(user_data_path, preprocessing, algorithms, visualization):
+def preprocess_data(user_data_path, prepro_selections):
     path = DATA_PATH + user_data_path
     # text import, get list of string, each is a document 
     files_as_strings = text_import(path)
@@ -94,16 +93,16 @@ def preprocess_data(user_data_path, preprocessing, algorithms, visualization):
     # we can make this better-organized later...
     # later this will have multiple if statements , or some other way of organizing
     # do this for each possibility
-    if preprocessing['complete_tokenize']:
+    if prepro_selections['complete_tokenize']:
         output = complete_tokenize(output)
         if DEBUG:
             print('complete_tokenize output:', output)
         
-    if preprocessing['stem']:
+    if prepro_selections['stem']:
         output = stem_tokens(output)
         if DEBUG:
             print('stem_tokens output:', output)
-    elif preprocessing['lemmatize']:
+    elif prepro_selections['lemmatize']:
         output = lemmatize_tokens(output)
         if DEBUG:
             print('lemmatize_tokens output:', output)
@@ -111,10 +110,10 @@ def preprocess_data(user_data_path, preprocessing, algorithms, visualization):
     return output # this will be a list of lists of tokens, each list represents a document's tokens
 
 
-def apply_algorithms(data):
+def apply_algorithms(data, alg_selections):
     output = data
     # do algs
-    if algorithms['BOW']:
+    if alg_selections['BOW']:
         output = bow_from_tokens(output)
         if DEBUG:
             print('bow applied output:', output)
@@ -122,17 +121,17 @@ def apply_algorithms(data):
     else:
         print('NO ALG SELECTED')
         print('input: ', data)
-        print('algs selected: ', algorithms)
+        print('algs selected: ', user_algs)
 
     return output
 
 
-def run_visualizations(data):
+def run_visualizations(data, viz_selections):
     output = data
 
     # this needs to be put into
     # do viz
-    if visualization['WordCloud']:
+    if viz_selections['WordCloud']:
         if DEBUG:
             print('WordCloud output:', output)
         # mwc()
@@ -145,20 +144,24 @@ def run_visualizations(data):
 
 
 
-
 if __name__ == '__main__':
     if DEBUG:
         print('start')
-    d,p,a,v = read_config_file()
+
+    # get user selections and path
+    user_data_path, selected_prepro, selected_algs, selected_viz = read_config_file()
+
     # do preprocessing
-    processed_data = preprocess_data(d,p,a,v)
-    algs_done_data = apply_algorithms(processed_data)
-    print(run_visualizations(algs_done_data))
+    processed_data = preprocess_data(user_data_path, selected_prepro)
+
+    # apply algs
+    post_algs_data = apply_algorithms(processed_data, selected_algs)
+
+    # run viz
+    print(run_visualizations(post_algs_data, selected_viz))
     if DEBUG:
         print('end')
 
-    # do algs
-    # do visualization
 
 
 
