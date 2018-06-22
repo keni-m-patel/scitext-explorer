@@ -14,7 +14,6 @@ using those parameters.
 
 ### CODE ###
 
-# (modified from Keni's read_config_file.py)
 
 
 ### CONSTANTS ###
@@ -25,13 +24,27 @@ DATA_PATH = 'data/'
 # config
 import yaml
 
+
+# preprocessing required imports:
+import pandas as pd
+import numpy as np
+import nltk
+from nltk.tokenize import sent_tokenize
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+import glob
+import PyPDF2
+
 # preprocessing
 from preprocessing import pre_process_functions
 from pre_process_functions import complete_tokenize, stem_tokens, lemma as lemmatize_tokens
 
+# alg required imports:
+from collections import Counter
+
 # algs
-from algorithms import BOW
-from BOW import bow_from_tokens
+from algorithms import algorithms_functions
+from algorithms_functions import bow_from_tokens
 
 # viz
 # from visualization import viz_functions as viz
@@ -70,7 +83,7 @@ def read_config_file():
     return user_data_path, preprocessing, algorithms, visualization
 
 
-def preprocess_data(user_data_path, preprocessing, algorithms, visualization)
+def preprocess_data(user_data_path, preprocessing, algorithms, visualization):
     path = DATA_PATH + user_data_path
     # text import, get list of string, each is a document 
     files_as_strings = text_import(path)
@@ -115,9 +128,8 @@ def run_visualizations(data):
         # import and apply WC alg
         # immport WC_viz function
         # output = WC_viz(processed_data)
-
+        pass
     # apply other visualizations maybe??
-
     return output
 
 
@@ -128,7 +140,7 @@ if __name__ == '__main__':
     # do preprocessing
     processed_data = preprocess_data(d,p,a,v)
     algs_done_data = apply_algorithms(processed_data)
-    return run_visualizations(algs_done_data)
+    print(run_visualizations(algs_done_data))
 
     # do algs
     # do visualization
