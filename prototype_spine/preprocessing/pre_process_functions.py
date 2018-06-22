@@ -94,11 +94,10 @@ from nltk.stem import PorterStemmer
 
 def stem_tokens(documents):  
     ps = PorterStemmer()
-    stem_words=list()
     stem_docs=list()
     for tokens in documents:
         for item in tokens:
-            stem_words.append(ps.stem(item))
+            stem_docs.append(ps.stem(item))
     return stem_docs
 
 
