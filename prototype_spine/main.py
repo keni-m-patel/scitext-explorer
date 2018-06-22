@@ -88,17 +88,25 @@ def preprocess_data(user_data_path, preprocessing, algorithms, visualization):
     # text import, get list of string, each is a document 
     files_as_strings = text_import(path)
     output = files_as_strings
+    if DEBUG:
+        print('files as strings:', files_as_strings)
     
     # we can make this better-organized later...
     # later this will have multiple if statements , or some other way of organizing
     # do this for each possibility
     if preprocessing['complete_tokenize']:
         output = complete_tokenize(output)
+        if DEBUG:
+            print('complete_tokenize output:', output)
         
     if preprocessing['stem']:
         output = stem_tokens(output)
+        if DEBUG:
+            print('stem_tokens output:', output)
     elif preprocessing['lemmatize']:
         output = lemmatize_tokens(output)
+        if DEBUG:
+            print('lemmatize_tokens output:', output)
 
     return output # this will be a list of lists of tokens, each list represents a document's tokens
 
@@ -108,7 +116,8 @@ def apply_algorithms(data):
     # do algs
     if algorithms['BOW']:
         output = bow_from_tokens(output)
-        print(output)
+        if DEBUG:
+            print('bow applied output:', output)
     # apply other algs/have more options here
     else:
         print('NO ALG SELECTED')
@@ -124,6 +133,8 @@ def run_visualizations(data):
     # this needs to be put into
     # do viz
     if visualization['WordCloud']:
+        if DEBUG:
+            print('WordCloud output:', output)
         # mwc()
         # import and apply WC alg
         # immport WC_viz function
