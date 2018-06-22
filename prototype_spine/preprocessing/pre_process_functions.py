@@ -8,12 +8,7 @@
 #Must give path
 #Works for text files and PDFs
 #Turns files into a list of strings
-### IMPORTS ###  (just copy paste any new imports you need as lines of code)
-import yaml
-from preprocessing import text_import as timp, complete_tokenize as ctkn
-from algorithms import BOW
 
-### IMPORTING ###
 
 def text_import(path):
     files = glob.glob(path + '*')
