@@ -34,8 +34,8 @@ from algorithms import BOW
 from BOW import bow_from_tokens
 
 # viz
-from visualization import viz_functions as viz
-from viz import make_word_cloud as make_word_cloud
+# from visualization import viz_functions as viz
+# from viz import make_word_cloud as mwc
 
 
 
@@ -81,6 +81,7 @@ def preprocess_data(user_data_path, preprocessing, algorithms, visualization)
     # do this for each possibility
     if preprocessing['complete_tokenize']:
         output = complete_tokenize(output)
+        
     if preprocessing['stem']:
         output = stem_tokens(output)
     elif preprocessing['lemmatize']:
@@ -106,9 +107,11 @@ def apply_algorithms(data):
 
 def run_visualizations(data):
     output = data
+
+    # this needs to be put into
     # do viz
     if visualization['WordCloud']:
-        
+        # mwc()
         # import and apply WC alg
         # immport WC_viz function
         # output = WC_viz(processed_data)
