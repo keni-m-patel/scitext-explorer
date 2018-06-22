@@ -11,10 +11,9 @@ def bow(documents):
 
     new_dict = {}
     for i in documents:
-        for j in i:
-            if j in new_dict:
-                new_dict[j] += 1
-            else:
-                new_dict[j] = 1
+        if i in new_dict:
+            new_dict[i] += 1
+        else:
+            new_dict[i] = 1
     return new_dict
 
