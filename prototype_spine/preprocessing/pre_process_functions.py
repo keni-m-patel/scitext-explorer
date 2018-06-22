@@ -8,6 +8,12 @@
 #Must give path
 #Works for text files and PDFs
 #Turns files into a list of strings
+### IMPORTS ###  (just copy paste any new imports you need as lines of code)
+import yaml
+from preprocessing import text_import as timp, complete_tokenize as ctkn
+from algorithms import BOW
+
+### IMPORTING ###
 
 def text_import(path):
     files = glob.glob(path + '*')
@@ -34,6 +40,9 @@ def text_import(path):
 #Removes stop words and punctuation and makes letter lowercase
 #Then does tokenization
 #Keeps form of list of strings, but breaks it into words
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
 def complete_tokenize(documents):
     tokenized_documents=list()
@@ -78,6 +87,11 @@ def complete_tokenize(documents):
 #Stems tokens
 #List of strings
 
+### WORD STEMMING ###
+import nltk 
+from nltk.stem import PorterStemmer
+
+
 def stem_tokens(documents):  
     ps = PorterStemmer()
     stem_words=list()
@@ -90,6 +104,7 @@ def stem_tokens(documents):
 
 #Lemmatizes tokens
 #List of strings
+
 
 def lemma(documents):
     lem_docs=list()
