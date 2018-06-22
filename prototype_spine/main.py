@@ -19,8 +19,10 @@ using those parameters.
 ### CONSTANTS ###
 DEBUG = 1  # if true, print debugging statements
 DATA_PATH = 'data/'
+CONFIG_PATH = 'configuration/'
 
 ### IMPORTS ###
+
 # config
 import yaml
 
@@ -36,15 +38,13 @@ import glob
 import PyPDF2
 
 # preprocessing
-from preprocessing import pre_process_functions
-from pre_process_functions import complete_tokenize, stem_tokens, lemma as lemmatize_tokens
+from preprocessing.pre_process_functions import complete_tokenize, stem_tokens, lemma as lemmatize_tokens
 
 # alg required imports:
 from collections import Counter
 
 # algs
-from algorithms import algorithms_functions
-from algorithms_functions import bow_from_tokens
+from algorithms.algorithms_functions import bow_from_tokens
 
 # viz
 # from visualization import viz_functions as viz
@@ -57,17 +57,17 @@ from algorithms_functions import bow_from_tokens
 def read_config_file():
     
     # open master config file for (currently) 1 key dict on which config file to use
-    with open('config.yaml', 'r') as filestream:
+    with open(CONFIG_PATH + 'config.yaml', 'r') as filestream:
         config = yaml.load(filestream)
 
-    user_config = config[user]
+    user_config = config['user_configuration']
 
     if DEBUG:
         print('master config file type: {}\n'.format(type(config)) + '\n')
         print('master config dict (k,v) pairs: ', str([(k,config[k]) for k in config.keys()]) )
 
     # now open the config file specified by the master config dict
-    with open(user_config, 'r') as filestream:
+    with open(CONFIG_PATH + user_config, 'r') as filestream:
         user_config = yaml.load(filestream)
 
     if DEBUG:
@@ -147,11 +147,15 @@ def run_visualizations(data):
 
 
 if __name__ == '__main__':
+    if DEBUG:
+        print('start')
     d,p,a,v = read_config_file()
     # do preprocessing
     processed_data = preprocess_data(d,p,a,v)
     algs_done_data = apply_algorithms(processed_data)
     print(run_visualizations(algs_done_data))
+    if DEBUG:
+        print('end')
 
     # do algs
     # do visualization

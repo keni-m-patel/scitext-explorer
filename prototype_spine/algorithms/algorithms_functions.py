@@ -15,4 +15,3 @@ def bow_from_tokens(documents):
             bow_simple = Counter(t)
             new_docs.append(bow_simple)
     return new_docs
-bow_from_tokens(tokens)
