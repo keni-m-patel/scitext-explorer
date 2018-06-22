@@ -1,0 +1,15 @@
+#download wordcloud
+from os import path
+from wordcloud import WordCloud
+
+#input string-documents 
+#word cloud
+def wordcloud(documents):
+    for doc in documents:
+        wordcloud = WordCloud().generate(doc)
+        import matplotlib.pyplot as plt
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis("off")
+        wordcloud = WordCloud(max_font_size=40).generate(doc)
+        plt.show()
+wordcloud(documents)
