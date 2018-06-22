@@ -17,7 +17,7 @@ using those parameters.
 
 
 ### CONSTANTS ###
-DEBUG = 1  # if true, print debugging statements
+DEBUG = 1 # if true, print debugging statements
 DATA_PATH = 'data/'
 CONFIG_PATH = 'configuration/'
 
@@ -46,9 +46,7 @@ from preprocessing.pre_process_functions import text_import, complete_tokenize, 
 from algorithms.algorithms_functions import bow as bow_from_tokens
 
 # viz
-# from visualization import viz_functions as viz
-# from viz import make_word_cloud as mwc
-
+from visualization.viz_functions import bow_to_wordcloud
 
 
 
@@ -132,13 +130,12 @@ def run_visualizations(data, viz_selections):
     # this needs to be put into
     # do viz
     if viz_selections['WordCloud']:
+
+        output = bow_to_wordcloud(output)
+
         if DEBUG:
             print('WordCloud output:', output)
-        # mwc()
-        # import and apply WC alg
-        # immport WC_viz function
-        # output = WC_viz(processed_data)
-        pass
+
     # apply other visualizations maybe??
     return output
 
