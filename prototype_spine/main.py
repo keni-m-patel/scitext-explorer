@@ -34,6 +34,8 @@ from algorithms import BOW
 from BOW import bow_from_tokens
 
 # viz
+from visualization import viz_functions as viz
+from viz import make_word_cloud as make_word_cloud
 
 
 
@@ -65,20 +67,15 @@ def read_config_file():
     algorithms = user_config['algorithms']
     visualization =  user_config['visualization']
 
-    return data, preprocessing, algorithms, visualization
+    return user_data_path, preprocessing, algorithms, visualization
 
-def preprocess_data(data, preprocessing, algorithms, visualization)
 
-    # ASSUMPTION: for now we assume only one text file inputted, 
-    #             but text will be a list of strings that are filenames
-
+def preprocess_data(user_data_path, preprocessing, algorithms, visualization)
     path = DATA_PATH + user_data_path
-
     # text import, get list of string, each is a document 
     files_as_strings = text_import(path)
     output = files_as_strings
     
-
     # we can make this better-organized later...
     # later this will have multiple if statements , or some other way of organizing
     # do this for each possibility
@@ -94,7 +91,6 @@ def preprocess_data(data, preprocessing, algorithms, visualization)
 
 def apply_algorithms(data):
     output = data
-
     # do algs
     if algorithms['BOW']:
         output = bow_from_tokens(output)
@@ -103,8 +99,6 @@ def apply_algorithms(data):
         print('NO ALG SELECTED')
         print('input: ', data)
         print('algs selected: ', algorithms)
-
-    
 
     return output
 
@@ -120,16 +114,6 @@ def run_visualizations(data):
     # apply other visualizations maybe??
 
     return output
-
-
-
-
-
-      
-
-    print('Algorithms:')
-    for alg in algorithms:
-      print('  {}: {}'.format(alg, algorithms[alg]))
 
 
 
