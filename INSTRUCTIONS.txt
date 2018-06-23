@@ -1,7 +1,0 @@
-INSTRUCTIONS
-
-edit config file to heart's content
-
-run main.py
-
-to end, close word cloud window

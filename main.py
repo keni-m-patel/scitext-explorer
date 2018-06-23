@@ -12,10 +12,6 @@ and then execute the correct files from algs, visualization, and preprocessing (
 using those parameters.
 '''
 
-### CODE ###
-
-
-
 ### CONSTANTS ###
 DEBUG = 1 # if true, print debugging statements
 DATA_PATH = 'data/'
@@ -25,7 +21,6 @@ CONFIG_PATH = 'configuration/'
 
 # config
 import yaml
-
 
 # preprocessing required imports:
 import pandas as pd
@@ -47,9 +42,6 @@ from algorithms.algorithms_functions import bow as bow_from_tokens
 
 # viz
 from visualization.viz_functions import bow_to_wordcloud
-
-
-
 
 def read_config_file():
     
@@ -158,23 +150,3 @@ if __name__ == '__main__':
     print(run_visualizations(post_algs_data, selected_viz))
     if DEBUG:
         print('end')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
