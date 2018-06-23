@@ -21,26 +21,8 @@ CONFIG_PATH = 'configuration/'
 
 # config
 import yaml
-
-# preprocessing required imports:
-import pandas as pd
-import numpy as np
-import nltk
-from nltk.tokenize import sent_tokenize
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-import glob
-import PyPDF2
-
-# preprocessing
 from preprocessing.pre_process_functions import text_import, complete_tokenize, stem_tokens, lemma as lemmatize_tokens
-
-# alg required imports:
-
-# algs
 from algorithms.algorithms_functions import bow as bow_from_tokens
-
-# viz
 from visualization.viz_functions import bow_to_wordcloud
 
 def read_config_file():

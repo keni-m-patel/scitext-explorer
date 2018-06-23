@@ -2,12 +2,10 @@
 #Must give path
 #Works for text files and PDFs
 #Turns files into a list of strings
-import pandas as pd
-import numpy as np
-import nltk
-from nltk.tokenize import sent_tokenize
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+from nltk.stem.wordnet import WordNetLemmatizer
 import glob
 import PyPDF2
 
@@ -31,14 +29,6 @@ def text_import(path):
         else:
             print('File Error: Cannot read file type for ' + textfile + '\n') 
     return documents
-
-
-#Removes stop words and punctuation and makes letter lowercase
-#Then does tokenization
-#Keeps form of list of strings, but breaks it into words
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
 
 def complete_tokenize(documents):
     tokenized_documents=list()
@@ -82,12 +72,6 @@ def complete_tokenize(documents):
 
 #Stems tokens
 #List of strings
-
-### WORD STEMMING ###
-import nltk 
-from nltk.stem import PorterStemmer
-
-
 def stem_tokens(documents):  
     ps = PorterStemmer()
     stem_docs=list()
@@ -99,8 +83,6 @@ def stem_tokens(documents):
 
 #Lemmatizes tokens
 #List of strings
-
-
 def lemma(documents):
     lem_docs=list()
     wordnet_lemmatizer = WordNetLemmatizer()

@@ -6,14 +6,16 @@ Created on Fri Jun 22 20:53:26 2018
 @author: patelkm
 """
 
-def Corpus(object):
-    def __init__(self, config):
+import utilities
+
+class Corpus(object):
+    def __init__(self, config_file):
         # here we should read a master data configuration file that specifies
         # data source type, location, and method of iterating over records
-        self.config = config
-        
+        self.config = utilities.get_config(config_file)
+                
     def __iter__(self):
-        # this is a custom iterator function that defines how to iterate over 
+        # custom iterator function that defines how to iterate over 
         # records according to the configuration specified
         pass
     
