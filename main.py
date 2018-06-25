@@ -18,4 +18,5 @@ logging.basicConfig(level=logging.DEBUG,
 
 corpus = Corpus('./config/data/text_files.yaml')
 data = Preprocessor(corpus, './config/preprocessing.yaml')
-b = BagOfWords(data).run()
+b = BagOfWords(data)
+b.run()
