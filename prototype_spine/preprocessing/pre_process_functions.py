@@ -80,10 +80,13 @@ def complete_tokenize(documents):
 
 def stem_tokens(documents):  
     ps = PorterStemmer()
+    stem_words=list()
     stem_docs=list()
     for tokens in documents:
         for item in tokens:
-            stem_docs.append(ps.stem(item))
+            stem_words.append(ps.stem(item))
+        stem_docs.append(stem_words)
+        stem_words = list()
     return stem_docs
 
 
@@ -91,11 +94,13 @@ def stem_tokens(documents):
 #List of strings
 
 def lemma(documents):
+    lem_words=list()
     lem_docs=list()
     wordnet_lemmatizer = WordNetLemmatizer()
     for no_stops in documents:
         for t in no_stops:
             lemmatized = wordnet_lemmatizer.lemmatize(t)
-            lem_docs.append(lemmatized)
+            lem_words.append(lemmatized)
+        lem_docs.append(lem_words)
+        lem_words = list()
     return lem_docs
-
