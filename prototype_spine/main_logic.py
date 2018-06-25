@@ -57,7 +57,7 @@ def preprocess_data(user_data_path, prepro_selections):
     files_as_strings = text_import(path)
     output = files_as_strings
     if DEBUG:
-        print('files as strings:', files_as_strings)
+        print('\n\n\nfiles as strings:\n\n', files_as_strings)
     
     # we can make this better-organized later...
     # later this will have multiple if statements , or some other way of organizing
@@ -65,16 +65,16 @@ def preprocess_data(user_data_path, prepro_selections):
     if prepro_selections['complete_tokenize']:
         output = complete_tokenize(output)
         if DEBUG:
-            print('complete_tokenize output:', output)
+            print('\n\n\ncomplete_tokenize output:\n\n', output)
         
     if prepro_selections['stem']:
         output = stem_tokens(output)
         if DEBUG:
-            print('stem_tokens output:', output)
+            print('\n\n\nstem_tokens output:\n\n', output)
     elif prepro_selections['lemmatize']:
         output = lemmatize_tokens(output)
         if DEBUG:
-            print('lemmatize_tokens output:', output)
+            print('\n\n\nlemmatize_tokens output:\n\n', output)
 
     return output # this will be a list of lists of tokens, each list represents a document's tokens
 
@@ -85,12 +85,12 @@ def apply_algorithms(data, alg_selections):
     if alg_selections['BOW']:
         output = bow_from_tokens(output)
         if DEBUG:
-            print('bow applied output:', output)
+            print('\n\n\nbow applied output:', output)
     # apply other algs/have more options here
     else:
-        print('NO ALG SELECTED')
-        print('input: ', data)
-        print('algs selected: ', user_algs)
+        print('\n\n\nNO ALG SELECTED')
+        print('\n\n\ninput: \n\n', data)
+        print('\n\n\nalgs selected: \n\n', user_algs)
 
     return output
 
@@ -105,7 +105,7 @@ def run_visualizations(data, viz_selections):
         output = multiple_bow_to_wordcloud(output)
 
         if DEBUG:
-            print('WordCloud output:', output)
+            print('\n\n\nWordCloud output:', output)
 
     # apply other visualizations maybe??
     return output
