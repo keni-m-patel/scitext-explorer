@@ -37,29 +37,33 @@ def text_import(path):
 
 def complete_tokenize(documents):
     tokenized_documents=list()
+    print("Adding and Removing Stopwords from NLTK Set of English Stopwords")
     stop = set(stopwords.words('english'))
-    Add_Stop = int(input('To Add a Stop Word Enter 1. Press 2 if not. '))
-    while Add_Stop == 1:
-        look_at_stop = int(input("Press 1 to look at set of stop words. Press 2 if not. "))
-        if look_at_stop == 1:
+    add_stop = 'add'
+    remove_stop = 'remove'
+    add_remove_stop = int(input('To LOOK at Set of Stopwords Enter 1. To ADD Stopwords Enter 2. To REMOVE Stopwords Enter 3. To CONVERT to Original Stopwords Enter 4. Otherwise Enter 5: '))
+    while add_remove_stop != 5:
+        if add_remove_stop == 1:
             print(stop)
-        stop_word_added = input('Enter a stop word to add: ')
-        if stop_word_added not in stop:
-            stop.add(stop_word_added)
+        elif add_remove_stop == 2:
+            while add_stop != str(1):
+                add_stop = input('Enter a stopword to add. When you are no longer want to add more stop words, enter 1. \n')
+                stop.add(add_stop)
+                if add_stop != str(1):
+                    print('Stopword has been added')
+        elif add_remove_stop == 3:
+            while remove_stop != str(1):
+                remove_stop = input('Enter a stopword to remove. When you are no longer want to remove more stop words, enter 1. \n')
+                stop.remove(remove_stop)
+                if remove_stop != str(1):
+                    print('Stopword has been added')
+        elif add_remove_stop == 4:
+            stop = set(stopwords.words('english'))
         else:
-            print("That word is alredy in the set of stop words!")
-        Add_Stop = int(input('To Add Another Stop Word Enter 1. Press 2 if not. '))
-    Remove_Stop = int(input('To Remove a Stop Word Enter 1. Press 2 if not. '))
-    while Remove_Stop == 1:
-        look_at_stop_1 = int(input("Press 1 to look at set of stop words. Press 2 if not."))
-        if look_at_stop_1 == 1:
-            print(stop)
-        stop_word_removed = input('Enter a stop word to remove: ')
-        if stop_word_removed in stop:
-            stop.remove(stop_word_removed)
-        else:
-            print("That word is not in the set of stop words!")
-        Remove_Stop = int(input('To Remove Another Stop Word Enter 1. Press 2 if not. '))
+            print("Error: that input was incorrect")
+        add_remove_stop = int(input('To LOOK at Set of Stopwords Enter 1. To ADD Stopwords Enter 2. To REMOVE Stopwords Enter 3. To CONVERT to Original Stopwords Enter 4. Otherwise Enter 5: '))
+
+       
     for text in documents:   
         # TO DO: word_tokenize chapter_one
         tokens = word_tokenize(text)   
