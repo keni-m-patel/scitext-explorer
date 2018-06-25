@@ -1,134 +1,21 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Created on Wed Jun 20 12:30:52 2018
+Created on Sun Jun 24 18:29:24 2018
 
-@author: sonj@mit.edu
+@author: kenipatel
 """
 
-### NOTES ###
-'''
-this is the main file for the prototype system.
-main.py will read through the config file, pick out the parameters, 
-and then execute the correct files from algs, visualization, and preprocessing (all directories)
-using those parameters.
-'''
+import logging
+from structures import Corpus
+from preprocess import Preprocessor
+from algorithms import BagOfWords
 
-### CONSTANTS ###
-DEBUG = 1 # if true, print debugging statements
-DATA_PATH = 'data/'
-CONFIG_PATH = 'configuration/'
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)s %(levelname)s %(message)s',
+                    filename='scitext.log',
+                    filemode='w')
 
-### IMPORTS ###
-
-# config
-import yaml
-from preprocessing.pre_process_functions import text_import, complete_tokenize, stem_tokens, lemma as lemmatize_tokens
-from algorithms.algorithms_functions import bow as bow_from_tokens
-from visualization.viz_functions import bow_to_wordcloud
-
-def read_config_file():
-    
-    # open master config file for (currently) 1 key dict on which config file to use
-    with open(CONFIG_PATH + 'config.yaml', 'r') as filestream:
-        config = yaml.load(filestream)
-
-    user_config = config['user_configuration']
-
-    if DEBUG:
-        print('master config file type: {}\n'.format(type(config)) + '\n')
-        print('master config dict (k,v) pairs: ', str([(k,config[k]) for k in config.keys()]) )
-
-    # now open the config file specified by the master config dict
-    with open(CONFIG_PATH + user_config, 'r') as filestream:
-        user_config = yaml.load(filestream)
-
-    if DEBUG:
-        print('user config file type: {}\n'.format(type(user_config)) + '\n')
-        print('user config dict (k,v) pairs: ', str([(k,user_config[k]) for k in user_config.keys()]) )
-
-    # extract each section's parameters as list or dict
-    user_data_path = user_config['data']
-    preprocessing = user_config['preprocessing']
-    user_algs= user_config['algorithms']
-    visualization =  user_config['visualization']
-
-    return user_data_path, preprocessing, user_algs, visualization
-
-
-def preprocess_data(user_data_path, prepro_selections):
-    path = DATA_PATH + user_data_path
-    # text import, get list of string, each is a document 
-    files_as_strings = text_import(path)
-    output = files_as_strings
-    if DEBUG:
-        print('files as strings:', files_as_strings)
-    
-    # we can make this better-organized later...
-    # later this will have multiple if statements , or some other way of organizing
-    # do this for each possibility
-    if prepro_selections['complete_tokenize']:
-        output = complete_tokenize(output)
-        if DEBUG:
-            print('complete_tokenize output:', output)
-        
-    if prepro_selections['stem']:
-        output = stem_tokens(output)
-        if DEBUG:
-            print('stem_tokens output:', output)
-    elif prepro_selections['lemmatize']:
-        output = lemmatize_tokens(output)
-        if DEBUG:
-            print('lemmatize_tokens output:', output)
-
-    return output # this will be a list of lists of tokens, each list represents a document's tokens
-
-
-def apply_algorithms(data, alg_selections):
-    output = data
-    # do algs
-    if alg_selections['BOW']:
-        output = bow_from_tokens(output)
-        if DEBUG:
-            print('bow applied output:', output)
-    # apply other algs/have more options here
-    else:
-        print('NO ALG SELECTED')
-        print('input: ', data)
-        print('algs selected: ', user_algs)
-
-    return output
-
-
-def run_visualizations(data, viz_selections):
-    output = data
-
-    # this needs to be put into
-    # do viz
-    if viz_selections['WordCloud']:
-
-        output = bow_to_wordcloud(output)
-
-        if DEBUG:
-            print('WordCloud output:', output)
-
-    # apply other visualizations maybe??
-    return output
-
-
-
-if __name__ == '__main__':
-    if DEBUG:
-        print('start')
-
-    # get user selections and path
-    user_data_path, selected_prepro, selected_algs, selected_viz = read_config_file()
-
-    # do preprocessing
-    processed_data = preprocess_data(user_data_path, selected_prepro)
-
-    # apply algs
-    post_algs_data = apply_algorithms(processed_data, selected_algs)
-
-    # run viz
-    print(run_visualizations(post_algs_data, selected_viz))
-    if DEBUG:
-        print('end')
+corpus = Corpus('./config/data/text_files.yaml')
+data = Preprocessor(corpus, './config/preprocessing.yaml')
+b = BagOfWords(data).run()

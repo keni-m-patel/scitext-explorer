@@ -20,7 +20,7 @@ class Corpus(object):
         self.config = utilities.get_config(config_file) # read the config file and set the log_file name
         self.__read_data(self.config) # get data    
         self.__log() # log things
-                                    
+        
     def __iter__(self):
         # custom iterator function that defines how to iterate over 
         # records according to the configuration specified
