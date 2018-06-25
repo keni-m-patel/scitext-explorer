@@ -36,6 +36,17 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from os import path
 
+### TOKENIZING STOPWORDS ###
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+### WORD STEMMING ###
+import nltk 
+from nltk.stem import PorterStemmer
+
+### BAG OF WORDS ###
+from collections import Counter
 
 ### DIRECTORY STRUCTURE ###
 FILE: main.py
