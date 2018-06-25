@@ -91,19 +91,20 @@ def complete_tokenize(documents):
 
 ### WORD STEMMING ###
 import nltk 
-from nltk.stem import PorterStemmer
-
+from nltk.stem.lancaster import LancasterStemmer
 
 def stem_tokens(documents):  
-    ps = PorterStemmer()
+    ls = LancasterStemmer()
     stem_words=list()
     stem_docs=list()
+    
     for tokens in documents:
         for item in tokens:
-            stem_words.append(ps.stem(item))
+            stem_words.append(ls.stem(item))
         stem_docs.append(stem_words)
         stem_words = list()
     return stem_docs
+stem_tokens(tokens)
 
 
 #Lemmatizes tokens
