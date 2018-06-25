@@ -6,7 +6,7 @@ data: 'books/pride_and_prejudice.txt'
   # - 'pdf_file1.pdf'
   # - 'excel_file1.xlxs'
   
-# here's where I'll assign the preprocessing steps I'd like to execute
+# here's where I'll assign the preprocessing steps I'd like to execute 
 preprocessing:
   complete_tokenize: True
   stem: True
@@ -15,7 +15,7 @@ preprocessing:
   lower_case: False
   punctuation: False
   
-# now choose the algorithms!
+# now choose the algorithms!  functional: BOW 
 algorithms:
   BOW: True
   LSA: False
