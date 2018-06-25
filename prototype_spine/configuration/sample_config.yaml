@@ -13,7 +13,7 @@ preprocessing:
   lower_case: True
   punctuation: True
  
-  
+
 # now choose the algorithms!  functional: BOW 
 algorithms:
   BOW: True
@@ -23,4 +23,5 @@ algorithms:
 
 
 visualization: 
-  WordCloud: True
+  WordCloud: False
+  FrequencyTable: True

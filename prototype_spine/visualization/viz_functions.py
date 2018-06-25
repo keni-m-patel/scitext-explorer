@@ -4,6 +4,7 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from matplotlib import interactive
 from random import shuffle
+import glob
 
 
 def bow_to_fs(bow_dict):
@@ -38,6 +39,36 @@ def multiple_bow_to_wordcloud(list_of_bow):
         plt.axis('off')
         wc = WordCloud(max_font_size=40).generate(docs)
     return plt.show()
+
+
+
+import pandas as pd
+
+
+def document_names(path):
+    files = glob.glob(path + '*')
+    document_names=list()
+    for textfile in files[:]:
+        if '.txt' in textfile:
+            ext = ".txt"
+            fileNameOnly = textfile[len(path):textfile.find(ext) + len(ext)]
+            document_names.append(fileNameOnly)
+        elif '.pdf' in textfile:
+            ext = ".pdf"
+            fileNameOnly = textfile[len(path):textfile.find(ext) + len(ext)]
+            document_names.append(fileNameOnly)
+        else:
+            print(" ")
+    return document_names
+
+
+def bow_to_dataframe(bow, path):
+    bow_df = pd.DataFrame.from_records(bow)
+    bow_df = bow_df.T
+    bow_df.columns = document_names(path)
+    bow_df = bow_df.fillna(0)
+    pd.options.display.float_format = '{:,.0f}'.format
+    return bow_df
 
 
 

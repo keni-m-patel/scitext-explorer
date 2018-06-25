@@ -110,7 +110,6 @@ def stem_tokens(documents):
     return stem_docs
 
 
-
 #Lemmatizes tokens
 #List of strings
 
