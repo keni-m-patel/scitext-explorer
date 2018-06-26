@@ -3,7 +3,7 @@
 ### Prerequisites
 ### Installing
 ### Running
-*edit config file to heart's content
+*edit config file
 *run main.py
 ### Author(s)
 

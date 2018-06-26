@@ -15,8 +15,17 @@ logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(name)s %(levelname)s %(message)s',
                     filename='scitext.log',
                     filemode='w')
+'''
+TODO:
+# for future of UI: 
+# Config class: init with path to folder, use those defaults
+# have method that lets you save as a folder of yaml files
+# Algs class have objs in list and then depending on what config/alg.yaml says, will run it.
+# if select something (ie for PP) that doesn't work for ALG or VIZ, spit out warning
+'''
 
 corpus = Corpus('./config/data/text_files.yaml')
 data = Preprocessor(corpus, './config/preprocessing.yaml')
+# alg = AlgSelector()
 b = BagOfWords(data)
 b.run()
