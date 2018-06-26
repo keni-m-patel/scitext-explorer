@@ -3,6 +3,7 @@
 # this specifies the data sources I'd like to use
 data: 'books/'
 
+
 # here's where I'll assign the preprocessing steps I'd like to execute 
 preprocessing:
   complete_tokenize: True
@@ -11,7 +12,8 @@ preprocessing:
   stop_words: True
   lower_case: True
   punctuation: True
-  
+ 
+
 # now choose the algorithms!  functional: BOW 
 algorithms:
   BOW: True
@@ -19,5 +21,7 @@ algorithms:
   LDA: False
   Word2Vec: False  
 
+
 visualization: 
-  WordCloud: True
+  WordCloud: False
+  FrequencyTable: True

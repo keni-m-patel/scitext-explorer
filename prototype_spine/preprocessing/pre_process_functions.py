@@ -108,7 +108,6 @@ def stem_tokens(documents):
         stem_docs.append(stem_words)
         stem_words = list()
     return stem_docs
-stem_tokens(tokens)
 
 
 #Lemmatizes tokens

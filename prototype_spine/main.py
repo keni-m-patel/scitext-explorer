@@ -16,8 +16,6 @@ using those parameters.
 
 ### CONSTANTS ###
 DEBUG = 0 # if true, print debugging statements
-DATA_PATH = 'data/'
-CONFIG_PATH = 'configuration/'
 
 ### IMPORTS ###
 
@@ -35,7 +33,7 @@ def main():
     post_algs_data = apply_algorithms(processed_data, selected_algs)
 
     # run viz
-    print(run_visualizations(post_algs_data, selected_viz))
+    print(run_visualizations(post_algs_data, selected_viz, user_data_path))
 
     if DEBUG:
         print('end')

@@ -2,6 +2,7 @@
 
 ### CONSTANTS ###
 DEBUG = 0 # if true, print debugging statements
+USER_EX = 1
 DATA_PATH = 'data/'
 CONFIG_PATH = 'configuration/'
 
@@ -17,7 +18,7 @@ from preprocessing.pre_process_functions import text_import, complete_tokenize, 
 from algorithms.algorithms_functions import bow as bow_from_tokens
 
 # viz
-from visualization.viz_functions import multiple_bow_to_wordcloud
+from visualization.viz_functions import multiple_bow_to_wordcloud, bow_to_dataframe
 
 
 
@@ -43,7 +44,7 @@ def read_config_file():
         print('user config dict (k,v) pairs: ', str([(k,user_config[k]) for k in user_config.keys()]) )
 
     # extract each section's parameters as list or dict
-    user_data_path = user_config['data']
+    user_data_path = DATA_PATH + user_config['data']
     preprocessing = user_config['preprocessing']
     user_algs= user_config['algorithms']
     visualization =  user_config['visualization']
@@ -51,8 +52,8 @@ def read_config_file():
     return user_data_path, preprocessing, user_algs, visualization
 
 
-def preprocess_data(user_data_path, prepro_selections):
-    path = DATA_PATH + user_data_path
+def preprocess_data(path, prepro_selections):
+
     # text import, get list of string, each is a document 
     files_as_strings = text_import(path)
     output = files_as_strings
@@ -95,7 +96,7 @@ def apply_algorithms(data, alg_selections):
     return output
 
 
-def run_visualizations(data, viz_selections):
+def run_visualizations(data, viz_selections, user_data_path):
     output = data
 
     # this needs to be put into
@@ -106,6 +107,11 @@ def run_visualizations(data, viz_selections):
 
         if DEBUG:
             print('\n\n\nWordCloud output:', output)
+
+    elif viz_selections['FrequencyTable']:
+        # do a thing
+        output = bow_to_dataframe(output, user_data_path)
+
 
     # apply other visualizations maybe??
     return output

@@ -1,6 +1,6 @@
 INSTRUCTIONS
 
-edit config file to heart's content
+edit config file
 
 run main.py
 
