@@ -31,7 +31,7 @@ class Algorithm(object):
     def run(self):
         result_dict = {}
         # NEED TO THINK ABOUT HOW TO DO FOR MULTIPLE DOCS/SPLIT BY SENTENCES  
-        vectorizer = CountVectorizer(lowercase=True, stop_words='english')
+        vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
         dtm = vectorizer.fit_transform(self.data)  # HACKY: use in all things to avoid iterating multiple times
 
         if self.config['latent_semantic_analysis']:

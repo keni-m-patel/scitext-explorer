@@ -12,7 +12,7 @@ todo:
 1) test DOTPDF class
 2) test DOTTXT class
 3) emancipate DOT* from Corpus, make Corpus a controller class instead
-4) add TFIDF instead of CountVectorizer to algs for LSA
+4) add TFIDF instead of CountVectorizer to algs for LSA ::::: done
 
 '''
 
@@ -61,9 +61,12 @@ class Corpus(object):
 
 
 
-class DotPDF(Corpus):
+class DotPDF(object):
     def __init__(self, config_file, group_by='doc'):
-        super().__init__(config_file)
+        self.config = config_file
+        self.__read_data(self.config)
+        self.grouping = group_by
+
 
     def __iter__(self):
         # custom iterator function that defines how to iterate over 
@@ -108,9 +111,12 @@ class DotPDF(Corpus):
             pass # LOG A WARNING that there shouldn't be non-PDF files 
 
 
-class DotTXT(Corpus):
-    def __init__(self, config_file, group_by=None):
-        super().__init__(config_file)
+class DotTXT(object):
+    def __init__(self, config_file, group_by='doc'):
+        self.config = config_file
+        self.__read_data(self.config)
+        self.__log() # log things
+        self.grouping = group_by
 
     def __iter__(self):
         # custom iterator function that defines how to iterate over 
@@ -139,7 +145,9 @@ class DotTXT(Corpus):
 
 class DotCSV(DotTXT): 
     def __init__(self, config_file, group_by=None):
-        super().__init__(config_file)
+        self.config = config_file
+        self.__read_data(self.config)
+        self.__log() # log things
         self.grouping = group_by
 
     def __iter__(self):
