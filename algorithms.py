@@ -71,12 +71,12 @@ class BagOfWords(VectorSpaceModels):
         # dtm = vectorizer.fit_transform(self.corpus)
         dtm_dense = self.dtm.todense()
         vocabulary = self.vectorizer.vocabulary_
+        self.output = {'dtm': self.dtm,
+                        'dtm_dense': dtm_dense,
+                        'vocabulary': vocabulary}
         
         # inspecing the program stack to get the calling functions name so we don't have to hardcode it
         # when building our output
-        self.output = {inspect.stack()[0][3]: {'dtm': self.dtm,
-                               'dtm_dense': dtm_dense,
-                               'vocabulary': vocabulary}}
  
 
 class LatentSemanticAnalysis(VectorSpaceModels):
@@ -97,9 +97,9 @@ class LatentSemanticAnalysis(VectorSpaceModels):
         print('\ndtm_lsa:', dtm_lsa)
 
         pd.DataFrame(lsa.components_,index = ["component_1","component_2"],columns = self.vectorizer.get_feature_names())
-        self.output = {inspect.stack()[0][3]: {'dtm': self.dtm,
-                               'dtm_lsa': dtm_lsa}}
-        print('data frames of lsa components (there are 2) should have been shown')
+
+        self.output = {'dtm': self.dtm,
+                        'dtm_lsa': dtm_lsa,}
 
         
  

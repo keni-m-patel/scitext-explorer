@@ -5,6 +5,15 @@ Created on Fri Jun 22 20:53:26 2018
 
 @author: patelkm
 """
+# MAKE CORPU NOT A PARENT AND MAKE IT A CONTROLLER CLAS THAT 
+# TAKES IN ONE CONFIG FILE AND SPITS OUT AN OBJ BASED ON DOC TYPE
+'''
+todo:
+1) test DOTPDF class
+2) test DOTTXT class
+3) emancipate DOT* from Corpus, make Corpus a controller class instead
+
+'''
 
 import os
 import utilities
@@ -65,7 +74,7 @@ class DotPDF(Corpus):
                 text_file = ""
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
-                    text_file += page_text
+                    text_file = text_file + ' ' + page_text
                 yield text_file
 
         elif self.grouping == 'page':
@@ -93,7 +102,7 @@ class DotPDF(Corpus):
         
         if filetype == {'.pdf'}:
             # map to implement "lazy loading"; only read files as we need
-            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read('rb'), self.config['files'])
+            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x),'rb'), self.config['files'])
         else: 
             pass # LOG A WARNING that there shouldn't be non-PDF files 
 
