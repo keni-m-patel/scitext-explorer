@@ -1,0 +1,3 @@
+class TopicModels(object):
+    pass
+        
