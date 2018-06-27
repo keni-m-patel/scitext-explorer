@@ -1,6 +1,19 @@
 import inspect
 from sklearn.feature_extraction.text import CountVectorizer
 
+
+class Algorithm(object):
+    
+    def __init__(self, data, config_file):
+        self.data = data
+        pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
+        self.config = utilities.get_config(config_file)
+        print('\n\n\nalg config:\n\n', self.config)
+        
+    def __iter__(self):
+        for item in self.data:
+            yield item
+
 # Base class for Vector Space Models (Bag of Words, LSA, LDA, Word2Vec, Doc2Vec)
 class VectorSpaceModels(object):
     
@@ -10,6 +23,7 @@ class VectorSpaceModels(object):
         self.dtm = None
         self.dtm_dense = None
         self.vocabulary = None
+
         
 class BagOfWords(VectorSpaceModels):
     
@@ -27,7 +41,8 @@ class BagOfWords(VectorSpaceModels):
         self.output = {inspect.stack()[0][3]: {'dtm': dtm,
                                'dtm_dense': dtm_dense,
                                'vocabulary': vocabulary}}
-        
+ 
+
 class LatentSemanticAnalysis(VectorSpaceModels):
 
     def __init__(self):

@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 @decorators.log(logger)
 class Corpus(object):
-    
+
     def __init__(self, config_file, group_by='doc'):
         self.config = utilities.get_config(config_file) # read the config file and set the log_file name
         self.__read_data(self.config) # get data    
@@ -47,6 +47,7 @@ class Corpus(object):
 
     def __log(self):
         logger.info('Data Map created for: ' + ', '.join(self.config['files']))
+
 
 
 

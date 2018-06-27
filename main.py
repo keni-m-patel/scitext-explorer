@@ -7,7 +7,7 @@ Created on Sun Jun 24 18:29:24 2018
 """
 
 import logging
-from structures import Corpus
+from structures import Corpus, DotPDF, DotTXT, DotCSV
 from preprocess import Preprocessor
 from algorithms import BagOfWords
 
@@ -24,8 +24,8 @@ TODO:
 # if select something (ie for PP) that doesn't work for ALG or VIZ, spit out warning
 '''
 
-corpus = Corpus('./config/data/text_files.yaml')
+corpus = Corpus('./config/data/text_files.yaml', 'doc')
 data = Preprocessor(corpus, './config/preprocessing.yaml')
-# alg = AlgSelector()
+# alg = Algorithm(data, './config/algorithms.yaml')
 b = BagOfWords(data)
 b.run()
