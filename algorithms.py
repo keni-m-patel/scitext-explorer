@@ -30,17 +30,20 @@ class Algorithm(object):
 
     def run(self):
         result_dict = {}
-        if 'bag_of_words' in self.config:
-            b = BagOfWords(self.data)
+        # NEED TO THINK ABOUT HOW TO DO FOR MULTIPLE DOCS/SPLIT BY SENTENCES  
+        vectorizer = CountVectorizer(lowercase=True, stop_words='english')
+        dtm = vectorizer.fit_transform(self.data)  # HACKY: use in all things to avoid iterating multiple times
+
+        if self.config['latent_semantic_analysis']:
+            # print('\n\nERROR: LSA not yet implemented\n\n')
+            l = LatentSemanticAnalysis(self.data, vectorizer, dtm)
+            l.run()
+            result_dict['latent_semantic_analysis'] = l.output
+
+        if self.config['bag_of_words']:
+            b = BagOfWords(self.data, vectorizer, dtm)
             b.run()
             result_dict['bag_of_words'] = b.output
-
-        # NEED TO THINK ABOUT HOW TO DO FOR MULTIPLE DOCS/SPLIT BY SENTENCES  
-        # if 'latent_semantic_analysis' in self.config:
-        #     # print('\n\nERROR: LSA not yet implemented\n\n')
-        #     l = LatentSemanticAnalysis(self.data)
-        #     l.run()
-        #     result_dict['latent_semantic_analysis'] = l.output
 
         print(result_dict)
         return result_dict
@@ -50,28 +53,28 @@ class Algorithm(object):
 # Base class for Vector Space Models (Bag of Words, LSA, LDA, Word2Vec, Doc2Vec)
 class VectorSpaceModels(object):
     
-    def __init__(self, 
-                 corpus):
+    def __init__(self, corpus, vectorizer, dtm):
         self.corpus = corpus
-        self.dtm = None
+        self.vectorizer = vectorizer
+        self.dtm = dtm
         self.dtm_dense = None
         self.vocabulary = None
 
         
 class BagOfWords(VectorSpaceModels):
     
-     def __init__(self, corpus):
-        super().__init__(corpus)
+     def __init__(self, corpus, vectorizer, dtm):
+        super().__init__(corpus, vectorizer, dtm)
         
      def run(self):   
-        vectorizer = CountVectorizer(lowercase=True, stop_words='english')
-        dtm = vectorizer.fit_transform(self.corpus)
-        dtm_dense = dtm.todense()
-        vocabulary = vectorizer.vocabulary_
+        # vectorizer = CountVectorizer(lowercase=True, stop_words='english')
+        # dtm = vectorizer.fit_transform(self.corpus)
+        dtm_dense = self.dtm.todense()
+        vocabulary = self.vectorizer.vocabulary_
         
         # inspecing the program stack to get the calling functions name so we don't have to hardcode it
         # when building our output
-        self.output = {inspect.stack()[0][3]: {'dtm': dtm,
+        self.output = {inspect.stack()[0][3]: {'dtm': self.dtm,
                                'dtm_dense': dtm_dense,
                                'vocabulary': vocabulary}}
  
@@ -81,21 +84,21 @@ class LatentSemanticAnalysis(VectorSpaceModels):
     currently non-functional, need to ake this take in multiple docs for comparison.
     '''
 
-    def __init__(self, corpus):
-        super().__init__(corpus)
+    def __init__(self, corpus, vectorizer, dtm):
+        super().__init__(corpus, vectorizer, dtm)
 
     def run(self):
-        vectorizer = CountVectorizer(lowercase=True, stop_words='english')
-        dtm = vectorizer.fit_transform(self.corpus)
-        # Fit LSA. Use algorithm = “randomized” for large datasets
-        lsa = TruncatedSVD(2, algorithm = 'arpack')
-        dtm_lsa = lsa.fit_transform(dtm)
-        dtm_lsa = Normalizer(copy=False).fit_transform(dtm_lsa)
+        lsa_list = []
 
-        # pd.DataFrame(lsa.components_,index = ["component_1","component_2"],columns = vectorizer.get_feature_names())
-        pd.DataFrame(dtm_lsa, index = example, columns = ["component_1","component_2"])
-        self.output = {inspect.stack()[0][3]: {'dtm': dtm,
-                               'dtm_lsa': dtm_dense}}
+        # Fit LSA. Use algorithm = “randomized” for large datasets
+        lsa = TruncatedSVD(200)  # , algorithm = 'arpack')
+        dtm_lsa = lsa.fit_transform(self.dtm)
+        dtm_lsa = Normalizer(copy=False).fit_transform(dtm_lsa)
+        print('\ndtm_lsa:', dtm_lsa)
+
+        pd.DataFrame(lsa.components_,index = ["component_1","component_2"],columns = self.vectorizer.get_feature_names())
+        self.output = {inspect.stack()[0][3]: {'dtm': self.dtm,
+                               'dtm_lsa': dtm_lsa}}
         print('data frames of lsa components (there are 2) should have been shown')
 
         

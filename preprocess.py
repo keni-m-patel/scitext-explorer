@@ -11,7 +11,7 @@ import utilities
 class Preprocessor(object):
     
     def __init__(self, data, config_file):
-        self.data = data
+        self.data = data   # currently comes in as a Corpus object
         pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
         
