@@ -12,6 +12,7 @@ todo:
 1) test DOTPDF class
 2) test DOTTXT class
 3) emancipate DOT* from Corpus, make Corpus a controller class instead
+4) add TFIDF instead of CountVectorizer to algs for LSA
 
 '''
 
