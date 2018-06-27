@@ -16,7 +16,7 @@ import csv
 
 logger = logging.getLogger(__name__)
 
-@decorators.log(logger)
+# @decorators.log(logger)
 class Corpus(object):
 
     def __init__(self, config_file, group_by='doc'):

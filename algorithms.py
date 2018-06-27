@@ -1,4 +1,5 @@
 import inspect
+import utilities
 from sklearn.feature_extraction.text import CountVectorizer
 
 
@@ -13,6 +14,20 @@ class Algorithm(object):
     def __iter__(self):
         for item in self.data:
             yield item
+
+    def run(self):
+        result_dict = {}
+        if 'bag_of_words' in self.config:
+            b = BagOfWords(self.data)
+            b.run()
+            result_dict['bag_of_words'] = b.output
+        if 'LSA' in self.config:
+            print('\n\nERROR: LSA not yet implemented\n\n')
+
+        print(result_dict)
+        return result_dict
+
+
 
 # Base class for Vector Space Models (Bag of Words, LSA, LDA, Word2Vec, Doc2Vec)
 class VectorSpaceModels(object):

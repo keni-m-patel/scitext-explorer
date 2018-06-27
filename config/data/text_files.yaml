@@ -1,7 +1,7 @@
 # "text" files aren't just files with a .txt extension, csv and tsv files are also simple text files
 # but the only difference is that there is a specific specified between data elements
 
-directory: /Users/kenipatel/scitext-explorer/test/data/books
+directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/books
 files:
     - adventure.txt
     - pride_and_prejudice.txt

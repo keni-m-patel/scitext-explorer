@@ -18,3 +18,6 @@ class Preprocessor(object):
     def __iter__(self):
         for item in self.data:
             yield item
+
+    def run(self):
+        return self.data

@@ -9,7 +9,7 @@ Created on Sun Jun 24 18:29:24 2018
 import logging
 from structures import Corpus, DotPDF, DotTXT, DotCSV
 from preprocess import Preprocessor
-from algorithms import BagOfWords
+from algorithms import Algorithm, BagOfWords
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(name)s %(levelname)s %(message)s',
@@ -25,7 +25,8 @@ TODO:
 '''
 
 corpus = Corpus('./config/data/text_files.yaml', 'doc')
-data = Preprocessor(corpus, './config/preprocessing.yaml')
-# alg = Algorithm(data, './config/algorithms.yaml')
-b = BagOfWords(data)
-b.run()
+data = Preprocessor(corpus, './config/preprocessing.yaml').run()
+alg = Algorithm(data, './config/algorithms.yaml')
+alg.run()
+# b = BagOfWords(data)
+# b.run()
