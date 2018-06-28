@@ -82,7 +82,22 @@ class BagOfWords(VectorSpaceModels):
         
         # inspecing the program stack to get the calling functions name so we don't have to hardcode it
         # when building our output
- 
+        
+###  Word Frequency table inputting BagOFWords outputting freq table
+class WordFreq(BagOfWords):
+    
+    def __init__(self, corpus):
+        super().__init__(corpus)
+        self.run()
+    
+    def run_word_freq(self):
+        bow_series = pd.Series(self.output['vocabulary'])
+        bow_data = bow_series.to_frame().reset_index()
+        bow_data.columns = ['Word', 'Word Count']
+        bow_max = bow_data.sort_values(by='Word Count', ascending=False)
+        bow_max = bow_max.set_index('Word')
+        print(bow_max)
+
 
 class LatentSemanticAnalysis(VectorSpaceModels):
     '''
@@ -104,6 +119,8 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 
         self.output = {'dtm': self.dtm,
                         'dtm_lsa': dtm_lsa,}
+        
+
 
         
  
