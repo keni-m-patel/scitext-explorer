@@ -5,20 +5,20 @@ import pandas as pd
 
 class Algorithm(object):
     
-    def __init__(self, data, config_file):
-        self.data = data
+    def __init__(self, corpus, config_file):
+        self.corpus = corpus
         self.config = utilities.get_config(config_file)
         print('\n\n\nalg config:\n\n', self.config)
         
     def __iter__(self):
-        for item in self.data:
+        for item in self.corpus:
             yield item
 
     def run(self):
         result_dict = {}
         
         if 'bag_of_words' in self.config:
-            b = BagOfWords(self.data)
+            b = BagOfWords(self.corpus)
             b.run()
             result_dict['bag_of_words'] = b.output
             
@@ -39,7 +39,7 @@ class VectorSpaceModels(object):
         self.dtm = None
         self.dtm_dense = None
         self.vocabulary = None
-
+       
         
 class BagOfWords(VectorSpaceModels):
     
@@ -55,7 +55,7 @@ class BagOfWords(VectorSpaceModels):
         # inspecing the program stack to get the calling functions name so we don't have to hardcode it
         # when building our output
         self.output = {'dtm': dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary}
-        
+    
         if 'word_frequency' in self.config:
             wordfreq = WordFreq(self.data)
             wordfreq.run_word_freq()

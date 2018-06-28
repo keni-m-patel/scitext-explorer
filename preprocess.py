@@ -2,6 +2,7 @@
 import pandas as pd
 from pandas import DataFrame
 import numpy as np
+import utilities
 
 import nltk
 from nltk.tokenize import sent_tokenize
@@ -24,9 +25,9 @@ class Preprocessor(object):
 
     
 
-    def __init__(self, data):
+    def __init__(self, corpus, config_file):
 
-        self.data = data
+        self.corpus = corpus
 
         self.config = utilities.get_config(config_file)
         
@@ -37,9 +38,7 @@ class Preprocessor(object):
         
     def tokenize(self):
         
-        self.tokenized_docs = list()
-        
-        for item in self.data:
+        for item in self.corpus:
 
             tokens = word_tokenize(item)
             
@@ -66,7 +65,7 @@ class Preprocessor(object):
         
         
         
-        self.data = []
+        self.output = []
         
             
         if self.config['stem']:
@@ -76,9 +75,9 @@ class Preprocessor(object):
             for tokens in self.tokenized_docs:
                 for item in tokens:
                     stem_words.append(ps.stem(item))
-                self.data.append(stem_words)
+                self.output.append(stem_words)
                 stem_words = list()
-            return self.data
+            return self.output
 
 
         else:
@@ -89,8 +88,8 @@ class Preprocessor(object):
                 for item in tokens:
                     lemmatized = wordnet_lemmatizer.lemmatize(item)
                     lem_words.append(lemmatized)
-                self.data.append(lem_words)
+                self.output.append(lem_words)
                 lem_words = list()
-            return self.data
+            return self.output
     
     
