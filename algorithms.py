@@ -1,7 +1,7 @@
 import inspect
 import utilities
 from sklearn.feature_extraction.text import CountVectorizer
-
+import pandas as pd
 
 class Algorithm(object):
     
@@ -45,7 +45,7 @@ class BagOfWords(VectorSpaceModels):
      def __init__(self, corpus):
         super().__init__(corpus)
         
-     def run(self):   
+     def run(self):  
         vectorizer = CountVectorizer(lowercase=True, stop_words='english')
         dtm = vectorizer.fit_transform(self.corpus)
         dtm_dense = dtm.todense()
@@ -53,10 +53,23 @@ class BagOfWords(VectorSpaceModels):
         
         # inspecing the program stack to get the calling functions name so we don't have to hardcode it
         # when building our output
-        self.output = {inspect.stack()[0][3]: {'dtm': dtm,
-                               'dtm_dense': dtm_dense,
-                               'vocabulary': vocabulary}}
- 
+        self.output = {'dtm': dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary}
+        
+class WordFreq(BagOfWords):
+    
+    def __init__(self, corpus):
+        super().__init__(corpus)
+        self.run()
+    
+    def run_word_freq(self):
+        print(self.output['vocabulary'])
+        bow_series = pd.Series(self.output['vocabulary'])
+        bow_data = bow_series.to_frame().reset_index()
+        bow_data.columns = ['Word', 'Word Count']
+        bow_max = bow_data.sort_values(by='Word Count', ascending=False)
+        bow_max = bow_max.set_index('Word')
+        
+        print(bow_max)
 
 class LatentSemanticAnalysis(VectorSpaceModels):
 
