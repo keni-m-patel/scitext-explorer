@@ -43,10 +43,13 @@ from nltk.tokenize import word_tokenize
 
 ### WORD STEMMING ###
 import nltk 
-from nltk.stem import PorterStemmer
+from nltk.stem.lancaster import LancasterStemmer
+Input: List of lists
+Output: Stemmed List of lists
 
-### BAG OF WORDS ###
-from collections import Counter
+### BAG OF WORDS: NO IMPORTS###
+Input: List of lists
+Output: List of dictionaries
 
 ### DIRECTORY STRUCTURE ###
 FILE: main.py
