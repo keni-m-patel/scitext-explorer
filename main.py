@@ -25,8 +25,12 @@ TODO:
 '''
 
 corpus = Corpus('./config/data/text_files.yaml', 'doc')
-data = Preprocessor(corpus, './config/preprocessing.yaml').run()
+file_object = corpus.getObj()
+print(file_object)
+print(file_object.grouping)
+print(file_object.config)
+
+
+data = Preprocessor(file_object, './config/preprocessing.yaml').run()
 alg = Algorithm(data, './config/algorithms.yaml')
 alg.run()
-# b = BagOfWords(data)
-# b.run()
