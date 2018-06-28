@@ -20,6 +20,7 @@ from sklearn.preprocessing import Normalizer
 from sklearn import metrics
 from sklearn.cluster import KMeans, MiniBatchKMeans
 import pandas as pd
+from pandas import DataFrame
 import warnings
 import numpy
 
