@@ -1,2 +1,8 @@
 bag_of_words: True
+
+word_frequency: True
+
 latent_semantic_analysis: True
+
+
+

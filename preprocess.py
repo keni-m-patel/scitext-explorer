@@ -1,23 +1,96 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Jun 24 21:52:23 2018
+import pandas as pd
+from pandas import DataFrame
+import numpy as np
 
-@author: kenipatel
-"""
+import nltk
+from nltk.tokenize import sent_tokenize
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from nltk.stem import PorterStemmer
 
-import utilities
+import glob
+import PyPDF2
+
+import re
+from collections import Counter
+
+import matplotlib.pyplot as plt
+#from wordcloud import WordCloud
+from os import path
 
 class Preprocessor(object):
+
     
-    def __init__(self, data, config_file):
-        self.data = data   # currently comes in as a Corpus object
-        pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
+
+    def __init__(self, data):
+
+        self.data = data
+
         self.config = utilities.get_config(config_file)
         
-    def __iter__(self):
+        self.stop = list(set(stopwords.words('english')))
+        
+        self.tokenized_docs = []
+        
+        
+    def tokenize(self):
+        
+        self.tokenized_docs = list()
+        
         for item in self.data:
-            yield item
 
-    def run(self):
-        return self.data
+            tokens = word_tokenize(item)
+            
+            lower_tokens = [t.lower() for t in tokens]        
+    
+            alpha_only = [t for t in lower_tokens if t.isalpha()]
+    
+            no_stops = [w for w in alpha_only if w not in self.stop]       
+    
+            self.tokenized_docs.append(no_stops)
+            
+        
+        if self.config['new_stop_set']:
+            
+            self.stop = self.config['new_stop_set_list']
+            
+        if self.config['add_stop']:
+            
+            self.stop.extend(self.config['add_stop_list'])
+            
+        if self.config['remove_stop']:
+            
+            self.stop = list(set(self.stop) - set(self.config['remove_stop_list']))
+        
+        
+        
+        self.data = []
+        
+            
+        if self.config['stem']:
+            
+            ps = PorterStemmer()
+            stem_words=list()
+            for tokens in self.tokenized_docs:
+                for item in tokens:
+                    stem_words.append(ps.stem(item))
+                self.data.append(stem_words)
+                stem_words = list()
+            return self.data
+
+
+        else:
+        
+            wordnet_lemmatizer = WordNetLemmatizer()
+            lem_words = list()
+            for tokens in self.tokenized_docs:
+                for item in tokens:
+                    lemmatized = wordnet_lemmatizer.lemmatize(item)
+                    lem_words.append(lemmatized)
+                self.data.append(lem_words)
+                lem_words = list()
+            return self.data
+    
+    
