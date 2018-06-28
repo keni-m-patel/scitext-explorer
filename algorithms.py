@@ -119,9 +119,29 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 
         self.output = {'dtm': self.dtm,
                         'dtm_lsa': dtm_lsa,}
+
         
-
-
+class Tf_Idf(VectorSpaceModels):
+    
+    def __init__(self, corpus):
+        super().__init__(corpus)
+        
+    def run(self):
+        vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, encoding='utf-8')
+        
+        #Tranforms corpus into vectorized words
+        self.dtm = vectorizer.fit_transform(corpus)
+        
+        #Prints idf'd words
+        print(vectorizer.get_feature_names())
+        
+        #Prints doc-term matrix
+        print(self.dtm)
+        
+        #Prints and returns Data Table of doc-term matrix
+        Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
+        print(Tf_Idf_Table)
+        return Tf_Idf_Table
         
  
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
