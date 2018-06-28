@@ -50,6 +50,11 @@ class Algorithm(object):
             b = BagOfWords(self.data)
             b.run()
             result_dict['bag_of_words'] = b.output
+        
+        if self.config['tf_idf']:
+            t = Tf_Idf(self.data)
+            t.run()
+            result_dict['tf_idf'] = t.output
 
         print(result_dict)
         return result_dict
@@ -131,7 +136,7 @@ class Tf_Idf(VectorSpaceModels):
         vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, encoding='utf-8')
         
         #Tranforms corpus into vectorized words
-        self.dtm = vectorizer.fit_transform(corpus)
+        self.dtm = vectorizer.fit_transform(self.data)
         
         #Prints idf'd words
         print(vectorizer.get_feature_names())
@@ -141,8 +146,8 @@ class Tf_Idf(VectorSpaceModels):
         
         #Prints and returns Data Table of doc-term matrix
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
-        print(Tf_Idf_Table)
-        return Tf_Idf_Table
+        self.output = print(Tf_Idf_Table)
+        
         
  
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)

@@ -1,2 +1,3 @@
 bag_of_words: True
 latent_semantic_analysis: True
+tf_idf: True
