@@ -1,3 +1,11 @@
+'''
+todo:
+1) add TFIDF instead of CountVectorizer to algs for LSA ::::: done
+2) make generators repeatable so that I can run count vectrorizer for BOW and TFIDF for LSA  # I THINK IT WORKS NOW
+
+'''
+
+
 import inspect
 import utilities
 # from sklearn.feature_extraction.text import CountVectorizer
@@ -31,17 +39,14 @@ class Algorithm(object):
     def run(self):
         result_dict = {}
         # NEED TO THINK ABOUT HOW TO DO FOR MULTIPLE DOCS/SPLIT BY SENTENCES  
-        vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
-        dtm = vectorizer.fit_transform(self.data)  # HACKY: use in all things to avoid iterating multiple times
-
         if self.config['latent_semantic_analysis']:
             # print('\n\nERROR: LSA not yet implemented\n\n')
-            l = LatentSemanticAnalysis(self.data, vectorizer, dtm)
+            l = LatentSemanticAnalysis(self.data)
             l.run()
             result_dict['latent_semantic_analysis'] = l.output
 
         if self.config['bag_of_words']:
-            b = BagOfWords(self.data, vectorizer, dtm)
+            b = BagOfWords(self.data)
             b.run()
             result_dict['bag_of_words'] = b.output
 
@@ -53,22 +58,22 @@ class Algorithm(object):
 # Base class for Vector Space Models (Bag of Words, LSA, LDA, Word2Vec, Doc2Vec)
 class VectorSpaceModels(object):
     
-    def __init__(self, corpus, vectorizer, dtm):
-        self.corpus = corpus
-        self.vectorizer = vectorizer
-        self.dtm = dtm
+    def __init__(self, corpus):
+        self.data = corpus
+        self.vectorizer = None
+        self.dtm = None
         self.dtm_dense = None
         self.vocabulary = None
 
         
 class BagOfWords(VectorSpaceModels):
     
-     def __init__(self, corpus, vectorizer, dtm):
-        super().__init__(corpus, vectorizer, dtm)
+     def __init__(self, corpus):
+        super().__init__(corpus)
         
      def run(self):   
-        # vectorizer = CountVectorizer(lowercase=True, stop_words='english')
-        # dtm = vectorizer.fit_transform(self.corpus)
+        self.vectorizer = CountVectorizer(lowercase=True, stop_words='english')
+        self.dtm = self.vectorizer.fit_transform(self.data)
         dtm_dense = self.dtm.todense()
         vocabulary = self.vectorizer.vocabulary_
         self.output = {'dtm': self.dtm,
@@ -84,19 +89,18 @@ class LatentSemanticAnalysis(VectorSpaceModels):
     currently non-functional, need to ake this take in multiple docs for comparison.
     '''
 
-    def __init__(self, corpus, vectorizer, dtm):
-        super().__init__(corpus, vectorizer, dtm)
+    def __init__(self, corpus):
+        super().__init__(corpus)
 
     def run(self):
-        lsa_list = []
-
-        # Fit LSA. Use algorithm = “randomized” for large datasets
+        self.vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
+        self.dtm = self.vectorizer.fit_transform(self.data)
         lsa = TruncatedSVD(200)  # , algorithm = 'arpack')
         dtm_lsa = lsa.fit_transform(self.dtm)
         dtm_lsa = Normalizer(copy=False).fit_transform(dtm_lsa)
         print('\ndtm_lsa:', dtm_lsa)
 
-        pd.DataFrame(lsa.components_,index = ["component_1","component_2"],columns = self.vectorizer.get_feature_names())
+        pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
 
         self.output = {'dtm': self.dtm,
                         'dtm_lsa': dtm_lsa,}
