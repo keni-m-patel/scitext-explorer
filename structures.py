@@ -41,6 +41,8 @@ class Corpus(object):
         # INTERFACE DEFINITION: this iterator should always yield a string
         for doc in self.data_map:
             yield doc
+            self.__read_data(self.config) # get data    
+
     
     def __len__(self):
         # we may want to do some introspection of our data objects; how many records
