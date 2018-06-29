@@ -150,7 +150,7 @@ class Tf_Idf(VectorSpaceModels):
         self.output = print(Tf_Idf_Table)
         
         
- 
+#
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
     pass
