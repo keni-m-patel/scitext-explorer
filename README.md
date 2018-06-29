@@ -3,7 +3,7 @@
 1)  Open algorithms.yaml 
         A.) Type "True" to turn on an alg, otherwise type "False"
 
-3) Open Text_files.yaml 
+2) Open Text_files.yaml 
     A) change file directory to your data folder path (if necessary, not needed for testers on SonjMac)
     B) under "files:" change files listed to match your dataset corpus
 
