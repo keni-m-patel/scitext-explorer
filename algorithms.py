@@ -27,8 +27,6 @@ class Algorithm(object):
                 w.run()
                 result_dict['word_frequency'] = w.output
                 
-        if 'LSA' in self.config:
-            print('\n\nERROR: LSA not yet implemented\n\n')
 
         print(result_dict)
         return result_dict
