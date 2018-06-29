@@ -5,7 +5,6 @@ Created on Sun Jun 24 21:52:23 2018
 
 @author: kenipatel
 """
-
 import utilities
 
 class Preprocessor(object):

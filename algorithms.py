@@ -20,6 +20,7 @@ from sklearn.preprocessing import Normalizer
 from sklearn import metrics
 from sklearn.cluster import KMeans, MiniBatchKMeans
 import pandas as pd
+from pandas import DataFrame
 import warnings
 import numpy
 
@@ -49,6 +50,11 @@ class Algorithm(object):
             b = BagOfWords(self.data)
             b.run()
             result_dict['bag_of_words'] = b.output
+        
+        if self.config['tf_idf']:
+            t = Tf_Idf(self.data)
+            t.run()
+            result_dict['tf_idf'] = t.output
 
         print(result_dict)
         return result_dict
@@ -82,7 +88,22 @@ class BagOfWords(VectorSpaceModels):
         
         # inspecing the program stack to get the calling functions name so we don't have to hardcode it
         # when building our output
- 
+        
+###  Word Frequency table inputting BagOFWords outputting freq table
+class WordFreq(BagOfWords):
+    
+    def __init__(self, corpus):
+        super().__init__(corpus)
+        self.run()
+    
+    def run_word_freq(self):
+        bow_series = pd.Series(self.output['vocabulary'])
+        bow_data = bow_series.to_frame().reset_index()
+        bow_data.columns = ['Word', 'Word Count']
+        bow_max = bow_data.sort_values(by='Word Count', ascending=False)
+        bow_max = bow_max.set_index('Word')
+        print(bow_max)
+
 
 class LatentSemanticAnalysis(VectorSpaceModels):
     '''
@@ -107,7 +128,29 @@ class LatentSemanticAnalysis(VectorSpaceModels):
                         # ,'dataframe': dataframe}
 
         
- 
+class Tf_Idf(VectorSpaceModels):
+    
+    def __init__(self, corpus):
+        super().__init__(corpus)
+        
+    def run(self):
+        vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, encoding='utf-8')
+        
+        #Tranforms corpus into vectorized words
+        self.dtm = vectorizer.fit_transform(self.data)
+        
+        #Prints idf'd words
+        print(vectorizer.get_feature_names())
+        
+        #Prints doc-term matrix
+        print(self.dtm)
+        
+        #Prints and returns Data Table of doc-term matrix
+        Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
+        self.output = print(Tf_Idf_Table)
+        
+        
+#
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
     pass
