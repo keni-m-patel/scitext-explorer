@@ -22,6 +22,11 @@ class Algorithm(object):
             b.run()
             result_dict['bag_of_words'] = b.output
             
+            if 'word_frequency' in self.config:
+                w = WordFreq(self.corpus, self.config, b.output)
+                w.run()
+                result_dict['word_frequency'] = w.output
+                
         if 'LSA' in self.config:
             print('\n\nERROR: LSA not yet implemented\n\n')
 
@@ -57,9 +62,7 @@ class BagOfWords(VectorSpaceModels):
         # when building our output
         self.output = {'dtm': dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary}
     
-        if 'word_frequency' in self.config:
-            wordfreq = WordFreq(self.corpus, self.config, self.output)
-            wordfreq.run_word_freq()
+        
         
 
         
@@ -70,13 +73,14 @@ class WordFreq(BagOfWords):
         self.output = output
         #self.run()
     
-    def run_word_freq(self):
+    def run(self):
         bow_series = pd.Series(self.output['vocabulary'])
         bow_data = bow_series.to_frame().reset_index()
         bow_data.columns = ['Word', 'Word Count']
         bow_max = bow_data.sort_values(by='Word Count', ascending=False)
         bow_max = bow_max.set_index('Word')
-        print(bow_max)
+        self.output = bow_max
+
 
 class LatentSemanticAnalysis(VectorSpaceModels):
 
