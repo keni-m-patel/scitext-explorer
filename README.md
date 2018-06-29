@@ -26,6 +26,16 @@ Word Stemming: Removes affixes of words in order to get the root word (i.e. "jum
 Word Lemmatization: Reduces different forms of words down to the base word (i.e. "sing", "sang", and "sung" all turn into "sing").
 
 
+
+
+
+
+
+
+
+
+
+
 ### Prerequisites
 ### Installing
 ### Running

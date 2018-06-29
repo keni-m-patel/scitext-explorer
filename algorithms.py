@@ -56,6 +56,11 @@ class Algorithm(object):
             t.run()
             result_dict['tf_idf'] = t.output
 
+        if self.config['word_frequency_table']:
+            w = WordFreq(self.data)
+            w.run()
+            result_dict['word_frequency_table'] = w.output
+
         print(result_dict)
         return result_dict
 
@@ -102,7 +107,7 @@ class WordFreq(BagOfWords):
         bow_data.columns = ['Word', 'Word Count']
         bow_max = bow_data.sort_values(by='Word Count', ascending=False)
         bow_max = bow_max.set_index('Word')
-        print(bow_max)
+        self.output = bow_max
 
 
 class LatentSemanticAnalysis(VectorSpaceModels):
