@@ -1,11 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jun 22 20:53:26 2018
 
-@author: patelkm
-"""
-# MAKE CORPU NOT A PARENT AND MAKE IT A CONTROLLER CLAS THAT 
+# MAKE CORPUS NOT A PARENT AND MAKE IT A CONTROLLER CLASS THAT 
 # TAKES IN ONE CONFIG FILE AND SPITS OUT AN OBJ BASED ON DOC TYPE
 '''
 todo:
@@ -31,41 +25,67 @@ class Corpus(object):
 
     def __init__(self, config_file, group_by='doc'):
         self.config = utilities.get_config(config_file) # read the config file and set the log_file name
-        self.__read_data(self.config) # get data    
-        self.__log() # log things
         self.grouping = group_by
+        self.filetype = None
+        self.__read_data(self.config)
         
-    def __iter__(self):
-        # custom iterator function that defines how to iterate over 
-        # records according to the configuration specified
-        # INTERFACE DEFINITION: this iterator should always yield a string
-        for doc in self.data_map:
-            yield doc
-            self.__read_data(self.config) # get data    
+
+    # def __init__(self, config_file, group_by='doc'):
+    #     self.config = utilities.get_config(config_file) # read the config file and set the log_file name
+    #     self.__read_data(self.config) # get data    
+    #     self.__log() # log things
+    #     self.grouping = group_by
+        
+    # def __iter__(self):
+    #     # custom iterator function that defines how to iterate over 
+    #     # records according to the configuration specified
+    #     # INTERFACE DEFINITION: this iterator should always yield a string
+    #     for doc in self.data_map:
+    #         yield doc
+    #         self.__read_data(self.config) # get data    
 
     
-    def __len__(self):
-        # we may want to do some introspection of our data objects; how many records
-        # are in this data source? HINT: it depends on how we split it into records
-        return len(list(self.config['files']))
+    # def __len__(self):
+    #     # we may want to do some introspection of our data objects; how many records
+    #     # are in this data source? HINT: it depends on how we split it into records
+    #     return len(list(self.config['files']))
         
     def __read_data(self, config):
         # let's determine the file types we're dealing with
         filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
         
         if filetype == {'.txt'}:
-            # map to implement "lazy loading"; only read files as we need
-            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read(), self.config['files'])
+            self.filetype = 't'
 
-    def __log(self):
-        logger.info('Data Map created for: ' + ', '.join(self.config['files']))
+        elif filetype == {'.pdf'}:
+            self.filetype = 'p'
+            
+        elif filetype == {'.csv'}:
+            self.filetype = 'c'
+
+    def getObj(self):
+        if self.filetype == 't':
+            t = DotTXT(self.config, self.grouping)
+            return t
+        elif self.filetype == 'p':
+            p = DotPDF(self.config, self.grouping)
+            return p
+        elif self.filetype == 'c':
+            c = DotCSV(self.config, self.grouping)
+            return c
+        else:
+            print('filetype not set or filetype is not recognized/compatible')
+
+
+    # def __log(self):
+    #     logger.info('Data Map created for: ' + ', '.join(self.config['files']))
 
 
 
 
 class DotPDF(object):
-    def __init__(self, config_file, group_by='doc'):
-        self.config = config_file
+    def __init__(self, config, group_by='doc'):
+        self.config = config
         self.__read_data(self.config)
         self.grouping = group_by
 
@@ -82,6 +102,7 @@ class DotPDF(object):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     text_file = text_file + ' ' + page_text
                 yield text_file
+            self.__read_data(self.config) # get data    
 
         elif self.grouping == 'page':
             for PDFObj in self.data_map:
@@ -89,6 +110,7 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     yield page_text
+            self.__read_data(self.config) # get data    
 
     
     def __len__(self):
@@ -114,29 +136,31 @@ class DotPDF(object):
 
 
 class DotTXT(object):
-    def __init__(self, config_file, group_by='doc'):
-        self.config = config_file
-        self.__read_data(self.config)
-        self.__log() # log things
-        self.grouping = group_by
 
+    def __init__(self, config, group_by='doc'):
+        self.config = config
+        self.__read_data(self.config) # get data    
+        self.grouping = group_by
+        
     def __iter__(self):
         # custom iterator function that defines how to iterate over 
         # records according to the configuration specified
         # INTERFACE DEFINITION: this iterator should always yield a string
         for doc in self.data_map:
             yield doc
+            self.__read_data(self.config) # get data    
+
     
     def __len__(self):
         # we may want to do some introspection of our data objects; how many records
         # are in this data source? HINT: it depends on how we split it into records
         return len(list(self.config['files']))
-
+        
     def __read_data(self, config):
         # let's determine the file types we're dealing with
         filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
         
-        if filetype == {'.pdf'}:
+        if filetype == {'.txt'}:
             # map to implement "lazy loading"; only read files as we need
             self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read(), self.config['files'])
 

@@ -100,10 +100,11 @@ class LatentSemanticAnalysis(VectorSpaceModels):
         dtm_lsa = Normalizer(copy=False).fit_transform(dtm_lsa)
         print('\ndtm_lsa:', dtm_lsa)
 
-        pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
+        # dataframe = pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
 
         self.output = {'dtm': self.dtm,
-                        'dtm_lsa': dtm_lsa,}
+                        'dtm_lsa': dtm_lsa}
+                        # ,'dataframe': dataframe}
 
         
  
