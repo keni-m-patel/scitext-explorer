@@ -2,14 +2,14 @@
 # but the only difference is that there is a specific specified between data elements
 
 
-directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/pdfs
-files:
-    - Recitation13.pdf
-
-
-# directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/books
+# directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/pdfs
 # files:
-#     - adventure.txt
-#     - pride_and_prejudice.txt
+#     - Recitation13.pdf
+
+
+directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/books
+files:
+    - adventure.txt
+    - pride_and_prejudice.txt
 
         
