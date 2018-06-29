@@ -5,9 +5,9 @@ import pandas as pd
 
 class Algorithm(object):
     
-    def __init__(self, corpus, config_file):
+    def __init__(self, corpus, config):
         self.corpus = corpus
-        self.config = utilities.get_config(config_file)
+        self.config = utilities.get_config(config)
         print('\n\n\nalg config:\n\n', self.config)
         
     def __iter__(self):
@@ -18,7 +18,7 @@ class Algorithm(object):
         result_dict = {}
         
         if 'bag_of_words' in self.config:
-            b = BagOfWords(self.corpus)
+            b = BagOfWords(self.corpus, self.config)
             b.run()
             result_dict['bag_of_words'] = b.output
             
@@ -34,7 +34,8 @@ class Algorithm(object):
 class VectorSpaceModels(object):
     
     def __init__(self, 
-                 corpus):
+                 corpus, config):
+        self.config = config
         self.corpus = corpus
         self.dtm = None
         self.dtm_dense = None
@@ -43,8 +44,8 @@ class VectorSpaceModels(object):
         
 class BagOfWords(VectorSpaceModels):
     
-     def __init__(self, corpus):
-        super().__init__(corpus)
+     def __init__(self, corpus, config):
+        super().__init__(corpus, config)
         
      def run(self):  
         vectorizer = CountVectorizer(lowercase=True, stop_words='english')
@@ -57,16 +58,17 @@ class BagOfWords(VectorSpaceModels):
         self.output = {'dtm': dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary}
     
         if 'word_frequency' in self.config:
-            wordfreq = WordFreq(self.data)
+            wordfreq = WordFreq(self.corpus, self.config, self.output)
             wordfreq.run_word_freq()
         
 
         
 class WordFreq(BagOfWords):
     
-    def __init__(self, corpus):
-        super().__init__(corpus)
-        self.run()
+    def __init__(self, corpus, config, output):
+        super().__init__(corpus, config)
+        self.output = output
+        #self.run()
     
     def run_word_freq(self):
         bow_series = pd.Series(self.output['vocabulary'])
