@@ -10,6 +10,6 @@ remove_stop: False
 
 remove_stop_list: []
 
-stem: False
+stem: True
 
-named_entities: False
+named_entities: True
