@@ -11,66 +11,46 @@ from nltk.tree import Tree
 
 
 
-
-
-
-
 class Preprocessor(object):
-
-    
 
     def __init__(self, corpus, config_file):
 
         self.corpus = corpus
-
         self.config = utilities.get_config(config_file)
+
         print('\n\n\n\nRunning the following preprocessing actions:\n\n')
-        print(self.config)
-        
+        print(self.config.keys())
+
         self.stop = list(set(stopwords.words('english')))
-        
         self.tokenized_docs = []
-        
         self.named_entities_list = []
         
         
     def run(self):
         
-        if self.config['new_stop_set']:
-            
+        if self.config['new_stop_set']:            
             self.stop = self.config['new_stop_set_list']
             
-        if self.config['add_stop']:
-            
+        if self.config['add_stop']:            
             self.stop.extend(self.config['add_stop_list'])
             
-        if self.config['remove_stop']:
-            
+        if self.config['remove_stop']:            
             self.stop = list(set(self.stop) - set(self.config['remove_stop_list']))
         
-        for item in self.corpus:
-            
-            tokens = word_tokenize(item)
-                
+        for item in self.corpus:            
+            tokens = word_tokenize(item)                
             lower_tokens = [t.lower() for t in tokens]        
-
             alpha_only = [t for t in lower_tokens if t.isalpha()]
-
             no_stops = [w for w in alpha_only if w not in self.stop] 
             
-            #if not self.config['stem']:
-                
+            #if not self.config['stem']:  
                 #no_stops = pos_tag(no_stops)
     
-            self.tokenized_docs.append(no_stops)
-        
-            print(self.tokenized_docs)
-        
+            self.tokenized_docs.append(no_stops)        
+            # print(self.tokenized_docs)        
         self.output = []
         
-            
-        if self.config['stem']:
-            
+        if self.config['stem']:            
             ps = PorterStemmer()
             stem_words=list()
             for tokens in self.tokenized_docs:
@@ -79,7 +59,6 @@ class Preprocessor(object):
                 self.output.append(stem_words)
                 stem_words = list()
             return self.output
-
 
         else:
             #figure out pos_tagging
@@ -115,7 +94,7 @@ class Preprocessor(object):
                         else:
                             continue
                         self.named_entities_list.append(continuous_chunk)
-                print(self.named_entities_list)
+                # print(self.named_entities_list)
             return self.named_entities_list
 
     
