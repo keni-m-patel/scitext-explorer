@@ -1,8 +1,10 @@
 bag_of_words: True
 
-word_frequency: True
-
 latent_semantic_analysis: True
+
+tf_idf: True
+
+word_frequency_table: True
 
 
 

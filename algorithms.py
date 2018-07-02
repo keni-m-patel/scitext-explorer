@@ -22,7 +22,7 @@ class Algorithm(object):
             b.run()
             result_dict['bag_of_words'] = b.output
             
-            if 'word_frequency' in self.config:
+            if 'word_frequency_table' in self.config:
                 w = WordFreq(self.corpus, self.config, b.output)
                 w.run()
                 result_dict['word_frequency'] = w.output

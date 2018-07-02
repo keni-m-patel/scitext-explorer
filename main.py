@@ -27,6 +27,7 @@ TODO:
 corpus = Corpus('./config/data/text_files.yaml', 'doc')
 data = Preprocessor(corpus, './config/preprocessing.yaml')
 data.tokenize()
+data.named_entities()
 tokens = data.output
 alg = Algorithm(corpus, './config/algorithms.yaml')
 alg.run()
