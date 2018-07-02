@@ -82,7 +82,7 @@ class BagOfWords(VectorSpaceModels):
     
      def __init__(self, corpus):
         super().__init__(corpus)
-        print('\n\n\n\nRunning the following algorithm: Bag of Words:\n\n')
+        print('\n\n\n\nRunning the following algorithm: \nBag of Words\n\n')
         
      def run(self):   
         self.vectorizer = CountVectorizer(lowercase=True, stop_words='english')
@@ -101,7 +101,7 @@ class WordFreq(BagOfWords):
     
     def __init__(self, corpus):
         super().__init__(corpus)
-        print('\n\n\n\nRunning the following algorithm: Word Frequency\n\n')
+        print('\n\n\n\nRunning the following algorithm: \nWord Frequency\n\n')
         self.run()
     
     def run_word_freq(self):
@@ -120,7 +120,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 
     def __init__(self, corpus):
         super().__init__(corpus)
-        print('\n\n\n\nRunning the following algorithm: Latent Semantic Analysis\n\n')
+        print('\n\n\n\nRunning the following algorithm: \nLatent Semantic Analysis\n\n')
 
     def run(self):
         self.vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
@@ -128,7 +128,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
         lsa = TruncatedSVD(200)  # , algorithm = 'arpack')
         dtm_lsa = lsa.fit_transform(self.dtm)
         dtm_lsa = Normalizer(copy=False).fit_transform(dtm_lsa)
-        print('\ndtm_lsa:', dtm_lsa)
+        # print('\ndtm_lsa:', dtm_lsa)
 
         # dataframe = pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
 
@@ -141,7 +141,7 @@ class Tf_Idf(VectorSpaceModels):
     
     def __init__(self, corpus):
         super().__init__(corpus)
-        print('\n\n\n\nRunning the following algorithm: TFIDF \n\n')
+        print('\n\n\n\nRunning the following algorithm: \nTFIDF \n\n')
 
         
     def run(self):
