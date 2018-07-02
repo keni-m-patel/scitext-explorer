@@ -132,7 +132,7 @@ class DotPDF(object):
             # map to implement "lazy loading"; only read files as we need
             self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x),'rb'), self.config['files'])
         else: 
-            pass # LOG A WARNING that there shouldn't be non-PDF files 
+            print('ERROR: NON-PDF PASSED TO PDF CLASS')
 
 
 class DotTXT(object):
@@ -163,6 +163,9 @@ class DotTXT(object):
         if filetype == {'.txt'}:
             # map to implement "lazy loading"; only read files as we need
             self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read(), self.config['files'])
+        else:
+            print('ERROR: NON-TXT PASSED TO TXT CLASS')
+
 
 
 #################################################
@@ -210,8 +213,9 @@ class DotCSV(DotTXT):
         # let's determine the file types we're dealing with
         filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
         
-        if filetype == {'.pdf'}:
+        if filetype == {'.csv'}:
             # map to implement "lazy loading"; only read files as we need
             self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read('rb'), self.config['files'])
-
+        else:
+            print('ERROR: NON-CSV PASSED TO CSV CLASS')
         
