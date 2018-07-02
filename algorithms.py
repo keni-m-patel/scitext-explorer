@@ -100,7 +100,7 @@ class WordFreq(VectorSpaceModels):
     
     def __init__(self, corpus, bow_output):
         super().__init__(corpus)
-        print('\n\n\n\nRunning the following algorithm: \nWord Frequency\n\n'
+        print('\n\n\n\nRunning the following algorithm: \nWord Frequency\n\n')
         self.bow_output = bow_output
         self.output = None
         self.run()
