@@ -15,8 +15,6 @@ from nltk.tree import Tree
 
 
 
-
-
 class Preprocessor(object):
 
     
@@ -34,7 +32,7 @@ class Preprocessor(object):
         self.named_entities_list = []
         
         
-    def tokenize(self):
+    def run(self):
         
         if self.config['new_stop_set']:
             
@@ -96,8 +94,6 @@ class Preprocessor(object):
             return self.output
         
         
-        
-    def named_entities(self):
         
         if self.config['named_entities']:
             

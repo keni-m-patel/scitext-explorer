@@ -25,11 +25,20 @@ TODO:
 '''
 
 corpus = Corpus('./config/data/text_files.yaml', 'doc')
-data = Preprocessor(corpus, './config/preprocessing.yaml')
-data.tokenize()
-data.named_entities()
+
+
+
+
+
+file_object = corpus.getObj()
+print(file_object)
+print(file_object.grouping)
+print(file_object.config)
+
+
+data = Preprocessor(file_object, './config/preprocessing.yaml')
+data.run()
 tokens = data.output
-alg = Algorithm(corpus, './config/algorithms.yaml')
+alg = Algorithm(file_object, './config/algorithms.yaml')
+
 alg.run()
-# b = BagOfWords(data)
-# b.run()

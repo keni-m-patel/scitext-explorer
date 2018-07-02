@@ -1,7 +1,32 @@
 import inspect
 import utilities
 from sklearn.feature_extraction.text import CountVectorizer
+
+
+# Import all of the scikit learn stuff
+
+
+
+from sklearn.decomposition import TruncatedSVD
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+from sklearn.feature_extraction.text import CountVectorizer
+
+from sklearn.preprocessing import Normalizer
+
+from sklearn import metrics
+
+from sklearn.cluster import KMeans, MiniBatchKMeans
+
+
 import pandas as pd
+
+from pandas import DataFrame
+import warnings
+import numpy
+
+
 
 class Algorithm(object):
     
@@ -21,12 +46,21 @@ class Algorithm(object):
             b = BagOfWords(self.corpus, self.config)
             b.run()
             result_dict['bag_of_words'] = b.output
+
             
             if 'word_frequency_table' in self.config:
                 w = WordFreq(self.corpus, self.config, b.output)
                 w.run()
                 result_dict['word_frequency'] = w.output
                 
+
+        
+        if self.config['tf_idf']:
+            t = Tf_Idf(self.corpus, self.config)
+            t.run()
+            result_dict['tf_idf'] = t.output
+
+
 
         print(result_dict)
         return result_dict
@@ -58,10 +92,23 @@ class BagOfWords(VectorSpaceModels):
         
         # inspecing the program stack to get the calling functions name so we don't have to hardcode it
         # when building our output
+
         self.output = {'dtm': dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary}
     
         
         
+
+
+
+
+class LatentSemanticAnalysis(VectorSpaceModels):
+    '''
+    currently non-functional, need to ake this take in multiple docs for comparison.
+    '''
+
+    def __init__(self, corpus):
+        super().__init__(corpus)
+
 
         
 class WordFreq(BagOfWords):
@@ -69,7 +116,7 @@ class WordFreq(BagOfWords):
     def __init__(self, corpus, config, output):
         super().__init__(corpus, config)
         self.output = output
-        #self.run()
+
     
     def run(self):
         bow_series = pd.Series(self.output['vocabulary'])
@@ -82,10 +129,70 @@ class WordFreq(BagOfWords):
 
 class LatentSemanticAnalysis(VectorSpaceModels):
 
-    def __init__(self):
-        super.__init__()
+    '''
+
+    currently non-functional, need to ake this take in multiple docs for comparison.
+
+    '''
+
+
+
+    def __init__(self, corpus):
+
+        super().__init__(corpus)
+
+
+
+    def run(self):
+
+        self.vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
+
+        self.dtm = self.vectorizer.fit_transform(self.corpus)
+
+        lsa = TruncatedSVD(200)  # , algorithm = 'arpack')
+
+        dtm_lsa = lsa.fit_transform(self.dtm)
+
+        dtm_lsa = Normalizer(copy=False).fit_transform(dtm_lsa)
+
+        print('\ndtm_lsa:', dtm_lsa)
+
+
+
+        # dataframe = pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
+
+
+
+        self.output = {'dtm': self.dtm,
+
+                        'dtm_lsa': dtm_lsa}
+
+                        # ,'dataframe': dataframe}
+
         
- 
+class Tf_Idf(VectorSpaceModels):
+    
+    def __init__(self, corpus, config):
+        super().__init__(corpus, config)
+        
+    def run(self):
+        vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, encoding='utf-8')
+        
+        #Tranforms corpus into vectorized words
+        self.dtm = vectorizer.fit_transform(self.corpus)
+        
+        #Prints idf'd words
+        print(vectorizer.get_feature_names())
+        
+        #Prints doc-term matrix
+        print(self.dtm)
+        
+        #Prints and returns Data Table of doc-term matrix
+        Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
+        self.output = print(Tf_Idf_Table)
+        
+        
+#
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
     pass
