@@ -6,23 +6,23 @@ todo:
 '''
 
 
-import inspect
+#import inspect
 import utilities
 # from sklearn.feature_extraction.text import CountVectorizer
 
-import sklearn
+#import sklearn
 # Import all of the scikit learn stuff
-
+#
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import Normalizer
-from sklearn import metrics
-from sklearn.cluster import KMeans, MiniBatchKMeans
+#from sklearn import metrics
+#from sklearn.cluster import KMeans, MiniBatchKMeans
 import pandas as pd
-from pandas import DataFrame
-import warnings
-import numpy
+#from pandas import DataFrame
+#import warnings
+#import numpy
 
 
 class Algorithm(object):

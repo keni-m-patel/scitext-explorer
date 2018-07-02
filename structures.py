@@ -3,10 +3,10 @@
 # TAKES IN ONE CONFIG FILE AND SPITS OUT AN OBJ BASED ON DOC TYPE
 '''
 todo:
-1) test DOTPDF class
-2) test DOTTXT class
-3) emancipate DOT* from Corpus, make Corpus a controller class instead
-4) add TFIDF instead of CountVectorizer to algs for LSA ::::: done
+1) test DOTCSV class
+2) make DotXML? do microsoft word stuff
+3) HTML parsing 
+4) 
 
 '''
 
@@ -116,9 +116,9 @@ class DotPDF(object):
     def __len__(self):
         # we may want to do some introspection of our data objects; how many records
         # are in this data source? HINT: it depends on how we split it into records
-        if group_by == 'doc':
+        if self.grouping == 'doc':
             return len(list(self.config['files']))
-        elif group_by == 'page':
+        elif self.grouping == 'page':
             total_num_pages = 0
             for PDFObj in self.data_map:
                 total_num_pages += PDFR(PDFObj).numPages
@@ -185,10 +185,10 @@ class DotCSV(DotTXT):
         reader = csv.DictReader(file_obj, delimiter=',')
         field_names = csv.fieldnames()  # list of strings
 
-        if grouping == "row":
+        if self.grouping == "row":
             for row in reader:
                 yield row
-        elif grouping == "col":
+        elif self.grouping == "col":
             for field_name in field_names:
                 column = []
                 for row in reader:
@@ -201,9 +201,9 @@ class DotCSV(DotTXT):
         reader = csv.DictReader(file_obj, delimiter=',')
         field_names = csv.fieldnames()  # list of strings
 
-        if grouping == "row":
+        if self.grouping == "row":
             return size(reader)
-        elif grouping == "col":
+        elif self.grouping == "col":
             return len(reader.next())
 
     def __read_data(self, config):

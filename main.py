@@ -7,9 +7,9 @@ Created on Sun Jun 24 18:29:24 2018
 """
 
 import logging
-from structures import Corpus, DotPDF, DotTXT, DotCSV
+from structures import Corpus
 from preprocess import Preprocessor
-from algorithms import Algorithm, BagOfWords
+from algorithms import Algorithm
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(name)s %(levelname)s %(message)s',
