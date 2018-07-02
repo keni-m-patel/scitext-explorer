@@ -24,6 +24,8 @@ class Preprocessor(object):
         self.corpus = corpus
 
         self.config = utilities.get_config(config_file)
+        print('\n\n\n\nRunning the following preprocessing actions:\n\n')
+        print(self.config)
         
         self.stop = list(set(stopwords.words('english')))
         

@@ -1,4 +1,0 @@
-# master (yaml) configuration file
-
-# this specifies the config file I'd like to use
-user_configuration: 'sample_config.yaml'
