@@ -28,6 +28,8 @@ class Corpus(object):
         self.grouping = group_by
         self.filetype = None
         self.__read_data(self.config)
+        print('\n\n\n\nReading in the following files:\n\n')
+        print(self.config)
         
 
     # def __init__(self, config_file, group_by='doc'):

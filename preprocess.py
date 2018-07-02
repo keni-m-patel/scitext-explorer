@@ -13,6 +13,8 @@ class Preprocessor(object):
         self.data = data   # currently comes in as a Corpus object
         pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
+        print('\n\n\n\nRunning the following preprocessing actions:\n\n')
+        print(self.config)
         
     def __iter__(self):
         for item in self.data:

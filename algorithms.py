@@ -31,7 +31,8 @@ class Algorithm(object):
         self.data = data
         pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
-        print('\n\n\nalg config:\n\n', self.config)
+        print('\n\n\n\nRunning the following algorithms:\n\n')
+        print(self.config)
         
     def __iter__(self):
         for item in self.data:
@@ -81,6 +82,7 @@ class BagOfWords(VectorSpaceModels):
     
      def __init__(self, corpus):
         super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: Bag of Words:\n\n')
         
      def run(self):   
         self.vectorizer = CountVectorizer(lowercase=True, stop_words='english')
@@ -99,6 +101,7 @@ class WordFreq(BagOfWords):
     
     def __init__(self, corpus):
         super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: Word Frequency\n\n')
         self.run()
     
     def run_word_freq(self):
@@ -117,6 +120,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 
     def __init__(self, corpus):
         super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: Latent Semantic Analysis\n\n')
 
     def run(self):
         self.vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
@@ -137,6 +141,8 @@ class Tf_Idf(VectorSpaceModels):
     
     def __init__(self, corpus):
         super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: TFIDF \n\n')
+
         
     def run(self):
         vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, encoding='utf-8')
