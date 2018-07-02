@@ -171,9 +171,9 @@ class DotTXT(object):
 
 
 #################################################
-##  this may not be functional, is untested   ###
+##    non-functional, start for DotCSV class  ###
 #################################################
-
+'''
 class DotCSV(DotTXT): 
     def __init__(self, config_file, group_by=None):
         self.config = config_file
@@ -220,4 +220,7 @@ class DotCSV(DotTXT):
             self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read('rb'), self.config['files'])
         else:
             print('ERROR: NON-CSV PASSED TO CSV CLASS')
+
+'''
+
         
