@@ -6,23 +6,23 @@ todo:
 '''
 
 
-import inspect
+#import inspect
 import utilities
 # from sklearn.feature_extraction.text import CountVectorizer
 
-import sklearn
+#import sklearn
 # Import all of the scikit learn stuff
-
+#
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import Normalizer
-from sklearn import metrics
-from sklearn.cluster import KMeans, MiniBatchKMeans
+#from sklearn import metrics
+#from sklearn.cluster import KMeans, MiniBatchKMeans
 import pandas as pd
-from pandas import DataFrame
-import warnings
-import numpy
+#from pandas import DataFrame
+#import warnings
+#import numpy
 
 
 class Algorithm(object):
@@ -31,7 +31,8 @@ class Algorithm(object):
         self.data = data
         pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
-        print('\n\n\nalg config:\n\n', self.config)
+        print('\n\n\n\nRunning the following algorithms:\n\n')
+        print(self.config)
         
     def __iter__(self):
         for item in self.data:
@@ -81,6 +82,7 @@ class BagOfWords(VectorSpaceModels):
     
      def __init__(self, corpus):
         super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: \nBag of Words\n\n')
         
      def run(self):   
         self.vectorizer = CountVectorizer(lowercase=True, stop_words='english')
@@ -99,6 +101,7 @@ class WordFreq(BagOfWords):
     
     def __init__(self, corpus):
         super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: \nWord Frequency\n\n')
         self.run()
     
     def run_word_freq(self):
@@ -117,6 +120,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 
     def __init__(self, corpus):
         super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: \nLatent Semantic Analysis\n\n')
 
     def run(self):
         self.vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
@@ -124,7 +128,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
         lsa = TruncatedSVD(200)  # , algorithm = 'arpack')
         dtm_lsa = lsa.fit_transform(self.dtm)
         dtm_lsa = Normalizer(copy=False).fit_transform(dtm_lsa)
-        print('\ndtm_lsa:', dtm_lsa)
+        # print('\ndtm_lsa:', dtm_lsa)
 
         # dataframe = pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
 
@@ -137,6 +141,8 @@ class Tf_Idf(VectorSpaceModels):
     
     def __init__(self, corpus):
         super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: \nTFIDF \n\n')
+
         
     def run(self):
         vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, encoding='utf-8')
