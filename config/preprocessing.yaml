@@ -1,0 +1,15 @@
+new_stop_set: False
+
+new_stop_set_list: []
+
+add_stop: False
+
+add_stop_list: []
+
+remove_stop: False
+
+remove_stop_list: []
+
+stem: True
+
+named_entities: True
