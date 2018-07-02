@@ -31,27 +31,6 @@ class Corpus(object):
         print('\n\n\n\nReading in the following files:\n\n')
         print(self.config)
         
-
-    # def __init__(self, config_file, group_by='doc'):
-    #     self.config = utilities.get_config(config_file) # read the config file and set the log_file name
-    #     self.__read_data(self.config) # get data    
-    #     self.__log() # log things
-    #     self.grouping = group_by
-        
-    # def __iter__(self):
-    #     # custom iterator function that defines how to iterate over 
-    #     # records according to the configuration specified
-    #     # INTERFACE DEFINITION: this iterator should always yield a string
-    #     for doc in self.data_map:
-    #         yield doc
-    #         self.__read_data(self.config) # get data    
-
-    
-    # def __len__(self):
-    #     # we may want to do some introspection of our data objects; how many records
-    #     # are in this data source? HINT: it depends on how we split it into records
-    #     return len(list(self.config['files']))
-        
     def __read_data(self, config):
         # let's determine the file types we're dealing with
         filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
