@@ -42,6 +42,18 @@ class Algorithm(object):
     def run(self):
         result_dict = {}
         
+        # NEED TO THINK ABOUT HOW TO DO FOR MULTIPLE DOCS/SPLIT BY SENTENCES  
+
+        if self.config['latent_semantic_analysis']:
+
+            # print('\n\nERROR: LSA not yet implemented\n\n')
+
+            l = LatentSemanticAnalysis(self.corpus, self.config)
+
+            l.run()
+
+            result_dict['latent_semantic_analysis'] = l.output
+        
         if 'bag_of_words' in self.config:
             b = BagOfWords(self.corpus, self.config)
             b.run()
@@ -95,20 +107,6 @@ class BagOfWords(VectorSpaceModels):
 
         self.output = {'dtm': dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary}
     
-        
-        
-
-
-
-
-class LatentSemanticAnalysis(VectorSpaceModels):
-    '''
-    currently non-functional, need to ake this take in multiple docs for comparison.
-    '''
-
-    def __init__(self, corpus):
-        super().__init__(corpus)
-
 
         
 class WordFreq(BagOfWords):
@@ -137,9 +135,9 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 
 
 
-    def __init__(self, corpus):
+    def __init__(self, corpus, config):
 
-        super().__init__(corpus)
+        super().__init__(corpus, config)
 
 
 

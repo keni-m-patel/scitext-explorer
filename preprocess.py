@@ -49,7 +49,6 @@ class Preprocessor(object):
         for item in self.corpus:
             
             tokens = word_tokenize(item)
-           
                 
             lower_tokens = [t.lower() for t in tokens]        
 
@@ -87,7 +86,7 @@ class Preprocessor(object):
             for tokens in self.tokenized_docs:
                 for item in tokens:
                     #if item[1] == 'VB':
-                    lemmatized = wordnet_lemmatizer.lemmatize(item)
+                    lemmatized = wordnet_lemmatizer.lemmatize(item) #, pos = item[1]
                     lem_words.append(lemmatized)
                 self.output.append(lem_words)
                 lem_words = list()
@@ -96,45 +95,25 @@ class Preprocessor(object):
         
         
         if self.config['named_entities']:
-            
             for item in self.corpus:
-                
                 chunked_docs = []
-                
                 chunked = ne_chunk(pos_tag(word_tokenize(item)))
-                
                 chunked_docs.append(chunked)
-                
                 continuous_chunk = []
-                
                 current_chunk = []
-                
                 for chunk in chunked_docs:
-                    
                     for i in chunked:
-                        
                         if type(i) == Tree:
-                            
                             current_chunk.append(" ".join([token for token, pos in i.leaves()]))
-                            
                         elif current_chunk:
-                            
                             named_entity = " ".join(current_chunk)
-                            
-                            if named_entity not in continuous_chunk:
-                                
+                            if named_entity not in continuous_chunk: 
                                 continuous_chunk.append(named_entity)
-                                
                                 current_chunk = []
-                                
                         else:
-                            
                             continue
-                        
-                self.named_entities_list.append(continuous_chunk)
-                
-            print(self.named_entities_list)
-            
+                        self.named_entities_list.append(continuous_chunk)
+                print(self.named_entities_list)
             return self.named_entities_list
 
     
