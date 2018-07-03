@@ -27,33 +27,26 @@ class Corpus(object):
         self.config = utilities.get_config(config_file) # read the config file and set the log_file name
         self.grouping = group_by
         self.filetype = None
-        self.__read_data(self.config)
         print('\n\n\n\nReading in the following files:\n\n')
         print(self.config)
-        
-    def __read_data(self, config):
-        # let's determine the file types we're dealing with
+
+
+    def __call__(self):
+
         filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
         
         if filetype == {'.txt'}:
-            self.filetype = 't'
-
-        elif filetype == {'.pdf'}:
-            self.filetype = 'p'
-            
-        elif filetype == {'.csv'}:
-            self.filetype = 'c'
-
-    def getObj(self):
-        if self.filetype == 't':
             t = DotTXT(self.config, self.grouping)
             return t
-        elif self.filetype == 'p':
+
+        elif filetype == {'.pdf'}:
             p = DotPDF(self.config, self.grouping)
             return p
-        elif self.filetype == 'c':
+
+        elif filetype == {'.csv'}:
             c = DotCSV(self.config, self.grouping)
             return c
+
         else:
             print('filetype not set or filetype is not recognized/compatible')
 

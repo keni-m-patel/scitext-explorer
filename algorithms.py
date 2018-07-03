@@ -9,6 +9,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 
 from sklearn.preprocessing import Normalizer
+
+from sklearn.feature_extraction.text import TfidfTransformer
+
 #from sklearn import metrics
 #from sklearn.cluster import KMeans, MiniBatchKMeans
 import pandas as pd
@@ -77,6 +80,7 @@ class BagOfWords(VectorSpaceModels):
   
      def __init__(self, corpus):
         super().__init__(corpus)
+        self.bow = None
         print('\n\n\n\nRunning the following algorithm: \nBag of Words\n\n')
         
      def run(self):   
@@ -84,7 +88,13 @@ class BagOfWords(VectorSpaceModels):
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         dtm_dense = self.dtm.todense()
         vocabulary = self.vectorizer.vocabulary_
-        self.output = {'dtm': self.dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary}
+        tf_transformer = TfidfTransformer(use_idf=False).fit(self.dtm)
+        self.bow = tf_transformer.transform(self.bow)
+        self.output = {'dtm': self.dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary, 'bow': self.bow}
+        # print('\n\nCHECK THIS\n\n')
+        # for thing in self.bow:
+        #     print(thing)
+        # {'dtm': self.dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary, 'vectorizer': self.vectorizer}
     
 
         
@@ -98,7 +108,7 @@ class WordFreq(VectorSpaceModels):
         self.run()
     
     def run(self):
-        bow_series = pd.Series(self.bow_output['vocabulary'])
+        bow_series = pd.Series(list(self.bow_output['bow']))
         bow_data = bow_series.to_frame().reset_index()
         bow_data.columns = ['Word', 'Word Count']
         bow_max = bow_data.sort_values(by='Word Count', ascending=False)
@@ -120,8 +130,8 @@ class LatentSemanticAnalysis(VectorSpaceModels):
         dtm_lsa = lsa.fit_transform(self.dtm)
         dtm_lsa = Normalizer(copy=False).fit_transform(dtm_lsa)
 
-        # dataframe = pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
-        self.output = {'dtm': self.dtm,'dtm_lsa': dtm_lsa}  # ,'dataframe': dataframe}
+        dataframe = pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
+        self.output = {'dtm': self.dtm,'dtm_lsa': dtm_lsa,'dataframe': dataframe}
 
         
 class Tf_Idf(VectorSpaceModels):
