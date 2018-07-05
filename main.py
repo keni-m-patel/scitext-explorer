@@ -29,7 +29,7 @@ corpus = Corpus('./config/data/text_files.yaml', 'doc')
 
 
 
-
+#can remove this if change getobj to __call__
 file_object = corpus.getObj()
 
 #print(file_object)

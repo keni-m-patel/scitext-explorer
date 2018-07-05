@@ -9,6 +9,8 @@ from nltk.stem import PorterStemmer
 from nltk import ne_chunk, pos_tag
 from nltk.tree import Tree
 
+#use mapping
+#dont use of list of list, use dict perhaps
 
 
 class Preprocessor(object):
@@ -27,7 +29,7 @@ class Preprocessor(object):
         
         
     def run(self):
-        
+        #can get rid fo true false and use empty lsits as false
         if self.config['new_stop_set']:            
             self.stop = self.config['new_stop_set_list']
             
@@ -50,6 +52,7 @@ class Preprocessor(object):
             # print(self.tokenized_docs)        
         self.output = []
         
+        #add different options for stemming
         if self.config['stem']:            
             ps = PorterStemmer()
             stem_words=list()
@@ -64,6 +67,7 @@ class Preprocessor(object):
             #figure out pos_tagging
             wordnet_lemmatizer = WordNetLemmatizer()
             lem_words = list()
+            #faster with list comprehnsion
             for tokens in self.tokenized_docs:
                 for item in tokens:
                     #if item[1] == 'VB':
@@ -74,7 +78,7 @@ class Preprocessor(object):
             return self.output
         
         
-        
+        #move to algorithms
         if self.config['named_entities']:
             for item in self.corpus:
                 chunked_docs = []

@@ -2,8 +2,7 @@
 # but the only difference is that there is a specific specified between data elements
 
 
-directory: /Users/sonjalindberg/Documents/GitHub/scitext-explorer/test/data/books
-
+directory: \Users\597543\scitext-explorer\test\data
 
 
 #files:
@@ -12,6 +11,5 @@ directory: /Users/sonjalindberg/Documents/GitHub/scitext-explorer/test/data/book
 
 files:
      - adventure.txt
-     - pride_and_prejudice.txt
 
         

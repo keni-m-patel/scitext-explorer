@@ -17,6 +17,7 @@ import pandas as pd
 #import numpy
 
 
+#Link up preprocess, get rid of list of list and perhaps use dict with doc: word
 
 class Algorithm(object):
 
@@ -84,6 +85,7 @@ class BagOfWords(VectorSpaceModels):
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         dtm_dense = self.dtm.todense()
         vocabulary = self.vectorizer.vocabulary_
+        
         self.output = {'dtm': self.dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary}
     
 
@@ -132,6 +134,7 @@ class Tf_Idf(VectorSpaceModels):
         print('\n\n\n\nRunning the following algorithm: \nTFIDF \n\n')
         
     def run(self):
+        #figure out how to link up with preprocess
         self.vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, encoding='utf-8')
         
         #Tranforms corpus into vectorized words
