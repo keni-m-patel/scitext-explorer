@@ -81,7 +81,9 @@ class Preprocessor(object):
             #faster with list comprehnsion
             for tokens in self.tokenized_docs:
                 for item in tokens:
-                    if item[1].startswith('VB'):
+                    if len(item) < 2:
+                        pos = 'n'
+                    elif item[1].startswith('VB'):
                         pos = 'v'
                     elif item[1] == 'JJ':
                         pos = 'a'
