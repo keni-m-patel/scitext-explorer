@@ -95,7 +95,5 @@ class Preprocessor(object):
                             continue
                         self.named_entities_list.append(continuous_chunk)
                 # print(self.named_entities_list)
-            return self.named_entities_list
 
-    
-    
+            return self.named_entities_list
