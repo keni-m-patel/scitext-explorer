@@ -26,11 +26,12 @@ import pandas as pd
 #import warnings
 #import numpy
 
+
 from nltk import ne_chunk, pos_tag
 from nltk.tree import Tree
 from nltk.tokenize import word_tokenize
 
-#Viz Stuff
+
 import matplotlib.pyplot as plt
 
 
@@ -142,7 +143,6 @@ class BagOfWords(VectorSpaceModels):
         # {'dtm': self.dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary, 'vectorizer': self.vectorizer}
 
 
-        
 class WordFreq(VectorSpaceModels):
     
     def __init__(self, corpus, bow_output):
@@ -240,11 +240,19 @@ class kmeans(LatentSemanticAnalysis):
             plt.bar(x,y,width = 0.8, color = background)
 
             plt.title(str(key) + ' Document\nClusters', fontweight = 'normal', color = accent)
+<<<<<<< HEAD
 
             plt.grid(False)
             ax.tick_params(direction='out', length = 4, width = 1, colors = background,
                            labelsize = font_size, labelcolor = background)
 
+=======
+
+            plt.grid(False)
+            ax.tick_params(direction='out', length = 4, width = 1, colors = background,
+                           labelsize = font_size, labelcolor = background)
+
+>>>>>>> master
             ax.spines['right'].set_visible(False)
             ax.spines['left'].set_visible(False)
             ax.spines['top'].set_visible(False)
@@ -265,9 +273,11 @@ class tsne(LatentSemanticAnalysis):
         tsne_matrix = TSNE(n_components=2, perplexity=30.0, early_exaggeration=12.0, learning_rate=200.0, 
                            n_iter=1000, n_iter_without_progress=300, min_grad_norm=1e-07, metric='euclidean', 
                            init='random', verbose=0, random_state = random_state, method='barnes_hut', angle=0.5)
+
         
         position = tsne_matrix.fit_transform(self.dist)
         
+
         x, y = position[:, 0], position[:, 1]
         self.output = (x,y)
 
@@ -341,3 +351,4 @@ class Named_Entity_Recognition(TopicModels):
  
 
         
+

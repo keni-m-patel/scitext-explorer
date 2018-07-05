@@ -32,22 +32,6 @@ class Corpus(object):
         print('\n\n\n\nReading in the following files:\n\n')
         print(self.config)
 
-        
-
-    def __read_data(self, config):
-        # let's determine the file types we're dealing with
-        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
-        
-        if filetype == {'.txt'}:
-            self.filetype = 't'
-
-        elif filetype == {'.pdf'}:
-            self.filetype = 'p'
-            
-        elif filetype == {'.csv'}:
-            self.filetype = 'c'
-
-    #replace getobj with __call__ to return immediately 
 
 
     def __call__(self):

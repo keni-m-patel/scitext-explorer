@@ -7,7 +7,7 @@ directory: \Users\597543\scitext-explorer\test\data
 
 #files:
     #- Recitation13.pdf
-
+test: one, two, three
 
 files:
      #- adventure.txt

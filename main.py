@@ -26,13 +26,9 @@ TODO:
 
 corpus = Corpus('./config/data/text_files.yaml', 'doc')
 
-
-
-
-
-#can remove this if change getobj to __call__
 file_object = corpus()
 file_names = corpus.file_names()
+
 
 
 
