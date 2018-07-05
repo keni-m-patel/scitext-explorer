@@ -1,8 +1,8 @@
 bag_of_words: True
-latent_semantic_analysis: True
+latent_semantic_analysis: False
 tf_idf: True
 word_frequency_table: True
-
+named_entities: True
 
 
 # do T or F to turn on or off

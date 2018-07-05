@@ -6,8 +6,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
-from nltk import ne_chunk, pos_tag
-from nltk.tree import Tree
+
 
 #use mapping
 #dont use of list of list, use dict perhaps
@@ -15,10 +14,11 @@ from nltk.tree import Tree
 
 class Preprocessor(object):
 
-    def __init__(self, corpus, config_file):
+    def __init__(self, corpus, config_file, file_names):
 
         self.corpus = corpus
         self.config = utilities.get_config(config_file)
+        self.file_names = file_names
 
         print('\n\n\n\nRunning the following preprocessing actions:\n\n')
         print(self.config.keys())
@@ -29,41 +29,46 @@ class Preprocessor(object):
         
         
     def run(self):
-        #can get rid fo true false and use empty lsits as false
-        if self.config['new_stop_set']:            
+
+        if self.config['new_stop_set_list']:    
             self.stop = self.config['new_stop_set_list']
             
-        if self.config['add_stop']:            
+        if self.config['add_stop_list']:            
             self.stop.extend(self.config['add_stop_list'])
             
-        if self.config['remove_stop']:            
+        if self.config['remove_stop_list']:            
             self.stop = list(set(self.stop) - set(self.config['remove_stop_list']))
         
         for item in self.corpus:            
-            tokens = word_tokenize(item)                
-            lower_tokens = [t.lower() for t in tokens]        
-            alpha_only = [t for t in lower_tokens if t.isalpha()]
-            no_stops = [w for w in alpha_only if w not in self.stop] 
+            tokens = word_tokenize(item)
+            tokens = [t.lower() for t in tokens]              
+            tokens = [t for t in tokens if t.isalpha() and t not in self.stop]        
+            #alpha_only = [t for t in lower_tokens if t.isalpha()]
+            #no_stops = [w for w in alpha_only if w not in self.stop] 
             
-            #if not self.config['stem']:  
+            #if self.config['lemmatize']:  
                 #no_stops = pos_tag(no_stops)
     
-            self.tokenized_docs.append(no_stops)        
+            self.tokenized_docs.append(tokens)        
             # print(self.tokenized_docs)        
-        self.output = []
+        self.token_list = []
         
-        #add different options for stemming
-        if self.config['stem']:            
+
+        if self.config['stem']:  
+            print('hello')
             ps = PorterStemmer()
             stem_words=list()
             for tokens in self.tokenized_docs:
                 for item in tokens:
+                    #[map(lambda x:x+1 ,group) for group in self.tokenized_docs]
                     stem_words.append(ps.stem(item))
-                self.output.append(stem_words)
+                self.token_list.append(stem_words)
                 stem_words = list()
+            self.output = dict(zip(self.file_names, self.token_list))
             return self.output
 
-        else:
+        if self.config['lemmatize']:
+            print('success')
             #figure out pos_tagging
             wordnet_lemmatizer = WordNetLemmatizer()
             lem_words = list()
@@ -73,33 +78,13 @@ class Preprocessor(object):
                     #if item[1] == 'VB':
                     lemmatized = wordnet_lemmatizer.lemmatize(item) #, pos = item[1]
                     lem_words.append(lemmatized)
-                self.output.append(lem_words)
+                self.token_list.append(lem_words)
                 lem_words = list()
+            self.output = dict(zip(self.file_names, self.token_list))
             return self.output
         
         
-        #move to algorithms
-        if self.config['named_entities']:
-            for item in self.corpus:
-                chunked_docs = []
-                chunked = ne_chunk(pos_tag(word_tokenize(item)))
-                chunked_docs.append(chunked)
-                continuous_chunk = []
-                current_chunk = []
-                for chunk in chunked_docs:
-                    for i in chunked:
-                        if type(i) == Tree:
-                            current_chunk.append(" ".join([token for token, pos in i.leaves()]))
-                        elif current_chunk:
-                            named_entity = " ".join(current_chunk)
-                            if named_entity not in continuous_chunk: 
-                                continuous_chunk.append(named_entity)
-                                current_chunk = []
-                        else:
-                            continue
-                        self.named_entities_list.append(continuous_chunk)
-                # print(self.named_entities_list)
-            return self.named_entities_list
+    
 
     
     

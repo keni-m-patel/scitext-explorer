@@ -16,6 +16,10 @@ import pandas as pd
 #import warnings
 #import numpy
 
+from nltk import ne_chunk, pos_tag
+from nltk.tree import Tree
+from nltk.tokenize import word_tokenize
+
 
 #Link up preprocess, get rid of list of list and perhaps use dict with doc: word
 
@@ -54,6 +58,11 @@ class Algorithm(object):
             t = Tf_Idf(self.corpus)
             t.run()
             result_dict['tf_idf'] = t.output
+            
+        if self.config['named_entities']:
+            ner = Named_Entity_Recognition(self.corpus)
+            ner.run()
+            result_dict['named_entities'] = ner.output
 
         output_text = ""
         for alg,result in result_dict.items():
@@ -154,5 +163,44 @@ class Tf_Idf(VectorSpaceModels):
 #
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
-    pass
+    
+    def __init__(self, corpus):
+        self.corpus = corpus
+
+class Named_Entity_Recognition(TopicModels):
+    
+    def __init__(self, corpus):
+        super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: \nNamed_Entity_Recognition\n\n')
+        
+        self.output = []
+        
+    def run(self):
+        for item in self.corpus:
+                chunked_docs = []
+                chunked = ne_chunk(pos_tag(word_tokenize(item)))
+                chunked_docs.append(chunked)
+                continuous_chunk = []
+                current_chunk = []
+                for chunk in chunked_docs:
+                    
+                    for i in chunk:
+                       
+                        if type(i) == Tree:
+                            current_chunk.append(" ".join([token for token, pos in i.leaves()]))
+                            
+                        elif current_chunk:
+                            named_entity = " ".join(current_chunk)
+                            
+                            if named_entity not in continuous_chunk:
+                                
+                                continuous_chunk.append(named_entity)
+                                current_chunk = []
+                        else:
+                            continue
+                     
+                    #list of named entities
+                    self.output.append(continuous_chunk)
+ 
+
         

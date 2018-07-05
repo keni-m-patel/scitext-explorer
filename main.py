@@ -31,13 +31,14 @@ corpus = Corpus('./config/data/text_files.yaml', 'doc')
 
 #can remove this if change getobj to __call__
 file_object = corpus.getObj()
+file_names = corpus.file_names()
 
 #print(file_object)
 #print(file_object.grouping)
 #print(file_object.config)
 
 
-data = Preprocessor(file_object, './config/preprocessing.yaml')
+data = Preprocessor(file_object, './config/preprocessing.yaml', file_names)
 data.run()
 tokens = data.output
 alg = Algorithm(file_object, './config/algorithms.yaml')

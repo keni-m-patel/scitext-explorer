@@ -61,6 +61,10 @@ class Corpus(object):
         else:
             print('filetype not set or filetype is not recognized/compatible')
 
+    def file_names(self):
+        onlyfiles = [f for f in self.config['files']] 
+        return onlyfiles
+        
 
     # def __log(self):
     #     logger.info('Data Map created for: ' + ', '.join(self.config['files']))
