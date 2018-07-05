@@ -29,9 +29,12 @@ corpus = Corpus('./config/data/text_files.yaml', 'doc')
 
 
 
+
 #can remove this if change getobj to __call__
-file_object = corpus.getObj()
+file_object = corpus()
 file_names = corpus.file_names()
+
+
 
 #print(file_object)
 #print(file_object.grouping)
@@ -41,6 +44,7 @@ file_names = corpus.file_names()
 data = Preprocessor(file_object, './config/preprocessing.yaml', file_names)
 data.run()
 tokens = data.output
+# use preprocessed data
 alg = Algorithm(file_object, './config/algorithms.yaml')
 
 alg.run()
