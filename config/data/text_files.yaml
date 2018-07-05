@@ -8,7 +8,7 @@ directory: /Users/sonjalindberg/Documents/GitHub/scitext-explorer/test/data/book
 
 #files:
     #- Recitation13.pdf
-
+test: one, two, three
 
 files:
      - adventure.txt

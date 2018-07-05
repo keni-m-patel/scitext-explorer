@@ -13,6 +13,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 from sklearn.preprocessing import Normalizer
 
+
 from sklearn.cluster import KMeans, MiniBatchKMeans
 
 from collections import defaultdict, Counter
@@ -82,7 +83,7 @@ class Algorithm(object):
 
         output_text = ""
         for alg,result in result_dict.items():
-            output_text += "\n\nalgorithm: {}\n\nresult: {}\n\n".format(alg,result)
+            output_text += "\n\nalgorithm: {}\n\nresult:\n\n {}\n\n".format(alg,result)
 
         print(output_text)
         return output_text
@@ -103,14 +104,30 @@ class BagOfWords(VectorSpaceModels):
   
      def __init__(self, corpus):
         super().__init__(corpus)
+        self.bow = None
         print('\n\n\n\nRunning the following algorithm: \nBag of Words\n\n')
         
-     def run(self):   
+     def run(self): 
+
         self.vectorizer = CountVectorizer(lowercase=True, stop_words='english')
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         dtm_dense = self.dtm.todense()
-        vocabulary = self.vectorizer.vocabulary_
-        self.output = {'dtm': self.dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary}
+        vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
+
+        # print('\nvocab to index\n', vocabulary)
+        # print(self.vectorizer.get_feature_names())
+
+        list1 = self.dtm.toarray()[0]
+        list2 = self.dtm.toarray()[1]
+        # print(list1,'\n', list2)
+        dtm_array = [sum(x) for x in zip(list1, list2)]
+
+        self.bow = {word:freq for word,freq in zip(vocabulary.keys(), dtm_array)}
+        # print('bow\n', self.bow)
+
+        self.output = self.bow
+        # print('\n\nCHECK THIS\n\n')
+        # {'dtm': self.dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary, 'vectorizer': self.vectorizer}
     
 
         
@@ -119,12 +136,13 @@ class WordFreq(VectorSpaceModels):
     def __init__(self, corpus, bow_output):
         super().__init__(corpus)
         print('\n\n\n\nRunning the following algorithm: \nWord Frequency\n\n')
+        print('bow output\n', bow_output)
         self.bow_output = bow_output
         self.output = None
         self.run()
     
     def run(self):
-        bow_series = pd.Series(self.bow_output['vocabulary'])
+        bow_series = pd.Series(self.bow_output)
         bow_data = bow_series.to_frame().reset_index()
         bow_data.columns = ['Word', 'Word Count']
         bow_max = bow_data.sort_values(by='Word Count', ascending=False)
@@ -146,8 +164,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
         self.dtm_lsa = self.lsa.fit_transform(self.dtm)
         self.dist = 1 - cosine_similarity(self.dtm_lsa)
         
-# dataframe = pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
-
+        # dataframe = pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
         self.output = {'dtm': self.dtm,
                         'dtm_lsa': self.dtm_lsa}
 # ,'dataframe': dataframe}}
@@ -174,7 +191,6 @@ class LSA_Concepts(VectorSpaceModels):
 class kmeans(LatentSemanticAnalysis):  
     def __init__(self, corpus, dist):
         super().__init__(corpus) 
-
         self.dist = dist
         
     def run(self):
