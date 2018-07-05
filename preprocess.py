@@ -4,8 +4,8 @@ import utilities
 #import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer, PorterStemmer, SnowballStemmer
+from nltk import pos_tag
 
 
 #use mapping
@@ -21,7 +21,7 @@ class Preprocessor(object):
         self.file_names = file_names
 
         print('\n\n\n\nRunning the following preprocessing actions:\n\n')
-        print(self.config.keys())
+        print(self.config)
 
         self.stop = list(set(stopwords.words('english')))
         self.tokenized_docs = []
@@ -39,47 +39,60 @@ class Preprocessor(object):
         if self.config['remove_stop_list']:            
             self.stop = list(set(self.stop) - set(self.config['remove_stop_list']))
         
-        for item in self.corpus:            
+        for item in self.corpus:   
             tokens = word_tokenize(item)
-            tokens = [t.lower() for t in tokens]              
-            tokens = [t for t in tokens if t.isalpha() and t not in self.stop]        
-            #alpha_only = [t for t in lower_tokens if t.isalpha()]
-            #no_stops = [w for w in alpha_only if w not in self.stop] 
+            if self.config['lemmatize']:  
+                tokens = pos_tag(tokens)
+                tokens = [t[0].lower() for t in tokens]              
+                tokens = [t for t in tokens if t[0].isalpha() and t[0] not in self.stop]
+            else:
+                tokens = [t.lower() for t in tokens]              
+                tokens = [t for t in tokens if t.isalpha() and t not in self.stop]   
+        
             
-            #if self.config['lemmatize']:  
-                #no_stops = pos_tag(no_stops)
+            
     
-            self.tokenized_docs.append(tokens)        
-            # print(self.tokenized_docs)        
+            self.tokenized_docs.append(tokens)               
         self.token_list = []
         
-
-        if self.config['stem']:  
-            print('hello')
-            ps = PorterStemmer()
-            stem_words=list()
+        if self.config['PorterStemmer']:
+            stem_tool = PorterStemmer()
+            
+        if self.config['SnowballStemmer']:
+            stem_tool = SnowballStemmer('english')
+            
+        if self.config['PorterStemmer'] or self.config['SnowballStemmer']:
+            stem_words=[]
             for tokens in self.tokenized_docs:
                 for item in tokens:
                     #[map(lambda x:x+1 ,group) for group in self.tokenized_docs]
-                    stem_words.append(ps.stem(item))
+                    stem_words.append(stem_tool.stem(item))
                 self.token_list.append(stem_words)
-                stem_words = list()
+                stem_words = []
             self.output = dict(zip(self.file_names, self.token_list))
             return self.output
 
         if self.config['lemmatize']:
-            print('success')
             #figure out pos_tagging
+            # we can specify part of speech (pos) value like below:
+            # noun = n, verb = v, adjective = a, adverb = r
             wordnet_lemmatizer = WordNetLemmatizer()
-            lem_words = list()
+            lem_words = []
             #faster with list comprehnsion
             for tokens in self.tokenized_docs:
                 for item in tokens:
-                    #if item[1] == 'VB':
-                    lemmatized = wordnet_lemmatizer.lemmatize(item) #, pos = item[1]
+                    if item[1].startswith('VB'):
+                        pos = 'v'
+                    elif item[1] == 'JJ':
+                        pos = 'a'
+                    elif item[1] == 'RB':
+                        pos = 'r'
+                    else:
+                        pos = 'n'
+                    lemmatized = wordnet_lemmatizer.lemmatize(item, pos)
                     lem_words.append(lemmatized)
                 self.token_list.append(lem_words)
-                lem_words = list()
+                lem_words = []
             self.output = dict(zip(self.file_names, self.token_list))
             return self.output
         

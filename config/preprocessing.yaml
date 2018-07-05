@@ -18,11 +18,13 @@ remove_stop_list: []
 
 
 #To undergo stemming for tokenized words set to True. If not set to False
-#Uses PorterStemmer() from nltk
+#Choose either PorterStemmer() or SnowballStemmer from nltk
 #Stemming is the process for reducing inflected words to their word stem, base or root form by chopping off word endings
 #Example: dropping --> drop
 
-stem: True
+PorterStemmer: False
+
+SnowballStemmer: False
 
 
 #To undergo lemmatization for tokenized words set to True. If not set to False
