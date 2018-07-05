@@ -1,5 +1,6 @@
 import inspect
 import utilities
+
 from sklearn.manifold import mds, TSNE
 
 from sklearn.feature_extraction.text import CountVectorizer
@@ -18,15 +19,14 @@ from collections import defaultdict, Counter
 
 from sklearn.metrics.pairwise import cosine_similarity, pairwise_distances
 #from sklearn import metrics
+
 import pandas as pd
 #from pandas import DataFrame
 #import warnings
 #import numpy
+
 #Viz Stuff
 import matplotlib.pyplot as plt
-
-
-
 
 
 class Algorithm(object):
@@ -133,14 +133,13 @@ class WordFreq(VectorSpaceModels):
 
 
 class LatentSemanticAnalysis(VectorSpaceModels):
-    '''
-    currently non-functional, need to ake this take in multiple docs for comparison.
-    '''
 
     def __init__(self, corpus):
         super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: \nLatent Semantic Analysis\n\n')
 
     def run(self):
+
         self.vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         self.lsa = TruncatedSVD(n_components=200)  # , algorithm = 'arpack')
@@ -244,6 +243,7 @@ class tsne(LatentSemanticAnalysis):
         x, y = position[:, 0], position[:, 1]
         self.output = (x,y)
 
+
 class Tf_Idf(VectorSpaceModels):
     
     def __init__(self, corpus):
@@ -267,6 +267,7 @@ class Tf_Idf(VectorSpaceModels):
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
         
+
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
-#class TopicModels(object):
-#   pass
+class TopicModels(object):
+    pass
