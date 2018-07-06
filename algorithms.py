@@ -42,6 +42,7 @@ class Algorithm(object):
         self.corpus = data
         pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
+        self.results = None
         print('\n\n\n\nRunning the following algorithms:\n\n')
         print(self.config)
         
@@ -93,6 +94,7 @@ class Algorithm(object):
             result_dict['named_entities'] = ner.output
 
         output_text = ""
+        self.results = result_dict
         for alg,result in result_dict.items():
             output_text += "\n\nalgorithm: {}\n\nresult:\n\n {}\n\n".format(alg,result)
 
