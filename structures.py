@@ -16,6 +16,8 @@ import logging
 import decorators
 from PyPDF2 import PdfFileReader as PDFR
 import csv
+from os import listdir
+from os.path import isfile, join
 
 
 logger = logging.getLogger(__name__)
@@ -31,11 +33,13 @@ class Corpus(object):
         print(self.config)
 
 
+
     def __call__(self):
 
         filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
         
         if filetype == {'.txt'}:
+
             t = DotTXT(self.config, self.grouping)
             return t
 
@@ -50,11 +54,15 @@ class Corpus(object):
         else:
             print('filetype not set or filetype is not recognized/compatible')
 
+    def file_names(self):
+        onlyfiles = [f for f in self.config['files']] 
+        return onlyfiles
+        
 
     # def __log(self):
     #     logger.info('Data Map created for: ' + ', '.join(self.config['files']))
-
-
+    
+   
 
 
 class DotPDF(object):
@@ -158,7 +166,7 @@ class DotCSV(DotTXT):
         # records according to the configuration specified
         # INTERFACE DEFINITION: this iterator should always yield a string
 
-        # csv_dict_reader, but it does stuff on the whole file, not ne thing at a time
+        # csv_dict_reader, but it does stuff on the whole file, not one thing at a time
         reader = csv.DictReader(file_obj, delimiter=',')
         field_names = csv.fieldnames()  # list of strings
 

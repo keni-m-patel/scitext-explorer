@@ -25,13 +25,19 @@ TODO:
 '''
 
 corpus = Corpus('./config/data/text_files.yaml', 'doc')
+
 file_object = corpus()
+file_names = corpus.file_names()
+
+
+
+
 #print(file_object)
 #print(file_object.grouping)
 #print(file_object.config)
 
 
-data = Preprocessor(file_object, './config/preprocessing.yaml')
+data = Preprocessor(file_object, './config/preprocessing.yaml', file_names)
 data.run()
 tokens = data.output
 # use preprocessed data
