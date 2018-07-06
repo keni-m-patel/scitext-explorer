@@ -24,7 +24,7 @@ TODO:
 # if select something (ie for PP) that doesn't work for ALG or VIZ, spit out warning
 '''
 
-corpus = Corpus('./config/data/text_files.yaml', 'doc')
+corpus = Corpus('./config/data/text_files.yaml',)
 file_object = corpus()
 #print(file_object)
 #print(file_object.grouping)

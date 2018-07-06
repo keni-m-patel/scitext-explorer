@@ -8,10 +8,16 @@ directory: /Users/sonjalindberg/Documents/GitHub/scitext-explorer/test/data/book
 
 #files:
     #- Recitation13.pdf
-test: one, two, three
+# test: one, two, three
 
 files:
-     - adventure.txt
-     - pride_and_prejudice.txt
+     # - adventure.txt
+     # - pride_and_prejudice.txt
+     # - testcsv.csv
+     - SalesJan2009.csv
+
+
+# enter 'doc', 'row', 'page', or 'col' for how you want to group/iterate through you documents
+group_by: 'col'
 
         

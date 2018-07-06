@@ -21,6 +21,7 @@ from collections import defaultdict, Counter
 from sklearn.metrics.pairwise import cosine_similarity, pairwise_distances
 #from sklearn import metrics
 
+
 import pandas as pd
 #from pandas import DataFrame
 #import warnings
@@ -28,6 +29,8 @@ import pandas as pd
 
 #Viz Stuff
 import matplotlib.pyplot as plt
+
+
 
 
 class Algorithm(object):
@@ -114,20 +117,14 @@ class BagOfWords(VectorSpaceModels):
         dtm_dense = self.dtm.todense()
         vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
 
-        # print('\nvocab to index\n', vocabulary)
-        # print(self.vectorizer.get_feature_names())
-
         list1 = self.dtm.toarray()[0]
         list2 = self.dtm.toarray()[1]
-        # print(list1,'\n', list2)
+
         dtm_array = [sum(x) for x in zip(list1, list2)]
 
         self.bow = {word:freq for word,freq in zip(vocabulary.keys(), dtm_array)}
-        # print('bow\n', self.bow)
-
         self.output = self.bow
-        # print('\n\nCHECK THIS\n\n')
-        # {'dtm': self.dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary, 'vectorizer': self.vectorizer}
+ 
     
 
         
@@ -159,6 +156,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
     def run(self):
 
         self.vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
+        print('\n\n\n\nTFIDF vectorizer', self.vectorizer)
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         self.lsa = TruncatedSVD(n_components=200)  # , algorithm = 'arpack')
         self.dtm_lsa = self.lsa.fit_transform(self.dtm)
