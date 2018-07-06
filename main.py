@@ -27,19 +27,19 @@ TODO:
 corpus = Corpus('./config/data/text_files.yaml', 'doc')
 
 file_object = corpus()
-file_names = corpus.file_names()
 
-
-
+print('Helllo')
+print(file_object)
+# have to change this to give a string instead of DOT Text fsvsdvgbd nonsense
 
 #print(file_object)
 #print(file_object.grouping)
 #print(file_object.config)
 
 
-data = Preprocessor(file_object, './config/preprocessing.yaml', file_names)
-data.run()
-tokens = data.output
+#data = Preprocessor(file_object, './config/preprocessing.yaml')
+#data.run()
+#tokens = data.output
 # use preprocessed data
 alg = Algorithm(file_object, './config/algorithms.yaml')
 

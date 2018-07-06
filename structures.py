@@ -9,7 +9,7 @@ todo:
 4) 
 
 '''
-
+#JUST PUT PREPROCESSOR IN HERE
 import os
 import utilities
 import logging
@@ -18,6 +18,7 @@ from PyPDF2 import PdfFileReader as PDFR
 import csv
 from os import listdir
 from os.path import isfile, join
+from preprocess import Preprocessor
 
 
 logger = logging.getLogger(__name__)
@@ -54,7 +55,7 @@ class Corpus(object):
         else:
             print('filetype not set or filetype is not recognized/compatible')
 
-    def file_names(self):
+    def get_file_names(self):
         onlyfiles = [f for f in self.config['files']] 
         return onlyfiles
         
@@ -112,7 +113,7 @@ class DotPDF(object):
         
         if filetype == {'.pdf'}:
             # map to implement "lazy loading"; only read files as we need
-            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x),'rb'), self.config['files'])
+            self.data_map =map(lambda x: Preprocessor(open(os.path.join(self.config['directory'], x)).read(),'./config/preprocessing.yaml').run(), self.config['files']) #Put preprocessor here
         else: 
             print('ERROR: NON-PDF PASSED TO PDF CLASS')
 
@@ -144,7 +145,8 @@ class DotTXT(object):
         
         if filetype == {'.txt'}:
             # map to implement "lazy loading"; only read files as we need
-            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read(), self.config['files'])
+            #self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read(), self.config['files'])
+            self.data_map =map(lambda x: Preprocessor(open(os.path.join(self.config['directory'], x)).read(),'./config/preprocessing.yaml').run(), self.config['files']) #Put preprocessor here
         else:
             print('ERROR: NON-TXT PASSED TO TXT CLASS')
 

@@ -46,9 +46,9 @@ class Algorithm(object):
         print('\n\n\n\nRunning the following algorithms:\n\n')
         print(self.config)
         
-    def __iter__(self):
-        for item in self.corpus:
-            yield item
+    #def __iter__(self):
+        #for item in self.corpus:
+            #yield item
 
     def run(self):
         result_dict = {}
@@ -121,7 +121,9 @@ class BagOfWords(VectorSpaceModels):
         
      def run(self): 
 
-        self.vectorizer = CountVectorizer(lowercase=True, stop_words='english')
+        self.vectorizer = CountVectorizer(lowercase = False, stop_words = None, preprocessor = None, tokenizer = None)
+        print(self.corpus)
+        print('yes')
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         dtm_dense = self.dtm.todense()
 
@@ -240,19 +242,13 @@ class kmeans(LatentSemanticAnalysis):
             plt.bar(x,y,width = 0.8, color = background)
 
             plt.title(str(key) + ' Document\nClusters', fontweight = 'normal', color = accent)
-<<<<<<< HEAD
+
 
             plt.grid(False)
             ax.tick_params(direction='out', length = 4, width = 1, colors = background,
                            labelsize = font_size, labelcolor = background)
 
-=======
 
-            plt.grid(False)
-            ax.tick_params(direction='out', length = 4, width = 1, colors = background,
-                           labelsize = font_size, labelcolor = background)
-
->>>>>>> master
             ax.spines['right'].set_visible(False)
             ax.spines['left'].set_visible(False)
             ax.spines['top'].set_visible(False)
