@@ -17,18 +17,13 @@ logging.basicConfig(level=logging.DEBUG,
                     filemode='w')
 '''
 TODO:
-# for future of UI: 
-# Config class: init with path to folder, use those defaults
-# have method that lets you save as a folder of yaml files
-# Algs class have objs in list and then depending on what config/alg.yaml says, will run it.
 # if select something (ie for PP) that doesn't work for ALG or VIZ, spit out warning
 '''
 
 corpus = Corpus('./config/data/text_files.yaml',)
 file_object = corpus()
-#print(file_object)
-#print(file_object.grouping)
-#print(file_object.config)
+
+# print('\n\nlength:\n\n',len(file_object))
 
 
 data = Preprocessor(file_object, './config/preprocessing.yaml')

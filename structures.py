@@ -190,13 +190,26 @@ class DotCSV(DotTXT):
     def __len__(self):
         # we may want to do some introspection of our data objects; how many records
         # are in this data source? HINT: it depends on how we split it into records
-        reader = csv.DictReader(self.config, delimiter=',')
-        field_names = reader.fieldnames()  # list of strings
+        num_rows = 0
+        num_cols = 0    
 
         if self.grouping == "row":
-            return size(reader)
+            for csv_file in self.data_map:
+                reader = csv.reader(csv_file, delimiter=',')
+                for row in reader:
+                    num_rows += 1
+            return num_rows
+
         elif self.grouping == "col":
-            return len(reader.next())
+            for csv_file in self.data_map:
+                reader = csv.reader(csv_file, delimiter=',')
+                first_row = True
+                for row in reader:
+                    if not first_row:
+                        break
+                    num_cols += len(row)
+                    first_row = False
+            return num_cols
 
     def __read_data(self, config):
         # let's determine the file types we're dealing with
