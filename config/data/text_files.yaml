@@ -2,8 +2,7 @@
 # but the only difference is that there is a specific specified between data elements
 
 
-directory: /Users/sonjalindberg/Documents/GitHub/scitext-explorer/test/data/books
-
+directory: \Users\597543\scitext-explorer\test\data
 
 
 #files:
@@ -19,5 +18,6 @@ files:
 
 # enter 'doc', 'row', 'page', or 'col' for how you want to group/iterate through you documents
 group_by: 'col'
+
 
         

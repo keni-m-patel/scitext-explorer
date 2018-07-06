@@ -23,10 +23,7 @@ TODO:
 corpus = Corpus('./config/data/text_files.yaml',)
 file_object = corpus()
 
-# print('\n\nlength:\n\n',len(file_object))
-
-
-data = Preprocessor(file_object, './config/preprocessing.yaml')
+data = Preprocessor(file_object, './config/preprocessing.yaml', file_names)
 data.run()
 tokens = data.output
 # use preprocessed data

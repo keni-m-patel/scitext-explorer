@@ -5,7 +5,7 @@ kmeans: True
 tsne: True 
 tf_idf: True
 word_frequency_table: True
-
+named_entities: True
 
 
 # do T or F to turn on or off

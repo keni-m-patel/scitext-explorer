@@ -16,6 +16,8 @@ import logging
 import decorators
 from PyPDF2 import PdfFileReader as PDFR
 import csv
+from os import listdir
+from os.path import isfile, join
 
 from nltk import sent_tokenize, word_tokenize, pos_tag
 
@@ -37,11 +39,13 @@ class Corpus(object):
         print(self.config)
 
 
+
     def __call__(self):
 
         filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
         
         if filetype == {'.txt'}:
+
             t = DotTXT(self.config, self.grouping)
             return t
 
@@ -56,11 +60,15 @@ class Corpus(object):
         else:
             print('filetype not set or filetype is not recognized/compatible')
 
+    def file_names(self):
+        onlyfiles = [f for f in self.config['files']] 
+        return onlyfiles
+        
 
     # def __log(self):
     #     logger.info('Data Map created for: ' + ', '.join(self.config['files']))
-
-
+    
+   
 
 
 class DotPDF(object):
@@ -164,10 +172,10 @@ class DotCSV(DotTXT):
         
 
     def __iter__(self):
-        
         for csv_file in self.data_map:
             reader = csv.reader(csv_file, delimiter=',')
             if self.grouping == "row":
+
                 for row in reader:
                     # print('ROW: \n', row)
                     row_cells = ""
