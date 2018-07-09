@@ -9,8 +9,6 @@ from sklearn.decomposition import TruncatedSVD
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from sklearn.feature_extraction.text import CountVectorizer
-
 from sklearn.preprocessing import Normalizer
 
 
@@ -20,6 +18,7 @@ from collections import defaultdict, Counter
 
 from sklearn.metrics.pairwise import cosine_similarity, pairwise_distances
 #from sklearn import metrics
+
 
 import pandas as pd
 #from pandas import DataFrame
@@ -35,14 +34,13 @@ from nltk.tokenize import word_tokenize
 import matplotlib.pyplot as plt
 
 
-#Link up preprocess, get rid of list of list and perhaps use dict with doc: word
-
 class Algorithm(object):
 
     def __init__(self, data, config_file):
         self.corpus = data
         pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
+        self.results = None
         print('\n\n\n\nRunning the following algorithms:\n\n')
         print(self.config)
         
@@ -64,7 +62,7 @@ class Algorithm(object):
                 result_dict['LSA_Concepts'] = c.output
             
             if self.config['kmeans']:
-                k = kmeans(self.corpus, l.dist)
+                k = kmeans(self.corpus, l.dtm_lsa)
                 k.run()
                 result_dict['kmeans'] = k.output
                
@@ -94,6 +92,7 @@ class Algorithm(object):
             result_dict['named_entities'] = ner.output
 
         output_text = ""
+        self.results = result_dict
         for alg,result in result_dict.items():
             output_text += "\n\nalgorithm: {}\n\nresult:\n\n {}\n\n".format(alg,result)
 
@@ -127,20 +126,13 @@ class BagOfWords(VectorSpaceModels):
 
         vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
 
-        # print('\nvocab to index\n', vocabulary)
-        # print(self.vectorizer.get_feature_names())
-
         list1 = self.dtm.toarray()[0]
         list2 = self.dtm.toarray()[1]
-        # print(list1,'\n', list2)
+
         dtm_array = [sum(x) for x in zip(list1, list2)]
 
         self.bow = {word:freq for word,freq in zip(vocabulary.keys(), dtm_array)}
-        # print('bow\n', self.bow)
-
         self.output = self.bow
-        # print('\n\nCHECK THIS\n\n')
-        # {'dtm': self.dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary, 'vectorizer': self.vectorizer}
 
 
 class WordFreq(VectorSpaceModels):
@@ -171,6 +163,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
     def run(self):
 
         self.vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
+        print('\n\n\n\nTFIDF vectorizer', self.vectorizer)
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         self.lsa = TruncatedSVD(n_components=200)  # , algorithm = 'arpack')
         self.dtm_lsa = self.lsa.fit_transform(self.dtm)
@@ -201,21 +194,21 @@ class LSA_Concepts(VectorSpaceModels):
             print (" ")
             
 class kmeans(LatentSemanticAnalysis):  
-    def __init__(self, corpus, dist):
+    def __init__(self, corpus, dtm_lsa):
         super().__init__(corpus) 
-        self.dist = dist
+        self.dtm_lsa = dtm_lsa
         
     def run(self):
-        models = dict()
         km_dict = dict()
         max_clusters = 2
 
         for index in range(2,max_clusters + 1):
             km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
-            km.fit(self.dist)
+            km.fit(self.dtm_lsa)
             clusters = km.labels_.tolist()
             km_dict[index] = Counter(clusters)
             self.output = (index, Counter(clusters))
+
 '''
         models[index] = {'KMeans Model': km,
                              'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
@@ -254,8 +247,8 @@ class kmeans(LatentSemanticAnalysis):
 
             plt.savefig('Corpus2 Clusters ' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
 
-            index += 1
 '''
+
 class tsne(LatentSemanticAnalysis):
     def __init__(self, corpus, dist):
         super().__init__(corpus)      

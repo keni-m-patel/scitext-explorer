@@ -18,12 +18,9 @@ logging.basicConfig(level=logging.DEBUG,
                     filemode='w')
 '''
 TODO:
-# for future of UI: 
-# Config class: init with path to folder, use those defaults
-# have method that lets you save as a folder of yaml files
-# Algs class have objs in list and then depending on what config/alg.yaml says, will run it.
 # if select something (ie for PP) that doesn't work for ALG or VIZ, spit out warning
 '''
+
 
 corpus = Corpus('./config/data/text_files.yaml', 'doc')
 
@@ -33,8 +30,9 @@ tokenized_docs = []
 for doc in tokens:
     tokenized_docs.append(doc)
 
-print(tokenized_docs)
-print('tokens')
+#print(tokenized_docs)
+#print('tokens')
+    
 file_names = corpus.get_file_names()
 
 token_dict = dict(zip(file_names, chain(tokenized_docs, repeat(None))))
@@ -52,9 +50,17 @@ print(token_dict)
 #print(file_object.config)
 
 
+
 #data = Preprocessor(file_object, './config/preprocessing.yaml')
 #data.run()
 #tokens = data.output
 # use preprocessed data
-alg = Algorithm(corpus(), './config/algorithms.yaml')
+<<<<<<< HEAD
+alg = Algorithm(tokens, './config/algorithms.yaml')
 alg = alg.run()
+
+#vis = visualization(file_object, './config/visualization.yaml')
+
+
+#vis.run()
+
