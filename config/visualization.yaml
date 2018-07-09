@@ -1,4 +1,5 @@
 export_word_cloud: True
-
+kmean_hist: True
+tsne: True
 
 # do T or F to turn on or off

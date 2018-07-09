@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.cluster import KMeans, MiniBatchKMeans
 from algorithms import Algorithm
+from sklearn.manifold import mds, TSNE
 import pandas as pd
 
 
@@ -20,11 +21,12 @@ from sklearn.metrics.pairwise import cosine_similarity, pairwise_distances
 
 class Visualization(object):
 
-    def __init__(self, config_file, alg):
+    def __init__(self, config_file, alg, doc_names):
         #self.corpus = data
         #pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
         self.alg=alg
+        self.doc_names = doc_names
         print('\n\n\n\nRunning the following visualization:\n\n')
         print(self.config)
         
@@ -36,9 +38,15 @@ class Visualization(object):
         result_dict = {}
         
         if 'kmean_hist' in self.config:
-            k = kmean_hist(self.alg.run())
+            k = kmean_hist(self.alg.run(), self.doc_names)
             k.run()
-            result_dict['kmean_hist'] = k.output
+            #result_dict['kmean_hist'] = k.output
+            
+            if self.config['tsne']:
+                t = tsne(self.alg.run(), self.doc_names, k.dtm_lsa, k.clusters_and_names)
+                t.run()
+                t.File_Export()
+                result_dict['tsne'] = t.output
             
         
         if 'export_word_cloud' in self.config:
@@ -56,60 +64,112 @@ class Visualization(object):
 
 class VectorSpaceModels(object):
     
-    def __init__(self): #, corpus):
+    def __init__(self, doc_names): #, corpus):
         #self.corpus = corpus
+        self.doc_names = doc_names
         self.dtm = None
         self.vectorizer = None
         self.dist = None
         
 
 class kmean_hist(VectorSpaceModels):
-    def __init__(self, result_dict): #,corpus):
-        super().__init__()      
+    def __init__(self, result_dict, doc_names): #,corpus):
+        super().__init__(doc_names)      
         
-        km = result_dict['kmeans']   
-        models = dict()
-        models[index] = {'KMeans Model': km,
-                             'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
-                             'Document-Clustering': Counter(clusters),
-                             'Frame': pd.DataFrame({'Cluster': clusters})}
-                                                    #'Document Name': docnames})}
-        background = 'gray'
-        higlight = '#2171b5'
-        accent = 'dimgray'
-        font_size = 10.0
-        index = 0
-        for key,val in models.items():
+        self.dtm_lsa = result_dict['latent_semantic_analysis']['dtm_lsa']  
+        
+    def run(self):
+            km_dict = dict()
+            max_clusters = 2
+    
+            for index in range(2,max_clusters + 1):
+                km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
+                km.fit(self.dtm_lsa)
+                clusters = km.labels_.tolist()
+                km_dict[index] = Counter(clusters)
+                
+                
+            models = dict()
+            models[index] = {'KMeans Model': km,
+                                 'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
+                                 'Document-Clustering': Counter(clusters),
+                                 'Frame': pd.DataFrame({'Document Name': self.doc_names, 'Cluster': clusters})}
+            
+            
+            self.clusters_and_names = models[index]['Frame']
+            self.clusters_and_names = self.clusters_and_names.set_index('Document Name')
+            #self.clusters_and_names.columns['docnames','labels']
+            #self.clusters_and_names['title'] = self.clusters_and_names['labels']
+           
+            
+            
+            background = 'gray'
+            higlight = '#2171b5'
+            accent = 'dimgray'
+            font_size = 10.0
+            index = 0
+            for key,val in models.items():
+    
+                if index%5 == 0:
+                    fig = plt.figure(figsize=(12,2))
+    
+                ax = fig.add_subplot(151 + index%5)
+    
+                x = [k for k,v in sorted(val['Document-Clustering'].items())]
+                y = [v for k,v in sorted(val['Document-Clustering'].items())]
+    
+                plt.bar(x,y,width = 0.8, color = background)
+    
+                plt.title(str(key) + ' Document\nClusters', fontweight = 'normal', color = accent)
+    
+                plt.grid(False)
+                ax.tick_params(direction='out', length = 4, width = 1, colors = background,
+                               labelsize = font_size, labelcolor = background)
+    
+                ax.spines['right'].set_visible(False)
+                ax.spines['left'].set_visible(False)
+                ax.spines['top'].set_visible(False)
+                ax.spines['bottom'].set_visible(False)
+    
+                plt.savefig('Corpus2 Clusters ' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
+    
+                index += 1
+                
 
-            if index%5 == 0:
-                fig = plt.figure(figsize=(12,2))
+class tsne(kmean_hist):
+    def __init__(self, result_dict, doc_names, dtm_lsa, clusters_and_names):
+        #super().__init__(doc_names)      
+        
+        self.dist = dtm_lsa         
 
-            ax = fig.add_subplot(151 + index%5)
+        self.clusters_and_names = clusters_and_names
+        
+    def run(self):
+        random_state = 1423
+        tsne_matrix = TSNE(n_components=2, perplexity=30.0, early_exaggeration=12.0, learning_rate=200.0, 
+                           n_iter=1000, n_iter_without_progress=300, min_grad_norm=1e-07, metric='euclidean', 
+                           init='random', verbose=0, random_state = random_state, method='barnes_hut', angle=0.5)
 
-            x = [k for k,v in sorted(val['Document-Clustering'].items())]
-            y = [v for k,v in sorted(val['Document-Clustering'].items())]
+        
+        position = tsne_matrix.fit_transform(self.dist)
+        
 
-            plt.bar(x,y,width = 0.8, color = background)
-
-            plt.title(str(key) + ' Document\nClusters', fontweight = 'normal', color = accent)
-
-            plt.grid(False)
-            ax.tick_params(direction='out', length = 4, width = 1, colors = background,
-                           labelsize = font_size, labelcolor = background)
-
-            ax.spines['right'].set_visible(False)
-            ax.spines['left'].set_visible(False)
-            ax.spines['top'].set_visible(False)
-            ax.spines['bottom'].set_visible(False)
-
-            plt.savefig('Corpus2 Clusters ' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
-
-            index += 1
+        x, y = position[:, 0], position[:, 1]
+        self.output = pd.DataFrame(x,y)
+        
+        
+        
+    def File_Export(self):
+        
+       
+        print(self.clusters_and_names)
+        rdtdththrh
+        
           
 class File_Export(VectorSpaceModels):
     
     def __init__(self, result_dict): #,corpus):
-        super().__init__() #corpus)
+        #super().__init__() #corpus)
         
         self.word_frequency = result_dict['word_frequency']
         

@@ -33,9 +33,12 @@ for doc in tokens:
 #print(tokenized_docs)
 #print('tokens')
     
-file_names = corpus.get_file_names()
+doc_names = corpus.get_file_names()
 
-token_dict = dict(zip(file_names, chain(tokenized_docs, repeat(None))))
+
+
+
+token_dict = dict(zip(doc_names, chain(tokenized_docs, repeat(None))))
 
 
 
@@ -49,14 +52,13 @@ token_dict = dict(zip(file_names, chain(tokenized_docs, repeat(None))))
 
 
 
-print(tokens)
+
 
 alg = Algorithm(tokens, './config/algorithms.yaml')
-alg_ran = alg.run()
 
-print("test1")
-print(alg.run())
-vis = Visualization( './config/visualization.yaml',alg)
+
+
+vis = Visualization( './config/visualization.yaml',alg, doc_names)
 
 
 vis.run()

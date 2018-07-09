@@ -1,8 +1,6 @@
 import inspect
 import utilities
 
-from sklearn.manifold import mds, TSNE
-
 from sklearn.feature_extraction.text import CountVectorizer
 
 from sklearn.decomposition import TruncatedSVD
@@ -64,11 +62,7 @@ class Algorithm(object):
                 k = kmeans(self.corpus, l.dtm_lsa)
                 k.run()
                 result_dict['kmeans'] = k.output
-               
-            if self.config['tsne']:
-                t = tsne(self.corpus, l.dist)
-                t.run()
-                result_dict['tsne'] = t.output
+             
 
         if 'bag_of_words' in self.config:
             b = BagOfWords(self.corpus)
@@ -210,6 +204,8 @@ class kmeans(LatentSemanticAnalysis):
             self.output = (index, Counter(clusters))
 
 '''
+
+        models=dict()
         models[index] = {'KMeans Model': km,
                              'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
                              'Document-Clustering': Counter(clusters),
@@ -247,27 +243,9 @@ class kmeans(LatentSemanticAnalysis):
 
             plt.savefig('Corpus2 Clusters ' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
 
+plt.show()
+
 '''
-
-class tsne(LatentSemanticAnalysis):
-    def __init__(self, corpus, dist):
-        super().__init__(corpus)      
-        
-        self.dist = dist         
-
-    def run(self):
-        random_state = 1423
-        tsne_matrix = TSNE(n_components=2, perplexity=30.0, early_exaggeration=12.0, learning_rate=200.0, 
-                           n_iter=1000, n_iter_without_progress=300, min_grad_norm=1e-07, metric='euclidean', 
-                           init='random', verbose=0, random_state = random_state, method='barnes_hut', angle=0.5)
-
-        
-        position = tsne_matrix.fit_transform(self.dist)
-        
-
-        x, y = position[:, 0], position[:, 1]
-        self.output = (x,y)
-
 
 class Tf_Idf(VectorSpaceModels):
     
