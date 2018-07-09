@@ -9,7 +9,7 @@ todo:
 4) 
 
 '''
-
+#JUST PUT PREPROCESSOR IN HERE
 import os
 import utilities
 import logging
@@ -18,6 +18,7 @@ from PyPDF2 import PdfFileReader as PDFR
 import csv
 from os import listdir
 from os.path import isfile, join
+from preprocess import Preprocessor
 
 from nltk import sent_tokenize, word_tokenize, pos_tag
 
@@ -60,7 +61,7 @@ class Corpus(object):
         else:
             print('filetype not set or filetype is not recognized/compatible')
 
-    def file_names(self):
+    def get_file_names(self):
         onlyfiles = [f for f in self.config['files']] 
         return onlyfiles
         
@@ -90,7 +91,7 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     text_file = text_file + ' ' + page_text
-                yield text_file
+                yield Preprocessor(text_file,'./config/preprocessing.yaml').run()
             self.__read_data(self.config) # get data    
 
         elif self.grouping == 'page':
@@ -98,7 +99,7 @@ class DotPDF(object):
                 pdf_reader = PDFR(PDFObj)
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
-                    yield page_text
+                    yield Preprocessor(page_text,'./config/preprocessing.yaml').run()
             self.__read_data(self.config) # get data    
 
     
@@ -119,7 +120,7 @@ class DotPDF(object):
         
         if filetype == {'.pdf'}:
             # map to implement "lazy loading"; only read files as we need
-            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x),'rb'), self.config['files'])
+            self.data_map =map(lambda x: open(os.path.join(self.config['directory'], x),'rb'), self.config['files'])
         else: 
             print('ERROR: NON-PDF PASSED TO PDF CLASS')
 
@@ -136,7 +137,7 @@ class DotTXT(object):
         # records according to the configuration specified
         # INTERFACE DEFINITION: this iterator should always yield a string
         for doc in self.data_map:
-            yield doc
+            yield Preprocessor(doc,'./config/preprocessing.yaml').run()
             self.__read_data(self.config) # get data    
 
     
@@ -151,6 +152,7 @@ class DotTXT(object):
         
         if filetype == {'.txt'}:
             # map to implement "lazy loading"; only read files as we need
+            #self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read(), self.config['files'])
             self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read(), self.config['files'])
         else:
             print('ERROR: NON-TXT PASSED TO TXT CLASS')

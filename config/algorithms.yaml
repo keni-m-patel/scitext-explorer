@@ -1,11 +1,11 @@
 bag_of_words: True
-latent_semantic_analysis: True
-LSA_Concepts: True
-kmeans: True 
-tsne: True 
-tf_idf: True
+latent_semantic_analysis: False
+LSA_Concepts: False
+kmeans: False
+tsne: False
+tf_idf: False
 word_frequency_table: True
-named_entities: True
+named_entities: False
 
 
 # do T or F to turn on or off

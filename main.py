@@ -10,6 +10,7 @@ import logging
 from structures import Corpus
 from preprocess import Preprocessor
 from algorithms import Algorithm
+from itertools import chain, repeat
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(name)s %(levelname)s %(message)s',
@@ -20,15 +21,46 @@ TODO:
 # if select something (ie for PP) that doesn't work for ALG or VIZ, spit out warning
 '''
 
-corpus = Corpus('./config/data/text_files.yaml',)
-file_object = corpus()
 
-data = Preprocessor(file_object, './config/preprocessing.yaml', file_names)
-data.run()
-tokens = data.output
+corpus = Corpus('./config/data/text_files.yaml', 'doc')
+
+tokens = corpus()
+tokenized_docs = []
+
+for doc in tokens:
+    tokenized_docs.append(doc)
+
+#print(tokenized_docs)
+#print('tokens')
+    
+file_names = corpus.get_file_names()
+
+token_dict = dict(zip(file_names, chain(tokenized_docs, repeat(None))))
+
+print('tokens!!!!!!!!!!')
+print(token_dict)
+
+
+    
+
+# have to change this to give a string instead of DOT Text fsvsdvgbd nonsense
+
+#print(file_object)
+#print(file_object.grouping)
+#print(file_object.config)
+
+
+
+#data = Preprocessor(file_object, './config/preprocessing.yaml')
+#data.run()
+#tokens = data.output
 # use preprocessed data
-alg = Algorithm(file_object, './config/algorithms.yaml')
+
+alg = Algorithm(tokens, './config/algorithms.yaml')
+alg = alg.run()
+
 #vis = visualization(file_object, './config/visualization.yaml')
 
-alg.run()
+
 #vis.run()
+
