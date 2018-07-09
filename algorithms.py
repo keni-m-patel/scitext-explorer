@@ -9,8 +9,6 @@ from sklearn.decomposition import TruncatedSVD
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from sklearn.feature_extraction.text import CountVectorizer
-
 from sklearn.preprocessing import Normalizer
 
 
@@ -46,9 +44,9 @@ class Algorithm(object):
         print('\n\n\n\nRunning the following algorithms:\n\n')
         print(self.config)
         
-    def __iter__(self):
-        for item in self.corpus:
-            yield item
+    #def __iter__(self):
+        #for item in self.corpus:
+            #yield item
 
     def run(self):
         result_dict = {}
@@ -64,7 +62,7 @@ class Algorithm(object):
                 result_dict['LSA_Concepts'] = c.output
             
             if self.config['kmeans']:
-                k = kmeans(self.corpus, l.dist)
+                k = kmeans(self.corpus, l.dtm_lsa)
                 k.run()
                 result_dict['kmeans'] = k.output
                
@@ -122,7 +120,7 @@ class BagOfWords(VectorSpaceModels):
         
      def run(self): 
 
-        self.vectorizer = CountVectorizer(lowercase=True, stop_words='english')
+        self.vectorizer = CountVectorizer(lowercase = False, stop_words = None) #, preprocessor = None, tokenizer = None
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         dtm_dense = self.dtm.todense()
 
@@ -200,21 +198,21 @@ class LSA_Concepts(VectorSpaceModels):
             print (" ")
             
 class kmeans(LatentSemanticAnalysis):  
-    def __init__(self, corpus, dist):
+    def __init__(self, corpus, dtm_lsa):
         super().__init__(corpus) 
-        self.dist = dist
+        self.dtm_lsa = dtm_lsa
         
     def run(self):
-        models = dict()
         km_dict = dict()
         max_clusters = 2
 
         for index in range(2,max_clusters + 1):
             km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
-            km.fit(self.dist)
+            km.fit(self.dtm_lsa)
             clusters = km.labels_.tolist()
             km_dict[index] = Counter(clusters)
             self.output = (index, Counter(clusters))
+
 '''
         models[index] = {'KMeans Model': km,
                              'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
@@ -253,8 +251,8 @@ class kmeans(LatentSemanticAnalysis):
 
             plt.savefig('Corpus2 Clusters ' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
 
-            index += 1
 '''
+
 class tsne(LatentSemanticAnalysis):
     def __init__(self, corpus, dist):
         super().__init__(corpus)      
