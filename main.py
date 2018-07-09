@@ -8,8 +8,8 @@ Created on Sun Jun 24 18:29:24 2018
 
 import logging
 from structures import Corpus
-from preprocess import Preprocessor
 from algorithms import Algorithm
+from visualization import Visualization
 from itertools import chain, repeat
 
 logging.basicConfig(level=logging.DEBUG,
@@ -51,16 +51,15 @@ print(token_dict)
 
 
 
-#data = Preprocessor(file_object, './config/preprocessing.yaml')
-#data.run()
-#tokens = data.output
-# use preprocessed data
+print(tokens)
 
 alg = Algorithm(tokens, './config/algorithms.yaml')
-alg = alg.run()
+alg_ran = alg.run()
 
-#vis = visualization(file_object, './config/visualization.yaml')
+print("test1")
+print(alg.run())
+vis = Visualization( './config/visualization.yaml',alg)
 
 
-#vis.run()
+vis.run()
 

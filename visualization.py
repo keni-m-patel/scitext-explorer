@@ -9,13 +9,16 @@ import utilities
 import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.cluster import KMeans, MiniBatchKMeans
+from algorithms import Algorithm
+import pandas as pd
 
 class Visualization(object):
 
-    def __init__(self, data, config_file):
-        self.corpus = data
-        pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
+    def __init__(self, config_file, alg):
+        #self.corpus = data
+        #pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
+        self.alg=alg
         print('\n\n\n\nRunning the following visualization:\n\n')
         print(self.config)
         
@@ -25,11 +28,18 @@ class Visualization(object):
 
     def run(self):
         result_dict = {}
-        
+        '''
         if 'kmean_hist' in self.config:
             k = kmean_hist(self.corpus)
             k.run()
             result_dict['kmean_hist'] = k.output
+            '''
+        
+        if 'export_word_cloud' in self.config:
+            wc = File_Export(self.alg.run()) #,self.corpus):                   ###GET THIS TO WORK
+            wc.export_word_cloud()
+            
+        
         
         output_text = ""
         for vis,result in result_dict.items():
@@ -40,12 +50,13 @@ class Visualization(object):
 
 class VectorSpaceModels(object):
     
-    def __init__(self, corpus):
-        self.corpus = corpus
+    def __init__(self): #, corpus):
+        #self.corpus = corpus
         self.dtm = None
         self.vectorizer = None
         self.dist = None
-
+        
+'''
 class kmean_hist(VectorSpaceModels):
     def __init__(self, corpus, dist):
         super().__init__(corpus)      
@@ -88,3 +99,35 @@ class kmean_hist(VectorSpaceModels):
             plt.savefig('Corpus2 Clusters ' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
 
             index += 1
+   '''         
+class File_Export(VectorSpaceModels):
+    
+    def __init__(self, word_frequency): #,corpus):
+        super().__init__() #corpus)
+        
+        self.word_frequency = word_frequency['word_frequency']
+        
+        
+        
+        
+    
+    def export_word_cloud(self): #, alg.wordfreq):
+    
+        # Create a Pandas Excel writer using XlsxWriter as the engine.
+        writer = pd.ExcelWriter('word_cloud_form.xlsx', engine='xlsxwriter')
+        #bow_max.to_excel(writer, sheet_name='Sheet1')
+        self.word_frequency.to_excel(writer, sheet_name='Sheet1')
+        # Get the xlsxwriter objects from the dataframe writer object.
+        workbook  = writer.book
+        worksheet = writer.sheets['Sheet1']
+        
+        # Add some cell formats.
+        #format1 = workbook.add_format({'num_format': '#,##0.00'})
+        
+        # Set the column width and format.
+        #worksheet.set_column('B:B', 18, format1)
+        
+        
+        
+        # Close the Pandas Excel writer and output the Excel file.
+        writer.save()

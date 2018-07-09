@@ -38,7 +38,6 @@ class Algorithm(object):
 
     def __init__(self, data, config_file):
         self.corpus = data
-        pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
         self.results = None
         print('\n\n\n\nRunning the following algorithms:\n\n')
@@ -77,9 +76,9 @@ class Algorithm(object):
             result_dict['bag_of_words'] = b.output
             
             if 'word_frequency_table' in self.config:
-                w = WordFreq(self.corpus, b.output)
-                w.run()
-                result_dict['word_frequency'] = w.output
+                self.w = WordFreq(self.corpus, b.output)
+                self.w.run()
+                result_dict['word_frequency'] = self.w.output
                 
         if self.config['tf_idf']:
             t = Tf_Idf(self.corpus)
@@ -97,7 +96,7 @@ class Algorithm(object):
             output_text += "\n\nalgorithm: {}\n\nresult:\n\n {}\n\n".format(alg,result)
 
         print(output_text)
-        return output_text
+        return result_dict
 
 
 
@@ -150,8 +149,9 @@ class WordFreq(VectorSpaceModels):
         bow_data = bow_series.to_frame().reset_index()
         bow_data.columns = ['Word', 'Word Count']
         bow_max = bow_data.sort_values(by='Word Count', ascending=False)
-        bow_max = bow_max.set_index('Word')
+        #bow_max = bow_max.set_index('Word')
         self.output = bow_max
+        return self.output
 
 
 class LatentSemanticAnalysis(VectorSpaceModels):

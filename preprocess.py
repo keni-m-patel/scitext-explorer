@@ -13,7 +13,7 @@ from nltk import pos_tag
 
 
 class Preprocessor(object):
-    """ my docstring goes here"""
+    """This holds all the preprocessing which includes removes stop words, lowercases, removes punctuation, and removes symbols. It then has options to either lemmatizes or stem or neither.  """
     
     def __init__(self, corpus, config_file):
         
