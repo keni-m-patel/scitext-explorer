@@ -55,7 +55,7 @@ print(token_dict)
 #data.run()
 #tokens = data.output
 # use preprocessed data
-<<<<<<< HEAD
+
 alg = Algorithm(tokens, './config/algorithms.yaml')
 alg = alg.run()
 
