@@ -1,40 +1,21 @@
 import inspect
 import utilities
-
-from sklearn.manifold import mds, TSNE
-
-from sklearn.feature_extraction.text import CountVectorizer
-
-from sklearn.decomposition import TruncatedSVD
-
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-from sklearn.feature_extraction.text import CountVectorizer
-
-from sklearn.preprocessing import Normalizer
-
-
-from sklearn.cluster import KMeans, MiniBatchKMeans
-
 from collections import defaultdict, Counter
 
+from sklearn.manifold import mds, TSNE
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.decomposition import TruncatedSVD
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.preprocessing import Normalizer
+from sklearn.cluster import KMeans, MiniBatchKMeans
 from sklearn.metrics.pairwise import cosine_similarity, pairwise_distances
-#from sklearn import metrics
-
-
-import pandas as pd
-#from pandas import DataFrame
-#import warnings
-#import numpy
-
 
 from nltk import ne_chunk, pos_tag
 from nltk.tree import Tree
 from nltk.tokenize import word_tokenize
-
-
 import matplotlib.pyplot as plt
-
+import pandas as pd
 
 class Algorithm(object):
 
@@ -101,8 +82,6 @@ class Algorithm(object):
         print(output_text)
         return output_text
 
-
-
 # Base class for Vector Space Models (Bag of Words, LSA, LDA, Word2Vec, Doc2Vec)
 class VectorSpaceModels(object):
     
@@ -110,9 +89,7 @@ class VectorSpaceModels(object):
         self.corpus = corpus
         self.dtm = None
         self.vectorizer = None
-    
-
-        
+     
 class BagOfWords(VectorSpaceModels):
   
      def __init__(self, corpus):

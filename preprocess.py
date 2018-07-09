@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 import utilities
 
-#import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer, PorterStemmer, SnowballStemmer
 from nltk import pos_tag
 
-
-#use mapping
 #dont use of list of list, use dict perhaps
-
 
 class Preprocessor(object):
 
@@ -26,8 +22,7 @@ class Preprocessor(object):
         self.stop = list(set(stopwords.words('english')))
         self.tokenized_docs = []
         self.named_entities_list = []
-        
-        
+               
     def run(self):
 
         if self.config['new_stop_set_list']:    
@@ -48,11 +43,9 @@ class Preprocessor(object):
             else:
                 tokens = [t.lower() for t in tokens]              
                 tokens = [t for t in tokens if t.isalpha() and t not in self.stop]   
-        
-            
-            
-    
+                
             self.tokenized_docs.append(tokens)               
+
         self.token_list = []
         
         if self.config['PorterStemmer']:
@@ -97,6 +90,3 @@ class Preprocessor(object):
                 lem_words = []
             self.output = dict(zip(self.file_names, self.token_list))
             return self.output
-        
-        
-
