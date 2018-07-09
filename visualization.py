@@ -12,6 +12,12 @@ from sklearn.cluster import KMeans, MiniBatchKMeans
 from algorithms import Algorithm
 import pandas as pd
 
+
+
+from collections import defaultdict, Counter
+
+from sklearn.metrics.pairwise import cosine_similarity, pairwise_distances
+
 class Visualization(object):
 
     def __init__(self, config_file, alg):
@@ -28,12 +34,12 @@ class Visualization(object):
 
     def run(self):
         result_dict = {}
-        '''
+        
         if 'kmean_hist' in self.config:
-            k = kmean_hist(self.corpus)
+            k = kmean_hist(self.alg.run())
             k.run()
             result_dict['kmean_hist'] = k.output
-            '''
+            
         
         if 'export_word_cloud' in self.config:
             wc = File_Export(self.alg.run()) #,self.corpus):                   ###GET THIS TO WORK
@@ -56,12 +62,12 @@ class VectorSpaceModels(object):
         self.vectorizer = None
         self.dist = None
         
-'''
+
 class kmean_hist(VectorSpaceModels):
-    def __init__(self, corpus, dist):
-        super().__init__(corpus)      
+    def __init__(self, result_dict): #,corpus):
+        super().__init__()      
         
-        self.dist = dist   
+        km = result_dict['kmeans']   
         models = dict()
         models[index] = {'KMeans Model': km,
                              'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
@@ -99,16 +105,13 @@ class kmean_hist(VectorSpaceModels):
             plt.savefig('Corpus2 Clusters ' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
 
             index += 1
-   '''         
+          
 class File_Export(VectorSpaceModels):
     
-    def __init__(self, word_frequency): #,corpus):
+    def __init__(self, result_dict): #,corpus):
         super().__init__() #corpus)
         
-        self.word_frequency = word_frequency['word_frequency']
-        
-        
-        
+        self.word_frequency = result_dict['word_frequency']
         
     
     def export_word_cloud(self): #, alg.wordfreq):
@@ -118,16 +121,7 @@ class File_Export(VectorSpaceModels):
         #bow_max.to_excel(writer, sheet_name='Sheet1')
         self.word_frequency.to_excel(writer, sheet_name='Sheet1')
         # Get the xlsxwriter objects from the dataframe writer object.
-        workbook  = writer.book
-        worksheet = writer.sheets['Sheet1']
-        
-        # Add some cell formats.
-        #format1 = workbook.add_format({'num_format': '#,##0.00'})
-        
-        # Set the column width and format.
-        #worksheet.set_column('B:B', 18, format1)
-        
-        
-        
+
+        #worksheet = writer.sheets['Sheet1']
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
