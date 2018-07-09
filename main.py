@@ -28,5 +28,7 @@ data.run()
 tokens = data.output
 # use preprocessed data
 alg = Algorithm(file_object, './config/algorithms.yaml')
+#vis = visualization(file_object, './config/visualization.yaml')
 
 alg.run()
+#vis.run()

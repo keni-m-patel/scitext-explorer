@@ -9,8 +9,6 @@ from sklearn.decomposition import TruncatedSVD
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from sklearn.feature_extraction.text import CountVectorizer
-
 from sklearn.preprocessing import Normalizer
 
 
@@ -64,7 +62,7 @@ class Algorithm(object):
                 result_dict['LSA_Concepts'] = c.output
             
             if self.config['kmeans']:
-                k = kmeans(self.corpus, l.dist)
+                k = kmeans(self.corpus, l.dtm_lsa)
                 k.run()
                 result_dict['kmeans'] = k.output
                
@@ -196,61 +194,21 @@ class LSA_Concepts(VectorSpaceModels):
             print (" ")
             
 class kmeans(LatentSemanticAnalysis):  
-    def __init__(self, corpus, dist):
+    def __init__(self, corpus, dtm_lsa):
         super().__init__(corpus) 
-        self.dist = dist
+        self.dtm_lsa = dtm_lsa
         
     def run(self):
-        models = dict()
         km_dict = dict()
         max_clusters = 2
 
         for index in range(2,max_clusters + 1):
             km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
-            km.fit(self.dist)
+            km.fit(self.dtm_lsa)
             clusters = km.labels_.tolist()
             km_dict[index] = Counter(clusters)
             self.output = (index, Counter(clusters))
-'''
-        models[index] = {'KMeans Model': km,
-                             'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
-                             'Document-Clustering': Counter(clusters),
-                             'Frame': pd.DataFrame({'Cluster': clusters})}
-                                                    #'Document Name': docnames})}
-        background = 'gray'
-        higlight = '#2171b5'
-        accent = 'dimgray'
-        font_size = 10.0
-        index = 0
-        for key,val in models.items():
 
-            if index%5 == 0:
-                fig = plt.figure(figsize=(12,2))
-
-            ax = fig.add_subplot(151 + index%5)
-
-            x = [k for k,v in sorted(val['Document-Clustering'].items())]
-            y = [v for k,v in sorted(val['Document-Clustering'].items())]
-
-            plt.bar(x,y,width = 0.8, color = background)
-
-            plt.title(str(key) + ' Document\nClusters', fontweight = 'normal', color = accent)
-
-
-            plt.grid(False)
-            ax.tick_params(direction='out', length = 4, width = 1, colors = background,
-                           labelsize = font_size, labelcolor = background)
-
-
-            ax.spines['right'].set_visible(False)
-            ax.spines['left'].set_visible(False)
-            ax.spines['top'].set_visible(False)
-            ax.spines['bottom'].set_visible(False)
-
-            plt.savefig('Corpus2 Clusters ' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
-
-            index += 1
-'''
 class tsne(LatentSemanticAnalysis):
     def __init__(self, corpus, dist):
         super().__init__(corpus)      
