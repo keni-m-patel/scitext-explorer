@@ -128,9 +128,15 @@ class BagOfWords(VectorSpaceModels):
 
         vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
 
+        sorted_by_value = sorted(vocabulary.items(), key=lambda kv: kv[1])
+
+        sorted_vocab = [k for k,v in sorted_by_value]
+
+        print(sorted_vocab) 
+
         dtm_array = sum(self.dtm.toarray())  # [sum(x) for x in zip(list1, list2)]
 
-        self.bow = {word:freq for word,freq in zip(vocabulary.keys(), dtm_array)}
+        self.bow = {word:freq for word,freq in zip(sorted_vocab, dtm_array)}
         self.output = self.bow
 
 
