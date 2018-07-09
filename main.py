@@ -37,8 +37,6 @@ file_names = corpus.get_file_names()
 
 token_dict = dict(zip(file_names, chain(tokenized_docs, repeat(None))))
 
-print('tokens!!!!!!!!!!')
-print(token_dict)
 
 
     
