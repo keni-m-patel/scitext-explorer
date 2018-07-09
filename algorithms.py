@@ -121,9 +121,7 @@ class BagOfWords(VectorSpaceModels):
         
      def run(self): 
 
-        self.vectorizer = CountVectorizer(lowercase = False, stop_words = None, preprocessor = None, tokenizer = None)
-        print(self.corpus)
-        print('yes')
+        self.vectorizer = CountVectorizer(lowercase = False, stop_words = None) #, preprocessor = None, tokenizer = None
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         dtm_dense = self.dtm.todense()
 

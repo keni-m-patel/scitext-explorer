@@ -84,7 +84,7 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     text_file = text_file + ' ' + page_text
-                yield text_file
+                yield Preprocessor(text_file,'./config/preprocessing.yaml').run()
             self.__read_data(self.config) # get data    
 
         elif self.grouping == 'page':
@@ -92,7 +92,7 @@ class DotPDF(object):
                 pdf_reader = PDFR(PDFObj)
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
-                    yield page_text
+                    yield Preprocessor(page_text,'./config/preprocessing.yaml').run()
             self.__read_data(self.config) # get data    
 
     
@@ -113,7 +113,7 @@ class DotPDF(object):
         
         if filetype == {'.pdf'}:
             # map to implement "lazy loading"; only read files as we need
-            self.data_map =map(lambda x: Preprocessor(open(os.path.join(self.config['directory'], x)).read(),'./config/preprocessing.yaml').run(), self.config['files']) #Put preprocessor here
+            self.data_map =map(lambda x: open(os.path.join(self.config['directory'], x),'rb'), self.config['files'])
         else: 
             print('ERROR: NON-PDF PASSED TO PDF CLASS')
 
@@ -130,7 +130,7 @@ class DotTXT(object):
         # records according to the configuration specified
         # INTERFACE DEFINITION: this iterator should always yield a string
         for doc in self.data_map:
-            yield doc
+            yield Preprocessor(doc,'./config/preprocessing.yaml').run()
             self.__read_data(self.config) # get data    
 
     
@@ -146,7 +146,7 @@ class DotTXT(object):
         if filetype == {'.txt'}:
             # map to implement "lazy loading"; only read files as we need
             #self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read(), self.config['files'])
-            self.data_map =map(lambda x: Preprocessor(open(os.path.join(self.config['directory'], x)).read(),'./config/preprocessing.yaml').run(), self.config['files']) #Put preprocessor here
+            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read(), self.config['files'])
         else:
             print('ERROR: NON-TXT PASSED TO TXT CLASS')
 

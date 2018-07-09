@@ -13,13 +13,15 @@ from nltk import pos_tag
 
 
 class Preprocessor(object):
-
+    """ my docstring goes here"""
+    
     def __init__(self, corpus, config_file):
         
         self.corpus = corpus
         self.config = utilities.get_config(config_file)
         
         #self.file_names = self.corpus.get_file_names()
+        
 
         print('\n\n\n\nRunning the following preprocessing actions:\n\n')
         print(self.config)
@@ -111,7 +113,7 @@ class Preprocessor(object):
                 #self.token_list.append(lem_words)
                 #lem_words = []
             self.output = lem_words#dict(zip(self.file_names, self.token_list))
-            return self.output
+            return ' '.join(self.output)
         
         
 
