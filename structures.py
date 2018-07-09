@@ -16,6 +16,11 @@ import logging
 import decorators
 from PyPDF2 import PdfFileReader as PDFR
 import csv
+from os import listdir
+from os.path import isfile, join
+
+from nltk import sent_tokenize, word_tokenize, pos_tag
+
 
 
 logger = logging.getLogger(__name__)
@@ -23,12 +28,16 @@ logger = logging.getLogger(__name__)
 # @decorators.log(logger)
 class Corpus(object):
 
-    def __init__(self, config_file, group_by='doc'):
+    def __init__(self, config_file, group_by=None):
         self.config = utilities.get_config(config_file) # read the config file and set the log_file name
-        self.grouping = group_by
+        if group_by:
+            self.grouping = group_by
+        else:
+            self.grouping = self.config['group_by']
         self.filetype = None
         print('\n\n\n\nReading in the following files:\n\n')
         print(self.config)
+
 
 
     def __call__(self):
@@ -36,6 +45,7 @@ class Corpus(object):
         filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
         
         if filetype == {'.txt'}:
+
             t = DotTXT(self.config, self.grouping)
             return t
 
@@ -50,14 +60,19 @@ class Corpus(object):
         else:
             print('filetype not set or filetype is not recognized/compatible')
 
+    def file_names(self):
+        onlyfiles = [f for f in self.config['files']] 
+        return onlyfiles
+        
 
     # def __log(self):
     #     logger.info('Data Map created for: ' + ', '.join(self.config['files']))
-
-
+    
+   
 
 
 class DotPDF(object):
+
     def __init__(self, config, group_by='doc'):
         self.config = config
         self.__read_data(self.config)
@@ -145,43 +160,64 @@ class DotTXT(object):
 #################################################
 ##    non-functional, start for DotCSV class  ###
 #################################################
-'''
+
+# TRY PANDAS pd.readcsv()
 class DotCSV(DotTXT): 
-    def __init__(self, config_file, group_by=None):
+
+    def __init__(self, config_file, group_by):
+        self.grouping = group_by
         self.config = config_file
         self.__read_data(self.config)
-        self.__log() # log things
-        self.grouping = group_by
+        # self.__log() # log things
+        
 
     def __iter__(self):
-        # custom iterator function that defines how to iterate over 
-        # records according to the configuration specified
-        # INTERFACE DEFINITION: this iterator should always yield a string
+        for csv_file in self.data_map:
+            reader = csv.reader(csv_file, delimiter=',')
+            if self.grouping == "row":
 
-        # csv_dict_reader, but it does stuff on the whole file, not ne thing at a time
-        reader = csv.DictReader(file_obj, delimiter=',')
-        field_names = csv.fieldnames()  # list of strings
-
-        if self.grouping == "row":
-            for row in reader:
-                yield row
-        elif self.grouping == "col":
-            for field_name in field_names:
-                column = []
                 for row in reader:
-                    column.append(row[field_name])
-                yield column
+                    # print('ROW: \n', row)
+                    row_cells = ""
+                    for cell in row:
+                        # print('cell: \n', cell)
+                        row_cells += ' ' + cell + ' '
+                    yield row_cells
+
+            elif self.grouping == "col":
+                columns = zip(*reader)
+                col_text = ""
+                for column in columns:
+                        # print ('COLUMN:\n\n', column )
+                        for cell in column:
+                            col_text += ' ' + cell + ' '
+                        yield col_text
+
+        self.__read_data(self.config) # get data    
             
     def __len__(self):
         # we may want to do some introspection of our data objects; how many records
         # are in this data source? HINT: it depends on how we split it into records
-        reader = csv.DictReader(file_obj, delimiter=',')
-        field_names = csv.fieldnames()  # list of strings
+        num_rows = 0
+        num_cols = 0    
 
         if self.grouping == "row":
-            return size(reader)
+            for csv_file in self.data_map:
+                reader = csv.reader(csv_file, delimiter=',')
+                for row in reader:
+                    num_rows += 1
+            return num_rows
+
         elif self.grouping == "col":
-            return len(reader.next())
+            for csv_file in self.data_map:
+                reader = csv.reader(csv_file, delimiter=',')
+                first_row = True
+                for row in reader:
+                    if not first_row:
+                        break
+                    num_cols += len(row)
+                    first_row = False
+            return num_cols
 
     def __read_data(self, config):
         # let's determine the file types we're dealing with
@@ -189,10 +225,7 @@ class DotCSV(DotTXT):
         
         if filetype == {'.csv'}:
             # map to implement "lazy loading"; only read files as we need
-            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read('rb'), self.config['files'])
+            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x),'rU'), self.config['files'])
         else:
             print('ERROR: NON-CSV PASSED TO CSV CLASS')
-
-'''
-
         

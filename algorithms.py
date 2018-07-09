@@ -19,12 +19,18 @@ from collections import defaultdict, Counter
 from sklearn.metrics.pairwise import cosine_similarity, pairwise_distances
 #from sklearn import metrics
 
+
 import pandas as pd
 #from pandas import DataFrame
 #import warnings
 #import numpy
 
-#Viz Stuff
+
+from nltk import ne_chunk, pos_tag
+from nltk.tree import Tree
+from nltk.tokenize import word_tokenize
+
+
 import matplotlib.pyplot as plt
 
 
@@ -34,6 +40,7 @@ class Algorithm(object):
         self.corpus = data
         pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
+        self.results = None
         print('\n\n\n\nRunning the following algorithms:\n\n')
         print(self.config)
         
@@ -78,8 +85,14 @@ class Algorithm(object):
             t = Tf_Idf(self.corpus)
             t.run()
             result_dict['tf_idf'] = t.output
+            
+        if self.config['named_entities']:
+            ner = Named_Entity_Recognition(self.corpus)
+            ner.run()
+            result_dict['named_entities'] = ner.output
 
         output_text = ""
+        self.results = result_dict
         for alg,result in result_dict.items():
             output_text += "\n\nalgorithm: {}\n\nresult:\n\n {}\n\n".format(alg,result)
 
@@ -110,25 +123,18 @@ class BagOfWords(VectorSpaceModels):
         self.vectorizer = CountVectorizer(lowercase=True, stop_words='english')
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         dtm_dense = self.dtm.todense()
-        vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
 
-        # print('\nvocab to index\n', vocabulary)
-        # print(self.vectorizer.get_feature_names())
+        vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
 
         list1 = self.dtm.toarray()[0]
         list2 = self.dtm.toarray()[1]
-        # print(list1,'\n', list2)
+
         dtm_array = [sum(x) for x in zip(list1, list2)]
 
         self.bow = {word:freq for word,freq in zip(vocabulary.keys(), dtm_array)}
-        # print('bow\n', self.bow)
-
         self.output = self.bow
-        # print('\n\nCHECK THIS\n\n')
-        # {'dtm': self.dtm,'dtm_dense': dtm_dense,'vocabulary': vocabulary, 'vectorizer': self.vectorizer}
-    
 
-        
+
 class WordFreq(VectorSpaceModels):
     
     def __init__(self, corpus, bow_output):
@@ -157,6 +163,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
     def run(self):
 
         self.vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
+        print('\n\n\n\nTFIDF vectorizer', self.vectorizer)
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         self.lsa = TruncatedSVD(n_components=200)  # , algorithm = 'arpack')
         self.dtm_lsa = self.lsa.fit_transform(self.dtm)
@@ -213,9 +220,11 @@ class tsne(LatentSemanticAnalysis):
         tsne_matrix = TSNE(n_components=2, perplexity=30.0, early_exaggeration=12.0, learning_rate=200.0, 
                            n_iter=1000, n_iter_without_progress=300, min_grad_norm=1e-07, metric='euclidean', 
                            init='random', verbose=0, random_state = random_state, method='barnes_hut', angle=0.5)
+
         
         position = tsne_matrix.fit_transform(self.dist)
         
+
         x, y = position[:, 0], position[:, 1]
         self.output = (x,y)
 
@@ -228,6 +237,7 @@ class Tf_Idf(VectorSpaceModels):
         print('\n\n\n\nRunning the following algorithm: \nTFIDF \n\n')
         
     def run(self):
+        #figure out how to link up with preprocess
         self.vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, encoding='utf-8')
         
         #Tranforms corpus into vectorized words
@@ -246,4 +256,46 @@ class Tf_Idf(VectorSpaceModels):
 
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
-    pass
+
+    
+    def __init__(self, corpus):
+        self.corpus = corpus
+
+class Named_Entity_Recognition(TopicModels):
+    
+    def __init__(self, corpus):
+        super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: \nNamed_Entity_Recognition\n\n')
+        
+        self.output = []
+        
+    def run(self):
+        for item in self.corpus:
+                chunked_docs = []
+                chunked = ne_chunk(pos_tag(word_tokenize(item)))
+                chunked_docs.append(chunked)
+                continuous_chunk = []
+                current_chunk = []
+                for chunk in chunked_docs:
+                    
+                    for i in chunk:
+                       
+                        if type(i) == Tree:
+                            current_chunk.append(" ".join([token for token, pos in i.leaves()]))
+                            
+                        elif current_chunk:
+                            named_entity = " ".join(current_chunk)
+                            
+                            if named_entity not in continuous_chunk:
+                                
+                                continuous_chunk.append(named_entity)
+                                current_chunk = []
+                        else:
+                            continue
+                     
+                    #list of named entities
+                    self.output.append(continuous_chunk)
+ 
+
+        
+
