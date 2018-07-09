@@ -20,7 +20,7 @@ from os import listdir
 from os.path import isfile, join
 
 from nltk import sent_tokenize, word_tokenize, pos_tag
-
+import glob
 
 
 logger = logging.getLogger(__name__)
@@ -30,40 +30,44 @@ class Corpus(object):
 
     def __init__(self, config_file, group_by=None):
         self.config = utilities.get_config(config_file) # read the config file and set the log_file name
+        self.path = self.config['directory']
+        self.files = glob.glob(self.path + '*')
+        # print(self.files)
+        # for file in self.files:
+        #     print(file)
         if group_by:
             self.grouping = group_by
         else:
             self.grouping = self.config['group_by']
         self.filetype = None
-        print('\n\n\n\nReading in the following files:\n\n')
-        print(self.config)
+        print('\n\n\n\nReading in {} files:\n\n'.format(len(self.files)))
+        # print(self.files)
 
 
 
     def __call__(self):
 
-        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
+        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.files]])
+        # print('\n\n\nfile type: \n\n', filetype, '\n\n')
         
         if filetype == {'.txt'}:
-
-            t = DotTXT(self.config, self.grouping)
+            t = DotTXT(self.files, self.grouping)
             return t
 
         elif filetype == {'.pdf'}:
-            p = DotPDF(self.config, self.grouping)
+            p = DotPDF(self.files, self.grouping)
             return p
 
         elif filetype == {'.csv'}:
-            c = DotCSV(self.config, self.grouping)
+            c = DotCSV(self.files, self.grouping)
             return c
 
         else:
             print('filetype not set or filetype is not recognized/compatible')
 
     def file_names(self):
-        onlyfiles = [f for f in self.config['files']] 
+        onlyfiles = [f for f in self.files] 
         return onlyfiles
-        
 
     # def __log(self):
     #     logger.info('Data Map created for: ' + ', '.join(self.config['files']))
@@ -73,9 +77,9 @@ class Corpus(object):
 
 class DotPDF(object):
 
-    def __init__(self, config, group_by='doc'):
-        self.config = config
-        self.__read_data(self.config)
+    def __init__(self, files, group_by='doc'):
+        self.files = files
+        self.__read_data(self.files)
         self.grouping = group_by
 
 
@@ -90,8 +94,9 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     text_file = text_file + ' ' + page_text
+                # print('\n\n\ntextfile HERE:\n\n', text_file)
                 yield text_file
-            self.__read_data(self.config) # get data    
+            self.__read_data(self.files) # get data    
 
         elif self.grouping == 'page':
             for PDFObj in self.data_map:
@@ -99,27 +104,31 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     yield page_text
-            self.__read_data(self.config) # get data    
+            self.__read_data(self.files) # get data    
 
     
     def __len__(self):
         # we may want to do some introspection of our data objects; how many records
         # are in this data source? HINT: it depends on how we split it into records
         if self.grouping == 'doc':
-            return len(list(self.config['files']))
+            return len(list(self.files))
         elif self.grouping == 'page':
             total_num_pages = 0
             for PDFObj in self.data_map:
                 total_num_pages += PDFR(PDFObj).numPages
             return total_num_pages
 
-    def __read_data(self, config):
+    def __read_data(self, files):
+        # print('\n\n\n files: ', files)
         # let's determine the file types we're dealing with
-        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
+        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.files]])
+        # print('\n\n\nfile type: \n\n', filetype, '\n\n')
         
         if filetype == {'.pdf'}:
             # map to implement "lazy loading"; only read files as we need
-            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x),'rb'), self.config['files'])
+            self.data_map = map(lambda x: open(os.path.join('', x),'rb'), self.files)
+            # for thing in self.data_map:
+            #     print(thing)
         else: 
             print('ERROR: NON-PDF PASSED TO PDF CLASS')
 
@@ -145,7 +154,7 @@ class DotTXT(object):
         # are in this data source? HINT: it depends on how we split it into records
         return len(list(self.config['files']))
         
-    def __read_data(self, config):
+    def __read_data(self, files):
         # let's determine the file types we're dealing with
         filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
         
@@ -157,9 +166,9 @@ class DotTXT(object):
 
 
 
-#################################################
-##    non-functional, start for DotCSV class  ###
-#################################################
+##################################################
+###    non-functional, start for DotCSV class  ###
+##################################################
 
 # TRY PANDAS pd.readcsv()
 class DotCSV(DotTXT): 
