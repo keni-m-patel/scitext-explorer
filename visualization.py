@@ -48,7 +48,7 @@ class Visualization(object):
                 t.File_Export()
                 result_dict['tsne'] = t.output
             
-        
+    
         if 'export_word_cloud' in self.config:
             wc = File_Export(self.alg.run()) #,self.corpus):                   ###GET THIS TO WORK
             wc.export_word_cloud()
@@ -153,18 +153,24 @@ class tsne(kmean_hist):
         
         position = tsne_matrix.fit_transform(self.dist)
         
-
-        x, y = position[:, 0], position[:, 1]
+        
+        x, y = position[ 0, : ], position[1, : ]
         self.output = pd.DataFrame(x,y)
         
         
         
     def File_Export(self):
         
-       
-        print(self.clusters_and_names)
-        rdtdththrh
+        x_and_y = self.output
+        print(x_and_y)
+        x_and_y.columns = ['x','y']
         
+        print(self.clusters_and_names)
+        self.clusters_and_names.columns = ['docnames', 'label']
+        self.clusters_and_names['title'] = self.clusters_and_names['label']
+        new_frame = self.clusters_and_names.append(x_and_y)
+        print(new_frame)
+
           
 class File_Export(VectorSpaceModels):
     
