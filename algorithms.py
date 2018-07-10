@@ -35,6 +35,7 @@ import matplotlib.pyplot as plt
 
 
 class Algorithm(object):
+    """Runs an algorithm based on what is selected in the user config file."""
 
     def __init__(self, data, config_file):
         self.corpus = data
@@ -50,7 +51,8 @@ class Algorithm(object):
 
     def run(self):
         result_dict = {}
-
+        """Runs the algorithms and gets the output of them"""
+        
         if self.config['latent_semantic_analysis']:
             l = LatentSemanticAnalysis(self.corpus)
             l.run()
@@ -110,15 +112,17 @@ class VectorSpaceModels(object):
         self.vectorizer = None
     
 
-        
+     
 class BagOfWords(VectorSpaceModels):
+     """Initiates Bag Of Words algorithm: this outputs a bag of words."""  
   
      def __init__(self, corpus):
         super().__init__(corpus)
         self.bow = None
         print('\n\n\n\nRunning the following algorithm: \nBag of Words\n\n')
         
-     def run(self): 
+     def run(self):
+        """Vectorizes words and fits words to a matrix"""
 
         self.vectorizer = CountVectorizer(lowercase = False, stop_words = None) #, preprocessor = None, tokenizer = None
         self.dtm = self.vectorizer.fit_transform(self.corpus)
@@ -136,6 +140,7 @@ class BagOfWords(VectorSpaceModels):
 
 
 class WordFreq(VectorSpaceModels):
+    """Initiates Word Frequency table: outputs how many times a word occurs."""
     
     def __init__(self, corpus, bow_output):
         super().__init__(corpus)
@@ -146,6 +151,8 @@ class WordFreq(VectorSpaceModels):
         self.run()
     
     def run(self):
+        """Takes Bag of Words and outputs into table."""
+        
         bow_series = pd.Series(self.bow_output)
         bow_data = bow_series.to_frame().reset_index()
         bow_data.columns = ['Word', 'Word Count']
@@ -155,6 +162,7 @@ class WordFreq(VectorSpaceModels):
 
 
 class LatentSemanticAnalysis(VectorSpaceModels):
+    """Initiates LSA. """
 
     def __init__(self, corpus):
         super().__init__(corpus)
@@ -193,7 +201,9 @@ class LSA_Concepts(VectorSpaceModels):
                 print(term[0])
             print (" ")
             
-class kmeans(LatentSemanticAnalysis):  
+class kmeans(LatentSemanticAnalysis): 
+    """Initiates k-means: clustering data according to means"""
+    
     def __init__(self, corpus, dtm_lsa):
         super().__init__(corpus) 
         self.dtm_lsa = dtm_lsa
@@ -250,6 +260,8 @@ class kmeans(LatentSemanticAnalysis):
 '''
 
 class tsne(LatentSemanticAnalysis):
+    """Initiates t-SNE: Basically dimensionality reduction on the clusters."""
+    
     def __init__(self, corpus, dist):
         super().__init__(corpus)      
         
@@ -270,6 +282,7 @@ class tsne(LatentSemanticAnalysis):
 
 
 class Tf_Idf(VectorSpaceModels):
+    """Initiates Tf-Idf algorithm: compares word frequency in a collection of documents."""
     
     def __init__(self, corpus):
         super().__init__(corpus)
@@ -277,6 +290,8 @@ class Tf_Idf(VectorSpaceModels):
         print('\n\n\n\nRunning the following algorithm: \nTFIDF \n\n')
         
     def run(self):
+        """Vectorize the words."""
+        
         #figure out how to link up with preprocess
         self.vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, encoding='utf-8')
         
@@ -289,7 +304,7 @@ class Tf_Idf(VectorSpaceModels):
         #Prints doc-term matrix
         # print(self.dtm)
         
-        #Prints and returns Data Table of doc-term matrix
+        """Prints and returns Data Table of doc-term matrix."""
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
         
@@ -302,6 +317,7 @@ class TopicModels(object):
         self.corpus = corpus
 
 class Named_Entity_Recognition(TopicModels):
+    """Initiates NER: identifies categories such as names, organizations, locations, etc."""
     
     def __init__(self, corpus):
         super().__init__(corpus)
@@ -310,6 +326,8 @@ class Named_Entity_Recognition(TopicModels):
         self.output = []
         
     def run(self):
+        """Chunks docs and adds named entities to a list"""
+        
         for item in self.corpus:
                 chunked_docs = []
                 chunked = ne_chunk(pos_tag(word_tokenize(item)))
