@@ -65,7 +65,7 @@ class Corpus(object):
             return c
         
         elif filetype == {'.json'}:
-            j = Tweets(self.config, self.grouping)
+            j = Tweets(self.files, self.grouping)
             return j
 
         else:
@@ -84,17 +84,30 @@ class Corpus(object):
 
 
 class DotPDF(object):
+    '''
+    .PDF object class
+    reads in PDFs and can iterate by page or by doc
+    in future should be iterable by sentence or maybe paragraph
+    '''
 
     def __init__(self, files, group_by='doc'):
         self.files = files
         self.__read_data(self.files)
         self.grouping = group_by
+        self.msg_flag = 1  # flag if preprocessing message should be sent by __iter__, should only do once.
 
 
     def __iter__(self):
         # custom iterator function that defines how to iterate over 
         # records according to the configuration specified
         # INTERFACE DEFINITION: this iterator should always yield a string
+        if self.msg_flag:
+            print('\n\n\n\nRunning the following preprocessing actions:\n\n')
+            print(utilities.get_config('./config/preprocessing.yaml'))
+            self.msg_flag = 0
+
+
+
         if self.grouping == 'doc':
             for PDFObj in self.data_map:
                 pdf_reader = PDFR(PDFObj)
@@ -140,19 +153,30 @@ class DotPDF(object):
 
 
 class DotTXT(object):
+    '''
+    .txt object 
+    can read in .txt files and iterate by doc. in the future, should also iterate by sentences. 
+    '''
 
     def __init__(self, files, group_by='doc'):
         self.files = files
-        self.__read_data(self.config) # get data    
+        self.__read_data(self.files) # get data    
         self.grouping = group_by
+        self.msg_flag = 1
         
     def __iter__(self):
         # custom iterator function that defines how to iterate over 
         # records according to the configuration specified
         # INTERFACE DEFINITION: this iterator should always yield a string
+        if self.msg_flag:
+            print('\n\n\n\nRunning the following preprocessing actions:\n\n')
+            print(utilities.get_config('./config/preprocessing.yaml'))
+            self.msg_flag = 0
+
+
         for doc in self.data_map:
             yield Preprocessor(doc,'./config/preprocessing.yaml', self.files).run()
-            self.__read_data(self.config) # get data    
+            self.__read_data(self.files) # get data    
 
     
     def __len__(self):
@@ -181,10 +205,16 @@ class DotCSV(DotTXT):
         self.grouping = group_by
         self.files = files
         self.__read_data(self.files)
+        self.msg_flag = 1
         # self.__log() # log things
         
 
     def __iter__(self):
+        if self.msg_flag:
+            print('\n\n\n\nRunning the following preprocessing actions:\n\n')
+            print(utilities.get_config('./config/preprocessing.yaml'))
+            self.msg_flag = 0
+
         for csv_file in self.data_map:
             reader = csv.reader(csv_file, delimiter=',')
             if self.grouping == "row":
@@ -233,6 +263,7 @@ class DotCSV(DotTXT):
                     first_row = False
             return num_cols
 
+
     def __read_data(self, files):
         # let's determine the file types we're dealing with
         filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.files]])
@@ -242,23 +273,41 @@ class DotCSV(DotTXT):
             self.data_map = map(lambda x: open(os.path.join('', x),'rU'), self.files)        
         else:
             print('ERROR: NON-CSV PASSED TO CSV CLASS')
+
+
+
  
 class Tweets(object):
-    def __init__(self, config, group_by):
-        self.config = config
-        self.__read_data(self.config)
+
+    def __init__(self, files, group_by):
+        self.files = files
+        self.__read_data(self.files)
         self.grouping = group_by
-        
-        
-    def __read_data(self, config):
-        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
-        if filetype == {'.json'}:
-            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x),'rU'), self.config['files'])
-        else:
-            print("ERROR: NON-JSON PASSED TO JSON CLASS")
+        self.msg_flag = 1
       
+
     def __iter__(self):  
+        if self.msg_flag:
+            print('\n\n\n\nRunning the following preprocessing actions:\n\n')
+            print(utilities.get_config('./config/preprocessing.yaml'))
+            self.msg_flag = 0
         for doc in self.data_map:
             tweets = json.loads(doc.read(), encoding = "utf-8")
             for tweet in tweets:
-                yield tweet['Text']
+                yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml', self.files).run()
+
+
+    def __read_data(self, files):
+        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.files]])
+        if filetype == {'.json'}:
+            self.data_map = map(lambda x: open(os.path.join('', x),'rU'), self.files)
+        else:
+            print("ERROR: NON-JSON PASSED TO TWEET CLASS")
+
+
+
+
+
+
+
+
