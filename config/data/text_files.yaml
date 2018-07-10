@@ -1,14 +1,12 @@
 # "text" files aren't just files with a .txt extension, csv and tsv files are also simple text files
 # but the only difference is that there is a specific specified between data elements
 
-
-directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/books/
-# SalesJan2009.csv
-
+# example directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/tweets/
+directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/tweets/
 
 
-# enter 'doc', 'row', 'page', or 'col' for how you want to group/iterate through you documents
-group_by: 'row'
+# enter 'doc', 'page', 'tweet', row', or 'col' for how you want to group/iterate through you documents
+group_by: 'tweet'
 
 
 
