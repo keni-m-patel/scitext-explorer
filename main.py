@@ -22,7 +22,7 @@ TODO:
 '''
 
 
-corpus = Corpus('./config/data/text_files.yaml', 'doc')
+corpus = Corpus('./config/data/text_files.yaml')
 
 tokens = corpus()
 tokenized_docs = []

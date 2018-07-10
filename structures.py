@@ -41,7 +41,7 @@ class Corpus(object):
         else:
             self.grouping = self.config['group_by']
         self.filetype = None
-        print('\n\n\n\nReading in {} files:\n\n'.format(len(self.files)))
+        print('\n\n\n\nReading in {} file(s)\n\n'.format(len(self.files)))
         # print(self.files)
 
 
@@ -64,7 +64,9 @@ class Corpus(object):
             return c
 
         else:
-            print('filetype not set or filetype is not recognized/compatible')
+            print('\n\n ERROR: filetype not set or filetype is not recognized/compatible\n\n')
+            print('filetypes found: \n\n', filetype)
+
 
     def get_file_names(self):
         onlyfiles = [f for f in self.files] 
@@ -126,10 +128,7 @@ class DotPDF(object):
         # print('\n\n\nfile type: \n\n', filetype, '\n\n')
         
         if filetype == {'.pdf'}:
-            # map to implement "lazy loading"; only read files as we need
             self.data_map = map(lambda x: open(os.path.join('', x),'rb'), self.files)
-            # for thing in self.data_map:
-            #     print(thing)
 
         else: 
             print('ERROR: NON-PDF PASSED TO PDF CLASS')
@@ -137,8 +136,8 @@ class DotPDF(object):
 
 class DotTXT(object):
 
-    def __init__(self, config, group_by='doc'):
-        self.config = config
+    def __init__(self, files, group_by='doc'):
+        self.files = files
         self.__read_data(self.config) # get data    
         self.grouping = group_by
         
@@ -147,7 +146,7 @@ class DotTXT(object):
         # records according to the configuration specified
         # INTERFACE DEFINITION: this iterator should always yield a string
         for doc in self.data_map:
-            yield Preprocessor(doc,'./config/preprocessing.yaml').run()
+            yield Preprocessor(doc,'./config/preprocessing.yaml', self.files).run()
             self.__read_data(self.config) # get data    
 
     
@@ -158,28 +157,25 @@ class DotTXT(object):
         
     def __read_data(self, files):
         # let's determine the file types we're dealing with
-        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
+        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.files]])
         
         if filetype == {'.txt'}:
             # map to implement "lazy loading"; only read files as we need
-            #self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read(), self.config['files'])
-            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x)).read(), self.config['files'])
+            self.data_map = map(lambda x: open(os.path.join('', x)).read(), self.files)        
         else:
             print('ERROR: NON-TXT PASSED TO TXT CLASS')
 
 
-
-##################################################
-###    non-functional, start for DotCSV class  ###
-##################################################
-
-# TRY PANDAS pd.readcsv()
 class DotCSV(DotTXT): 
+    '''
+    CSV class for corpus of .csv files. 
+    can iterate by rows or by columns
+    '''
 
-    def __init__(self, config_file, group_by):
+    def __init__(self, files, group_by):
         self.grouping = group_by
-        self.config = config_file
-        self.__read_data(self.config)
+        self.files = files
+        self.__read_data(self.files)
         # self.__log() # log things
         
 
@@ -187,14 +183,15 @@ class DotCSV(DotTXT):
         for csv_file in self.data_map:
             reader = csv.reader(csv_file, delimiter=',')
             if self.grouping == "row":
-
                 for row in reader:
                     # print('ROW: \n', row)
                     row_cells = ""
                     for cell in row:
                         # print('cell: \n', cell)
                         row_cells += ' ' + cell + ' '
-                    yield row_cells
+                    # print('row_cells:\n', row_cells)
+                    yield Preprocessor(row_cells,'./config/preprocessing.yaml', self.files).run()
+
 
             elif self.grouping == "col":
                 columns = zip(*reader)
@@ -203,9 +200,9 @@ class DotCSV(DotTXT):
                         # print ('COLUMN:\n\n', column )
                         for cell in column:
                             col_text += ' ' + cell + ' '
-                        yield col_text
+                        yield Preprocessor(col_text,'./config/preprocessing.yaml', self.files).run()
+        self.__read_data(self.files) # get data   
 
-        self.__read_data(self.config) # get data    
             
     def __len__(self):
         # we may want to do some introspection of our data objects; how many records
@@ -231,13 +228,13 @@ class DotCSV(DotTXT):
                     first_row = False
             return num_cols
 
-    def __read_data(self, config):
+    def __read_data(self, files):
         # let's determine the file types we're dealing with
-        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
+        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.files]])
         
         if filetype == {'.csv'}:
             # map to implement "lazy loading"; only read files as we need
-            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x),'rU'), self.config['files'])
+            self.data_map = map(lambda x: open(os.path.join('', x),'rU'), self.files)        
         else:
             print('ERROR: NON-CSV PASSED TO CSV CLASS')
         
