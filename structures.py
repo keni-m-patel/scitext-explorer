@@ -295,6 +295,7 @@ class Tweets(object):
             tweets = json.loads(doc.read(), encoding = "utf-8")
             for tweet in tweets:
                 yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml', self.files).run()
+        self.__read_data(self.files)
 
 
     def __read_data(self, files):
