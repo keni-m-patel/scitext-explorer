@@ -118,6 +118,11 @@ class Preprocessor(object):
                 #lem_words = []
             self.output = lem_words  # dict(zip(self.file_names, self.token_list))
             return ' '.join(self.output)
+
+
+        return self.corpus
+
+
         
         
 
