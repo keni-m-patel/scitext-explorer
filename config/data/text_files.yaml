@@ -2,21 +2,13 @@
 # but the only difference is that there is a specific specified between data elements
 
 
-directory: \Users\597543\scitext-explorer\test\data
-
-
-#files:
-    #- Recitation13.pdf
-# test: one, two, three
-
-files:
-     - adventure.txt
-     - pride_and_prejudice.txt
+directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/books/
+# SalesJan2009.csv
 
 
 
 # enter 'doc', 'row', 'page', or 'col' for how you want to group/iterate through you documents
-group_by: 'col'
+group_by: 'row'
 
 
 

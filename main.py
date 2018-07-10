@@ -22,7 +22,7 @@ TODO:
 '''
 
 
-corpus = Corpus('./config/data/text_files.yaml', 'doc')
+corpus = Corpus('./config/data/text_files.yaml')
 
 tokens = corpus()
 tokenized_docs = []
@@ -39,19 +39,6 @@ doc_names = corpus.get_file_names()
 
 
 token_dict = dict(zip(doc_names, chain(tokenized_docs, repeat(None))))
-
-
-
-    
-
-# have to change this to give a string instead of DOT Text fsvsdvgbd nonsense
-
-#print(file_object)
-#print(file_object.grouping)
-#print(file_object.config)
-
-
-
 
 
 alg = Algorithm(tokens, './config/algorithms.yaml')
