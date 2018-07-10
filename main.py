@@ -18,7 +18,7 @@ TODO:
 '''
 
 
-corpus = Corpus('./config/data/text_files.yaml', 'doc')
+corpus = Corpus('./config/data/text_files.yaml')
 
 
 tokens = corpus()
@@ -34,7 +34,8 @@ for doc in tokens:
 doc_names = corpus.get_file_names()
 
 
-token_dict = dict(zip(doc_names, chain(tokenized_docs, repeat(None))))
+
+#token_dict = dict(zip(doc_names, chain(tokenized_docs, repeat(None))))
 
 
 #print(file_object)

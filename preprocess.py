@@ -4,22 +4,28 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer, PorterStemmer, SnowballStemmer
 from nltk import pos_tag
+import os
+
 
 
 
 class Preprocessor(object):
+
     """This holds all the preprocessing which includes removes stop words, lowercases, removes punctuation, and removes symbols. It then has options to either lemmatizes or stem or neither.  """
     
-    def __init__(self, corpus, config_file):
-        
+
+    def __init__(self, corpus, config_file, files):
+
         self.corpus = corpus
         self.config = utilities.get_config(config_file)
-        
-        #self.file_names = self.corpus.get_file_names()
-        
+        self.file_names = [os.path.basename(x) for x in files]
 
-        print('\n\n\n\nRunning the following preprocessing actions:\n\n')
-        print(self.config)
+        if not self.file_names:
+            print('\n\nERROR: no files selected, must select at least one file to process, exiting program\n\n')
+            return
+
+        # print('\n\n\n\nRunning the following preprocessing actions:\n\n')
+        # print(self.config)
 
         self.stop = list(set(stopwords.words('english')))
         self.tokenized_docs = []
@@ -56,13 +62,13 @@ class Preprocessor(object):
             
         if self.config['SnowballStemmer']:
             stem_tool = SnowballStemmer('english')
-        
 
         if not self.config['lemmatize']: 
             stem_words = []
             for item in tokens:
                 stem_words.append(stem_tool.stem(item))
             self.output = stem_words
+
 
         if self.config['lemmatize']:
             wordnet_lemmatizer = WordNetLemmatizer()
@@ -80,9 +86,11 @@ class Preprocessor(object):
                     position = 'n'
                 lemmatized = wordnet_lemmatizer.lemmatize(item, pos = position)
                 lem_words.append(lemmatized)
+
             self.output = lem_words
             
         return ' '.join(self.output)
+
         
         
 
