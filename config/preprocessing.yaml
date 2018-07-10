@@ -36,7 +36,7 @@ SnowballStemmer: False
 #Automatically stems if both are set to True
 
 
-lemmatize: True
+lemmatize: False
 
 
 #To create a list of Named Entities set to True. If not set to False
