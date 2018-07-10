@@ -1,4 +1,6 @@
-
-
+export_word_cloud: True
+export_scatter_plot: True
+kmean_hist: True
+tsne: True
 
 # do T or F to turn on or off
