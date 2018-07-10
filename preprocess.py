@@ -27,8 +27,8 @@ class Preprocessor(object):
             print('\n\nERROR: no files selected, must select at least one file to process, exiting program\n\n')
             return
 
-        print('\n\n\n\nRunning the following preprocessing actions:\n\n')
-        print(self.config)
+        # print('\n\n\n\nRunning the following preprocessing actions:\n\n')
+        # print(self.config)
 
         self.stop = list(set(stopwords.words('english')))
         self.tokenized_docs = []
@@ -84,9 +84,9 @@ class Preprocessor(object):
             
             stem_words.append([stem_tool.stem(item) for item in tokens])
                 
- #               for item in tokens:
-                    #[map(lambda x:x+1 ,group) for group in self.tokenized_docs]
-#                    stem_words.append(stem_tool.stem(item))
+               # for item in tokens:
+               #      #[map(lambda x:x+1 ,group) for group in self.tokenized_docs]
+               #      stem_words.append(stem_tool.stem(item))
                     
                 #self.token_list.append(stem_words)
                 #stem_words = []
@@ -116,7 +116,7 @@ class Preprocessor(object):
                 lem_words.append(lemmatized)
                 #self.token_list.append(lem_words)
                 #lem_words = []
-            self.output = lem_words#dict(zip(self.file_names, self.token_list))
+            self.output = lem_words  # dict(zip(self.file_names, self.token_list))
             return ' '.join(self.output)
         
         
