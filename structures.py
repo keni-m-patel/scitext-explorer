@@ -9,18 +9,16 @@ todo:
 4) 
 
 '''
-#JUST PUT PREPROCESSOR IN HERE
+
 import os
 import utilities
 import logging
 import decorators
 from PyPDF2 import PdfFileReader as PDFR
 import csv
-from os import listdir
-from os.path import isfile, join
 from preprocess import Preprocessor
 
-from nltk import sent_tokenize, word_tokenize, pos_tag
+
 
 
 

@@ -7,17 +7,17 @@ Created on Fri Jul  6 08:22:02 2018
 import inspect
 import utilities
 import matplotlib.pyplot as plt
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.cluster import KMeans, MiniBatchKMeans
-from algorithms import Algorithm
-from sklearn.manifold import mds, TSNE
+
+from sklearn.cluster import KMeans
+from sklearn.manifold import TSNE
+
 import pandas as pd
 
 
 
-from collections import defaultdict, Counter
+from collections import Counter
 
-from sklearn.metrics.pairwise import cosine_similarity, pairwise_distances
+
 
 class Visualization(object):
 
@@ -59,7 +59,7 @@ class Visualization(object):
         
         output_text = ""
         for vis,result in result_dict.items():
-            output_text += "\n\nvisualization: {}\n\nresult:\n\n {}\n\n".format(alg,result)
+            output_text += "\n\nvisualization: {}\n\nresult:\n\n {}\n\n".format(vis,result)
 
         print(output_text)
         return output_text
