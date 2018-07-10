@@ -7,21 +7,25 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer, PorterStemmer, SnowballStemmer
 from nltk import pos_tag
 
+import os
+import glob
+
 
 #use mapping
 #dont use of list of list, use dict perhaps
 
 
 class Preprocessor(object):
-    """ my docstring goes here"""
-    
-    def __init__(self, corpus, config_file):
-        
+
+    def __init__(self, corpus, config_file, files):
+
         self.corpus = corpus
         self.config = utilities.get_config(config_file)
-        
-        #self.file_names = self.corpus.get_file_names()
-        
+        self.file_names = [os.path.basename(x) for x in files]
+
+        if not self.file_names:
+            print('\n\nERROR: no files selected, must select at least one file to process, exiting program\n\n')
+            return
 
         print('\n\n\n\nRunning the following preprocessing actions:\n\n')
         print(self.config)

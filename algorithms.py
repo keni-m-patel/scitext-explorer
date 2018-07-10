@@ -130,12 +130,15 @@ class BagOfWords(VectorSpaceModels):
 
         vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
 
-        list1 = self.dtm.toarray()[0]
-        list2 = self.dtm.toarray()[1]
+        sorted_by_value = sorted(vocabulary.items(), key=lambda kv: kv[1])
 
-        dtm_array = [sum(x) for x in zip(list1, list2)]
+        sorted_vocab = [k for k,v in sorted_by_value]
 
-        self.bow = {word:freq for word,freq in zip(vocabulary.keys(), dtm_array)}
+        print(sorted_vocab) 
+
+        dtm_array = sum(self.dtm.toarray())  # [sum(x) for x in zip(list1, list2)]
+
+        self.bow = {word:freq for word,freq in zip(sorted_vocab, dtm_array)}
         self.output = self.bow
 
 
@@ -145,7 +148,7 @@ class WordFreq(VectorSpaceModels):
     def __init__(self, corpus, bow_output):
         super().__init__(corpus)
         print('\n\n\n\nRunning the following algorithm: \nWord Frequency\n\n')
-        print('bow output\n', bow_output)
+        # print('bow output\n', bow_output)
         self.bow_output = bow_output
         self.output = None
         self.run()
@@ -167,6 +170,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
     def __init__(self, corpus):
         super().__init__(corpus)
         print('\n\n\n\nRunning the following algorithm: \nLatent Semantic Analysis\n\n')
+
 
     def run(self):
 
