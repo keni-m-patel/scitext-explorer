@@ -309,8 +309,24 @@ class Tweets(object):
             print("ERROR: NON-JSON PASSED TO TWEET CLASS")
 
 
+#################################
+####   NEW: (TB IMPLEMENTED)   ####
+#################################
+'''
+class Merge(object):
+ 
+    # class to merge a list corpus objects into one 
+    # to let all docs be iterable as part of  merged corpus
 
+    def __init__(self, corpus_list):
+        self.corpus_list = corpus_list
 
+    def __iter__(self):
+        for corpus in self.corpus_list:
+            for doc in corpus:
+                yield doc 
+
+'''
 
 
 

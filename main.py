@@ -18,9 +18,14 @@ logging.basicConfig(level=logging.DEBUG,
                     filemode='w')
 '''
 TODO:
-# if select something (ie for PP) that doesn't work for ALG or VIZ, spit out warning
+# ADD MERGE class and functionality with master config and then allow link to all config classes
 '''
-
+'''
+corpus_list = [Corpus(config_file) for config_file in utilities.get_config('./config/master.yaml')]
+corpus_list = [corpus() for corpus in corpus_list]
+corpi = Merge(corpus_list)
+# run stuff
+'''
 
 corpus = Corpus('./config/data/text_files.yaml')
 
