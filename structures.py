@@ -176,7 +176,7 @@ class DotTXT(object):
 
         for doc in self.data_map:
             yield Preprocessor(doc,'./config/preprocessing.yaml', self.files).run()
-            self.__read_data(self.files) # get data    
+        self.__read_data(self.files) # get data    
 
     
     def __len__(self):

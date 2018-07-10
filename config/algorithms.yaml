@@ -1,6 +1,6 @@
 bag_of_words: True
-latent_semantic_analysis: False
-LSA_Concepts: False
+latent_semantic_analysis: True
+LSA_Concepts: True
 kmeans: False 
 tsne: False 
 tf_idf: False
