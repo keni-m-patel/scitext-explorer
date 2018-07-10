@@ -1,37 +1,21 @@
 import inspect
 import utilities
 
-from sklearn.manifold import mds, TSNE
-
 from sklearn.feature_extraction.text import CountVectorizer
-
 from sklearn.decomposition import TruncatedSVD
-
 from sklearn.feature_extraction.text import TfidfVectorizer
-
 from sklearn.preprocessing import Normalizer
-
-
-from sklearn.cluster import KMeans, MiniBatchKMeans
-
-from collections import defaultdict, Counter
-
-from sklearn.metrics.pairwise import cosine_similarity, pairwise_distances
-#from sklearn import metrics
-
+from sklearn.cluster import KMeans
+from collections import Counter
+from sklearn.metrics.pairwise import cosine_similarity
 
 import pandas as pd
-#from pandas import DataFrame
-#import warnings
-#import numpy
-
 
 from nltk import ne_chunk, pos_tag
 from nltk.tree import Tree
 from nltk.tokenize import word_tokenize
 
 
-import matplotlib.pyplot as plt
 
 
 class Algorithm(object):
@@ -39,15 +23,11 @@ class Algorithm(object):
 
     def __init__(self, data, config_file):
         self.corpus = data
-        pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
         self.results = None
         print('\n\n\n\nRunning the following algorithms:\n\n')
         print(self.config)
         
-    #def __iter__(self):
-        #for item in self.corpus:
-            #yield item
 
     def run(self):
         result_dict = {}
@@ -67,11 +47,7 @@ class Algorithm(object):
                 k = kmeans(self.corpus, l.dtm_lsa)
                 k.run()
                 result_dict['kmeans'] = k.output
-               
-            if self.config['tsne']:
-                t = tsne(self.corpus, l.dist)
-                t.run()
-                result_dict['tsne'] = t.output
+             
 
         if 'bag_of_words' in self.config:
             b = BagOfWords(self.corpus)
@@ -79,9 +55,9 @@ class Algorithm(object):
             result_dict['bag_of_words'] = b.output
             
             if 'word_frequency_table' in self.config:
-                w = WordFreq(self.corpus, b.output)
-                w.run()
-                result_dict['word_frequency'] = w.output
+                self.w = WordFreq(self.corpus, b.output)
+                self.w.run()
+                result_dict['word_frequency'] = self.w.output
                 
         if self.config['tf_idf']:
             t = Tf_Idf(self.corpus)
@@ -98,8 +74,8 @@ class Algorithm(object):
         for alg,result in result_dict.items():
             output_text += "\n\nalgorithm: {}\n\nresult:\n\n {}\n\n".format(alg,result)
 
-        print(output_text)
-        return output_text
+        #print(output_text)
+        return result_dict
 
 
 
@@ -160,8 +136,9 @@ class WordFreq(VectorSpaceModels):
         bow_data = bow_series.to_frame().reset_index()
         bow_data.columns = ['Word', 'Word Count']
         bow_max = bow_data.sort_values(by='Word Count', ascending=False)
-        bow_max = bow_max.set_index('Word')
+        #bow_max = bow_max.set_index('Word')
         self.output = bow_max
+        return self.output
 
 
 class LatentSemanticAnalysis(VectorSpaceModels):
@@ -204,18 +181,23 @@ class LSA_Concepts(VectorSpaceModels):
             for term in  self.output:
                 print(term[0])
             print (" ")
+<<<<<<< HEAD
             
 class kmeans(LatentSemanticAnalysis): 
     """Initiates k-means: clustering data according to means"""
     
+=======
+   
+         
+class kmeans(LatentSemanticAnalysis):  
+>>>>>>> master
     def __init__(self, corpus, dtm_lsa):
         super().__init__(corpus) 
         self.dtm_lsa = dtm_lsa
         
     def run(self):
         km_dict = dict()
-        max_clusters = 2
-
+        max_clusters = 5
         for index in range(2,max_clusters + 1):
             km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
             km.fit(self.dtm_lsa)
@@ -223,6 +205,7 @@ class kmeans(LatentSemanticAnalysis):
             km_dict[index] = Counter(clusters)
             self.output = (index, Counter(clusters))
 
+<<<<<<< HEAD
 '''
         models[index] = {'KMeans Model': km,
                              'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
@@ -284,6 +267,8 @@ class tsne(LatentSemanticAnalysis):
         x, y = position[:, 0], position[:, 1]
         self.output = (x,y)
 
+=======
+>>>>>>> master
 
 class Tf_Idf(VectorSpaceModels):
     """Initiates Tf-Idf algorithm: compares word frequency in a collection of documents."""
@@ -297,7 +282,7 @@ class Tf_Idf(VectorSpaceModels):
         """Vectorize the words."""
         
         #figure out how to link up with preprocess
-        self.vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, encoding='utf-8')
+        self.vectorizer = TfidfVectorizer(stop_words=None, lowercase=False, encoding='utf-8')
         
         #Tranforms corpus into vectorized words
         self.dtm = self.vectorizer.fit_transform(self.corpus)
