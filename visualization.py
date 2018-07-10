@@ -156,7 +156,6 @@ class tsne(kmean_hist):
         
         
         x, y = position[ 0, : ], position[1, : ]
-        print(x,y)
         self.output = pd.DataFrame({'x' : x, 'y' : y})
         
           

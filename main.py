@@ -3,7 +3,6 @@ import logging
 from structures import Corpus
 from algorithms import Algorithm
 from visualization import Visualization
-from itertools import chain, repeat
 
 
 
@@ -18,7 +17,7 @@ TODO:
 '''
 
 
-corpus = Corpus('./config/data/text_files.yaml')
+corpus = Corpus('./config/data/pdf_files.yaml')
 
 
 tokens = corpus()
