@@ -284,7 +284,6 @@ class Tweets(object):
         self.__read_data(self.files)
         self.grouping = group_by
         self.msg_flag = 1
-        self.counter = 0
       
 
     def __iter__(self):  
@@ -295,9 +294,6 @@ class Tweets(object):
         for doc in self.data_map:
             tweets = json.loads(doc.read(), encoding = "utf-8")
             for tweet in tweets:
-                if self.counter > 10:
-                    break
-                self.counter += 1
                 yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml', self.files).run()
         self.__read_data(self.files)
 
