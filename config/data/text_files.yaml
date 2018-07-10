@@ -2,15 +2,10 @@
 # but the only difference is that there is a specific specified between data elements
 
 
+<<<<<<< HEAD
 directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/books/
 # SalesJan2009.csv
 
-
-# files:
-#      # - adventure.txt
-#      # - pride_and_prejudice.txt
-#      # - testcsv.csv
-#      # - SalesJan2009.csv
 
 
 # enter 'doc', 'row', 'page', or 'col' for how you want to group/iterate through you documents
