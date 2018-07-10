@@ -72,7 +72,7 @@ class Algorithm(object):
         for alg,result in result_dict.items():
             output_text += "\n\nalgorithm: {}\n\nresult:\n\n {}\n\n".format(alg,result)
 
-        print(output_text)
+        #print(output_text)
         return result_dict
 
 
@@ -182,8 +182,7 @@ class kmeans(LatentSemanticAnalysis):
         
     def run(self):
         km_dict = dict()
-        max_clusters = 2
-
+        max_clusters = 5
         for index in range(2,max_clusters + 1):
             km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
             km.fit(self.dtm_lsa)

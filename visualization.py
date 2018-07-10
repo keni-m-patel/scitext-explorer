@@ -61,7 +61,7 @@ class Visualization(object):
         for vis,result in result_dict.items():
             output_text += "\n\nvisualization: {}\n\nresult:\n\n {}\n\n".format(vis,result)
 
-        print(output_text)
+        #print(output_text)
         return output_text
 
 class VectorSpaceModels(object):
@@ -82,7 +82,7 @@ class kmean_hist(VectorSpaceModels):
         
     def run(self):
             km_dict = dict()
-            max_clusters = 2
+            max_clusters = 5
     
             for index in range(2,max_clusters + 1):
                 km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
@@ -154,16 +154,13 @@ class tsne(kmean_hist):
         
         position = tsne_matrix.fit_transform(self.dist)
         
-        
-        x, y = position[ 0, : ], position[1, : ]
-        self.output = pd.DataFrame({'x' : x, 'y' : y})
+        self.output = pd.DataFrame(position)
         
           
 class File_Export(VectorSpaceModels):
     
     def __init__(self): #,corpus):
         #super().__init__(doc_names) #corpus)
-        
         results_dict = None
         
 
@@ -188,6 +185,7 @@ class File_Export(VectorSpaceModels):
         self.clusters_and_names = clusters_and_names
         self.clusters_and_names.columns = ['docnames', 'label']
         self.clusters_and_names['title'] = self.clusters_and_names['label']
+        self.x_and_y.columns = ['x','y']
         scatter_plot_data = self.clusters_and_names.join(self.x_and_y)
         scatter_plot_data = scatter_plot_data.set_index('docnames')
         
