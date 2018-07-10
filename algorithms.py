@@ -181,16 +181,12 @@ class LSA_Concepts(VectorSpaceModels):
             for term in  self.output:
                 print(term[0])
             print (" ")
-<<<<<<< HEAD
+
             
 class kmeans(LatentSemanticAnalysis): 
     """Initiates k-means: clustering data according to means"""
     
-=======
-   
-         
-class kmeans(LatentSemanticAnalysis):  
->>>>>>> master
+
     def __init__(self, corpus, dtm_lsa):
         super().__init__(corpus) 
         self.dtm_lsa = dtm_lsa
@@ -205,70 +201,7 @@ class kmeans(LatentSemanticAnalysis):
             km_dict[index] = Counter(clusters)
             self.output = (index, Counter(clusters))
 
-<<<<<<< HEAD
-'''
-        models[index] = {'KMeans Model': km,
-                             'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
-                             'Document-Clustering': Counter(clusters),
-                             'Frame': pd.DataFrame({'Cluster': clusters})}
-                                                    #'Document Name': docnames})}
-        background = 'gray'
-        higlight = '#2171b5'
-        accent = 'dimgray'
-        font_size = 10.0
-        index = 0
-        for key,val in models.items():
 
-            if index%5 == 0:
-                fig = plt.figure(figsize=(12,2))
-
-            ax = fig.add_subplot(151 + index%5)
-
-            x = [k for k,v in sorted(val['Document-Clustering'].items())]
-            y = [v for k,v in sorted(val['Document-Clustering'].items())]
-
-            plt.bar(x,y,width = 0.8, color = background)
-
-            plt.title(str(key) + ' Document\nClusters', fontweight = 'normal', color = accent)
-
-
-            plt.grid(False)
-            ax.tick_params(direction='out', length = 4, width = 1, colors = background,
-                           labelsize = font_size, labelcolor = background)
-
-
-            ax.spines['right'].set_visible(False)
-            ax.spines['left'].set_visible(False)
-            ax.spines['top'].set_visible(False)
-            ax.spines['bottom'].set_visible(False)
-
-            plt.savefig('Corpus2 Clusters ' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
-
-'''
-
-class tsne(LatentSemanticAnalysis):
-    """Initiates t-SNE: Basically dimensionality reduction on the clusters."""
-    
-    def __init__(self, corpus, dist):
-        super().__init__(corpus)      
-        
-        self.dist = dist         
-
-    def run(self):
-        random_state = 1423
-        tsne_matrix = TSNE(n_components=2, perplexity=30.0, early_exaggeration=12.0, learning_rate=200.0, 
-                           n_iter=1000, n_iter_without_progress=300, min_grad_norm=1e-07, metric='euclidean', 
-                           init='random', verbose=0, random_state = random_state, method='barnes_hut', angle=0.5)
-
-        
-        position = tsne_matrix.fit_transform(self.dist)
-        
-
-        x, y = position[:, 0], position[:, 1]
-        self.output = (x,y)
-
-=======
->>>>>>> master
 
 class Tf_Idf(VectorSpaceModels):
     """Initiates Tf-Idf algorithm: compares word frequency in a collection of documents."""
