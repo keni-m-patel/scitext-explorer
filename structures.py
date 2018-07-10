@@ -160,7 +160,7 @@ class DotTXT(object):
 
     def __init__(self, files, group_by='doc'):
         self.files = files
-        self.__read_data(self.config) # get data    
+        self.__read_data(self.files) # get data    
         self.grouping = group_by
         self.msg_flag = 1
         
@@ -176,7 +176,7 @@ class DotTXT(object):
 
         for doc in self.data_map:
             yield Preprocessor(doc,'./config/preprocessing.yaml', self.files).run()
-            self.__read_data(self.config) # get data    
+            self.__read_data(self.files) # get data    
 
     
     def __len__(self):
