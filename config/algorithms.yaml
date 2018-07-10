@@ -1,9 +1,8 @@
-bag_of_words: True
-latent_semantic_analysis: False
+bag_of_words: False
+latent_semantic_analysis: True
 LSA_Concepts: False
-kmeans: False 
-tsne: False 
-tf_idf: False
+kmeans: True
+tf_idf: True
 word_frequency_table: False
 named_entities: False
 
