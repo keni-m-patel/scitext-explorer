@@ -43,16 +43,18 @@ class Visualization(object):
             #result_dict['kmean_hist'] = k.output
             
             if self.config['tsne']:
-                t = tsne(self.alg.run(), self.doc_names, k.dtm_lsa, k.clusters_and_names)
+                t = tsne(self.alg.run(), self.doc_names, k.dtm_lsa)
                 t.run()
-                t.File_Export()
                 result_dict['tsne'] = t.output
-            
+                
+                if 'export_scatter_plot' in self.config:
+                    sp = File_Export()
+                    sp.export_scatter_plot(t.output, k.clusters_and_names)
+                    
     
         if 'export_word_cloud' in self.config:
-            wc = File_Export(self.alg.run()) #,self.corpus):                   ###GET THIS TO WORK
-            wc.export_word_cloud()
-            
+            wc = File_Export() #,self.corpus):                   ###GET THIS TO WORK
+            wc.export_word_cloud(self.alg.run())
         
         
         output_text = ""
@@ -97,7 +99,7 @@ class kmean_hist(VectorSpaceModels):
             
             
             self.clusters_and_names = models[index]['Frame']
-            self.clusters_and_names = self.clusters_and_names.set_index('Document Name')
+            
             #self.clusters_and_names.columns['docnames','labels']
             #self.clusters_and_names['title'] = self.clusters_and_names['labels']
            
@@ -137,12 +139,11 @@ class kmean_hist(VectorSpaceModels):
                 
 
 class tsne(kmean_hist):
-    def __init__(self, result_dict, doc_names, dtm_lsa, clusters_and_names):
+    def __init__(self, result_dict, doc_names, dtm_lsa):
         #super().__init__(doc_names)      
         
         self.dist = dtm_lsa         
 
-        self.clusters_and_names = clusters_and_names
         
     def run(self):
         random_state = 1423
@@ -155,37 +156,46 @@ class tsne(kmean_hist):
         
         
         x, y = position[ 0, : ], position[1, : ]
-        self.output = pd.DataFrame(x,y)
+        print(x,y)
+        self.output = pd.DataFrame({'x' : x, 'y' : y})
         
-        
-        
-    def File_Export(self):
-        
-        x_and_y = self.output
-        print(x_and_y)
-        x_and_y.columns = ['x','y']
-        
-        print(self.clusters_and_names)
-        self.clusters_and_names.columns = ['docnames', 'label']
-        self.clusters_and_names['title'] = self.clusters_and_names['label']
-        new_frame = self.clusters_and_names.append(x_and_y)
-        print(new_frame)
-
           
 class File_Export(VectorSpaceModels):
     
-    def __init__(self, result_dict): #,corpus):
-        #super().__init__() #corpus)
+    def __init__(self): #,corpus):
+        #super().__init__(doc_names) #corpus)
+        
+        results_dict = None
+        
+
+    def export_word_cloud(self, result_dict): #, alg.wordfreq):
         
         self.word_frequency = result_dict['word_frequency']
-        
-    
-    def export_word_cloud(self): #, alg.wordfreq):
-    
         # Create a Pandas Excel writer using XlsxWriter as the engine.
         writer = pd.ExcelWriter('word_cloud_form.xlsx', engine='xlsxwriter')
         #bow_max.to_excel(writer, sheet_name='Sheet1')
         self.word_frequency.to_excel(writer, sheet_name='Sheet1')
+        # Get the xlsxwriter objects from the dataframe writer object.
+
+        #worksheet = writer.sheets['Sheet1']
+        # Close the Pandas Excel writer and output the Excel file.
+        writer.save()
+        
+    
+        
+    def export_scatter_plot(self, x_and_y, clusters_and_names):
+        
+        self.x_and_y = x_and_y
+        self.clusters_and_names = clusters_and_names
+        self.clusters_and_names.columns = ['docnames', 'label']
+        self.clusters_and_names['title'] = self.clusters_and_names['label']
+        scatter_plot_data = self.clusters_and_names.join(self.x_and_y)
+        scatter_plot_data = scatter_plot_data.set_index('docnames')
+        
+        # Create a Pandas Excel writer using XlsxWriter as the engine.
+        writer = pd.ExcelWriter('scatter_plot_form.xlsx', engine='xlsxwriter')
+        #bow_max.to_excel(writer, sheet_name='Sheet1')
+        scatter_plot_data.to_excel(writer, sheet_name='Sheet1')
         # Get the xlsxwriter objects from the dataframe writer object.
 
         #worksheet = writer.sheets['Sheet1']

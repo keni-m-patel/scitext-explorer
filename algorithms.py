@@ -256,7 +256,7 @@ class Tf_Idf(VectorSpaceModels):
         
     def run(self):
         #figure out how to link up with preprocess
-        self.vectorizer = TfidfVectorizer(stop_words='english', lowercase=True, encoding='utf-8')
+        self.vectorizer = TfidfVectorizer(stop_words=None, lowercase=False, encoding='utf-8')
         
         #Tranforms corpus into vectorized words
         self.dtm = self.vectorizer.fit_transform(self.corpus)
