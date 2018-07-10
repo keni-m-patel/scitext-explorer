@@ -14,6 +14,7 @@ import os
 import utilities
 import logging
 import decorators
+import json
 from PyPDF2 import PdfFileReader as PDFR
 import csv
 from os import listdir
@@ -57,6 +58,10 @@ class Corpus(object):
         elif filetype == {'.csv'}:
             c = DotCSV(self.config, self.grouping)
             return c
+        
+        elif filetype == {'.json'}:
+            j = Tweets(self.config, self.grouping)
+            return j
 
         else:
             print('filetype not set or filetype is not recognized/compatible')
@@ -230,4 +235,23 @@ class DotCSV(DotTXT):
             self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x),'rU'), self.config['files'])
         else:
             print('ERROR: NON-CSV PASSED TO CSV CLASS')
+ 
+class Tweets(object):
+    def __init__(self, config, group_by):
+        self.config = config
+        self.__read_data(self.config)
+        self.grouping = group_by
         
+        
+    def __read_data(self, config):
+        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.config['files']]])
+        if filetype == {'.json'}:
+            self.data_map = map(lambda x: open(os.path.join(self.config['directory'], x),'rU'), self.config['files'])
+        else:
+            print("ERROR: NON-JSON PASSED TO JSON CLASS")
+      
+    def __iter__(self):  
+        for doc in self.data_map:
+            tweets = json.loads(doc.read(), encoding = "utf-8")
+            for tweet in tweets:
+                yield tweet['Text']
