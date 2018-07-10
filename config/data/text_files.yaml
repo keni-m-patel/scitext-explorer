@@ -2,7 +2,7 @@
 # but the only difference is that there is a specific specified between data elements
 
 
-directory: \Users\597543\scitext-explorer\test\data
+directory: \Users\Brendan Gochett\scitext-explorer\test\data\tweets\
 
 
 #files:
@@ -13,6 +13,8 @@ files:
      - adventure.txt
      - pride_and_prejudice.txt
 
+#files:
+    #- capstone_2_twitter_dataset_2.json 
 
 
 # enter 'doc', 'row', 'page', or 'col' for how you want to group/iterate through you documents
