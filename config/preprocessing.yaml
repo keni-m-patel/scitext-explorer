@@ -22,8 +22,7 @@ remove_stop_list: []
 #Stemming is the process for reducing inflected words to their word stem, base or root form by chopping off word endings
 #Example: dropping --> drop
 
-PorterStemmer: False
-
+PorterStemmer: True
 SnowballStemmer: False
 
 
