@@ -72,7 +72,7 @@ class Algorithm(object):
         for alg,result in result_dict.items():
             output_text += "\n\nalgorithm: {}\n\nresult:\n\n {}\n\n".format(alg,result)
 
-        print(output_text)
+        # print(output_text)
         return result_dict
 
 
