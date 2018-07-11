@@ -9,7 +9,7 @@ new_stop_set_list: []
 
 #To add stopwords to the current list of stopwords enter words into the blank list below
 
-add_stop_list: ['wounds']
+add_stop_list: []
 
 
 #To remove stopwords to the current list of stopwords enter words into the blank list below
