@@ -44,9 +44,9 @@ doc_names = corpus.get_file_names()
 
 alg = Algorithm(tokens, './config/algorithms.yaml')
 
+alg_ran = alg.run()
 
-
-vis = Visualization( './config/visualization.yaml',alg, doc_names)
+vis = Visualization( './config/visualization.yaml', './config/algorithms.yaml', alg_ran, doc_names)
 
 
 vis.run()

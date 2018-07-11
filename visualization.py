@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jul  6 08:22:02 2018
 
-@author: 597667
-"""
 import inspect
 import utilities
 import matplotlib.pyplot as plt
@@ -21,11 +16,12 @@ from collections import Counter
 
 class Visualization(object):
 
-    def __init__(self, config_file, alg, doc_names):
+    def __init__(self, config_file, config_file_alg, alg_ran, doc_names):
         #self.corpus = data
         #pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
-        self.alg=alg
+        self.config_alg = utilities.get_config(config_file_alg)
+        self.alg_ran=alg_ran
         self.doc_names = doc_names
         print('\n\n\n\nRunning the following visualization:\n\n')
         print(self.config)
@@ -37,13 +33,13 @@ class Visualization(object):
     def run(self):
         result_dict = {}
         
-        if self.config['kmean_hist']:
-            k = kmean_hist(self.alg.run(), self.doc_names)
+        if self.config['kmean_hist'] and self.config_alg['latent_semantic_analysis']:
+            k = kmean_hist(self.alg_ran, self.doc_names)
             k.run()
             #result_dict['kmean_hist'] = k.output
             
             if self.config['tsne']:
-                t = tsne(self.alg.run(), self.doc_names, k.dtm_lsa)
+                t = tsne(self.alg_ran, self.doc_names, k.dtm_lsa)
                 t.run()
                 result_dict['tsne'] = t.output
                 
@@ -52,9 +48,9 @@ class Visualization(object):
                     sp.export_scatter_plot(t.output, k.clusters_and_names)
                     
     
-        if self.config['export_word_cloud']:
+        if self.config['export_word_cloud'] and self.config_alg['word_frequency_table']:
             wc = File_Export() #,self.corpus):                   ###GET THIS TO WORK
-            wc.export_word_cloud(self.alg.run())
+            wc.export_word_cloud(self.alg_ran)
         
         
         output_text = ""

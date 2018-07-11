@@ -44,13 +44,23 @@ class Preprocessor(object):
             self.stop = list(set(self.stop) - set(self.config['remove_stop_list']))
         
         tokens = word_tokenize(self.corpus)
+        
         if self.config['lemmatize']:  
             tokens = pos_tag(tokens)
-            tokens = [t[0].lower() for t in tokens]              
-            tokens = [t for t in tokens if t[0].isalpha() and t[0] not in self.stop]
+            if self.config['lowercase']:
+                tokens = [t[0].lower() for t in tokens]
+            if self.config['alpha_only']:
+                tokens = [t for t in tokens if t[0].isalpha()]   #and t[0] not in self.stop]
+            if self.config['use_stop_list']:
+                tokens = [t for t in tokens if t[0] not in self.stop]
+                
         else:
-            tokens = [t.lower() for t in tokens]              
-            tokens = [t for t in tokens if t.isalpha() and t not in self.stop]   
+            if self.config['lowercase']:
+                tokens = [t.lower() for t in tokens]    
+            if self.config['alpha_only']:
+                tokens = [t for t in tokens if t.isalpha()]  #and t not in self.stop]   
+            if self.config['use_stop_list']:
+                tokens = [t for t in tokens if t not in self.stop]
          
              
         self.token_list = []
@@ -68,8 +78,6 @@ class Preprocessor(object):
             for item in tokens:
                 stem_words.append(stem_tool.stem(item))
             self.output = stem_words
-            
-            return ' '.join(self.output)
 
 
         if self.config['lemmatize']:
@@ -90,12 +98,14 @@ class Preprocessor(object):
                 lem_words.append(lemmatized)
 
             self.output = lem_words
-            
-            return ' '.join(self.output)
+        
+       
+        if not self.config['lemmatize'] and self.config['PorterStemmer'] and self.config['SnowballStemmer']:
+            self.output = tokens
 
 
 
-        return self.corpus
+        return ' '.join(self.output)
 
 
         
