@@ -1,3 +1,4 @@
+
 import inspect
 import utilities
 
@@ -241,23 +242,22 @@ class Named_Entity_Recognition(TopicModels):
                 for chunk in chunked_docs:
                     
                     for i in chunk:
-                       
+                    
                         if type(i) == Tree:
                             current_chunk.append(" ".join([token for token, pos in i.leaves()]))
-                            
                         elif current_chunk:
-                            named_entity = " ".join(current_chunk)
-                            
-                            if named_entity not in continuous_chunk:
-                                
-                                continuous_chunk.append(named_entity)
-                                current_chunk = []
+                                named_entity = " ".join(current_chunk)
+                                if named_entity not in continuous_chunk:
+                                        continuous_chunk.append(named_entity)
+                                        current_chunk = []
                         else:
-                            continue
-                     
-                    #list of named entities
+                                continue
+                            
+                    continuous_chunk = ' '.join(continuous_chunk)
                     self.output.append(continuous_chunk)
-                    print(self.output.append(continuous_chunk))
+       
+     
+ 
  
 
         
