@@ -17,6 +17,21 @@ add_stop_list: []
 remove_stop_list: []
 
 
+#To use stopword list set to True. To use no stopword list set to False.
+
+use_stop_list: True
+
+
+#To lowercase alll letters set to True
+
+lowercase: True
+
+
+#To use use only alphabetical letters set to True
+
+alpha_only: True
+
+
 #Note: NOT able to do both stemming and lemmatization 
 #Would suggestion picking one method
 #Automatically lemmatizes if both are set to True

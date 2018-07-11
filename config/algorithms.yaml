@@ -17,7 +17,8 @@ bag_of_words: True
 #Only works when bag_of_words is True
 word_frequency_table: False
 
-#Gives a list of Named Entities CURRENTLY NOT WORKING
+#Gives a list of Named Entities
+#Only works correctly when undergo no preprocessing
 named_entities: False
 
 
