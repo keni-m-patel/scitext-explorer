@@ -47,12 +47,12 @@ class Algorithm(object):
                 result_dict['kmeans'] = k.output
              
 
-        if 'bag_of_words' in self.config:
+        if self.config['bag_of_words']:
             b = BagOfWords(self.corpus)
             b.run()
             result_dict['bag_of_words'] = b.output
             
-            if 'word_frequency_table' in self.config:
+            if self.config['word_frequency_table']:
                 self.w = WordFreq(self.corpus, b.output)
                 self.w.run()
                 result_dict['word_frequency'] = self.w.output
@@ -72,7 +72,7 @@ class Algorithm(object):
         for alg,result in result_dict.items():
             output_text += "\n\nalgorithm: {}\n\nresult:\n\n {}\n\n".format(alg,result)
 
-        #print(output_text)
+        # print(output_text)
         return result_dict
 
 
@@ -257,6 +257,7 @@ class Named_Entity_Recognition(TopicModels):
                      
                     #list of named entities
                     self.output.append(continuous_chunk)
+                    print(self.output.append(continuous_chunk))
  
 
         

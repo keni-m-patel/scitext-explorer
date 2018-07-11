@@ -63,7 +63,7 @@ class Preprocessor(object):
         if self.config['SnowballStemmer']:
             stem_tool = SnowballStemmer('english')
 
-        if not self.config['lemmatize']: 
+        if ((self.config['PorterStemmer'] or self.config['SnowballStemmer']) and not self.config['lemmatize']): 
             stem_words = []
             for item in tokens:
                 stem_words.append(stem_tool.stem(item))
