@@ -1,3 +1,4 @@
+
 import inspect
 import utilities
 
@@ -47,12 +48,12 @@ class Algorithm(object):
                 result_dict['kmeans'] = k.output
              
 
-        if 'bag_of_words' in self.config:
+        if self.config['bag_of_words']:
             b = BagOfWords(self.corpus)
             b.run()
             result_dict['bag_of_words'] = b.output
             
-            if 'word_frequency_table' in self.config:
+            if self.config['word_frequency_table']:
                 self.w = WordFreq(self.corpus, b.output)
                 self.w.run()
                 result_dict['word_frequency'] = self.w.output
@@ -72,6 +73,7 @@ class Algorithm(object):
         for alg,result in result_dict.items():
             output_text += "\n\nalgorithm: {}\n\nresult:\n\n {}\n\n".format(alg,result)
 
+
         #print(output_text)
         return result_dict
 
@@ -88,6 +90,8 @@ class VectorSpaceModels(object):
 
         
 class BagOfWords(VectorSpaceModels):
+    
+     """Gives words and their word count"""
   
      def __init__(self, corpus):
         super().__init__(corpus)
@@ -115,6 +119,8 @@ class BagOfWords(VectorSpaceModels):
 
 
 class WordFreq(VectorSpaceModels):
+    
+    """Used to output Bag of Words as a DataFrame"""
     
     def __init__(self, corpus, bow_output):
         super().__init__(corpus)
@@ -218,12 +224,16 @@ class Tf_Idf(VectorSpaceModels):
 
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
+    
+    """Parent Class for Named Entity Recognition"""
 
     
     def __init__(self, corpus):
         self.corpus = corpus
 
 class Named_Entity_Recognition(TopicModels):
+    
+    """This takes in a document strings and obtains the Named Entities from each. """
     
     def __init__(self, corpus):
         super().__init__(corpus)
@@ -241,22 +251,25 @@ class Named_Entity_Recognition(TopicModels):
                 for chunk in chunked_docs:
                     
                     for i in chunk:
-                       
+                    
                         if type(i) == Tree:
                             current_chunk.append(" ".join([token for token, pos in i.leaves()]))
-                            
                         elif current_chunk:
-                            named_entity = " ".join(current_chunk)
-                            
-                            if named_entity not in continuous_chunk:
-                                
-                                continuous_chunk.append(named_entity)
-                                current_chunk = []
+                                named_entity = " ".join(current_chunk)
+                                if named_entity not in continuous_chunk:
+                                        continuous_chunk.append(named_entity)
+                                        current_chunk = []
                         else:
-                            continue
-                     
-                    #list of named entities
+                                continue
+                            
+                    continuous_chunk = ' '.join(continuous_chunk)
                     self.output.append(continuous_chunk)
+       
+        #Replace 'the_word' with * 'the_word' * -> "highlight" it
+        #filedata.replace(the_word,  "*" + the_word + '*')
+
+     
+ 
  
 
         
