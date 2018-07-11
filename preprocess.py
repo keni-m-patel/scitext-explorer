@@ -68,8 +68,6 @@ class Preprocessor(object):
             for item in tokens:
                 stem_words.append(stem_tool.stem(item))
             self.output = stem_words
-            
-            return ' '.join(self.output)
 
 
         if self.config['lemmatize']:
@@ -90,12 +88,14 @@ class Preprocessor(object):
                 lem_words.append(lemmatized)
 
             self.output = lem_words
-            
-            return ' '.join(self.output)
+        
+       
+        if not self.config['lemmatize'] and self.config['PorterStemmer'] and self.config['SnowballStemmer']:
+            self.output = tokens
 
 
 
-        return self.corpus
+        return ' '.join(self.output)
 
 
         

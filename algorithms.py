@@ -90,6 +90,8 @@ class VectorSpaceModels(object):
 
         
 class BagOfWords(VectorSpaceModels):
+    
+     """Gives words and their word count"""
   
      def __init__(self, corpus):
         super().__init__(corpus)
@@ -117,6 +119,8 @@ class BagOfWords(VectorSpaceModels):
 
 
 class WordFreq(VectorSpaceModels):
+    
+    """Used to output Bag of Words as a DataFrame"""
     
     def __init__(self, corpus, bow_output):
         super().__init__(corpus)
@@ -220,12 +224,16 @@ class Tf_Idf(VectorSpaceModels):
 
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
+    
+    """Parent Class for Named Entity Recognition"""
 
     
     def __init__(self, corpus):
         self.corpus = corpus
 
 class Named_Entity_Recognition(TopicModels):
+    
+    """This takes in a document strings and obtains the Named Entities from each. """
     
     def __init__(self, corpus):
         super().__init__(corpus)
@@ -257,6 +265,9 @@ class Named_Entity_Recognition(TopicModels):
                     continuous_chunk = ' '.join(continuous_chunk)
                     self.output.append(continuous_chunk)
        
+        #Replace 'the_word' with * 'the_word' * -> "highlight" it
+        #filedata.replace(the_word,  "*" + the_word + '*')
+
      
  
  

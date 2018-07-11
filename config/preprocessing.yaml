@@ -9,7 +9,7 @@ new_stop_set_list: []
 
 #To add stopwords to the current list of stopwords enter words into the blank list below
 
-add_stop_list: []
+add_stop_list: ['wounds']
 
 
 #To remove stopwords to the current list of stopwords enter words into the blank list below
@@ -26,7 +26,7 @@ remove_stop_list: []
 #Stemming is the process for reducing inflected words to their word stem, base or root form by chopping off word endings
 #Example: dropping --> drop
 
-PorterStemmer: False
+PorterStemmer: True
 SnowballStemmer: False
 
 
