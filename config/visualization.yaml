@@ -1,4 +1,5 @@
-export_word_cloud: True
+export_word_cloud: False
+export_scatter_plot: True
 kmean_hist: True
 tsne: True
 

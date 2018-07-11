@@ -2,11 +2,14 @@
 # but the only difference is that there is a specific specified between data elements
 
 # example directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/tweets/
-directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/text/
+
+directory: /Users/597543/scitext-explorer/test/data/text/
+
 
 
 # enter 'doc', 'page', 'tweet', row', or 'col' for how you want to group/iterate through you documents
-group_by: 'doc'
+#group_by: 'doc'
+
 
 
 

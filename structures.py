@@ -9,7 +9,7 @@ todo:
 4) 
 
 '''
-#JUST PUT PREPROCESSOR IN HERE
+
 import os
 import utilities
 import logging
@@ -17,12 +17,9 @@ import decorators
 import json
 from PyPDF2 import PdfFileReader as PDFR
 import csv
-from os import listdir
-from os.path import isfile, join
 from preprocess import Preprocessor
-
-from nltk import sent_tokenize, word_tokenize, pos_tag
 import glob
+
 
 
 logger = logging.getLogger(__name__)
@@ -176,7 +173,7 @@ class DotTXT(object):
 
         for doc in self.data_map:
             yield Preprocessor(doc,'./config/preprocessing.yaml', self.files).run()
-            self.__read_data(self.files) # get data    
+        self.__read_data(self.files) # get data    
 
     
     def __len__(self):
@@ -295,6 +292,10 @@ class Tweets(object):
             tweets = json.loads(doc.read(), encoding = "utf-8")
             for tweet in tweets:
                 yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml', self.files).run()
+        self.__read_data(self.files)
+
+    def __len__(self):
+        pass
 
 
     def __read_data(self, files):
