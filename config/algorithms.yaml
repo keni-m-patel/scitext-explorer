@@ -1,10 +1,23 @@
-bag_of_words: True
-latent_semantic_analysis: False
+#Ray
+latent_semantic_analysis: True
+
+#Ray
 LSA_Concepts: False
-kmeans: False 
-tsne: False 
-tf_idf: False
-word_frequency_table: False
+
+#Ray
+kmeans: True
+
+#Ray
+tf_idf: True
+
+#Gives a dictionary of words with their frequency
+bag_of_words: False
+
+#Gives a table of words with their frequency
+#Only works when bag_of_words is True
+word_frequency_table: True
+
+#Gives a list of Named Entities CURRENTLY NOT WORKING
 named_entities: False
 
 

@@ -37,7 +37,7 @@ class Visualization(object):
     def run(self):
         result_dict = {}
         
-        if 'kmean_hist' in self.config:
+        if self.config['kmean_hist']:
             k = kmean_hist(self.alg.run(), self.doc_names)
             k.run()
             #result_dict['kmean_hist'] = k.output
@@ -47,12 +47,12 @@ class Visualization(object):
                 t.run()
                 result_dict['tsne'] = t.output
                 
-                if 'export_scatter_plot' in self.config:
+                if self.config['export_scatter_plot']:
                     sp = File_Export()
                     sp.export_scatter_plot(t.output, k.clusters_and_names)
                     
     
-        if 'export_word_cloud' in self.config:
+        if self.config['export_word_cloud']:
             wc = File_Export() #,self.corpus):                   ###GET THIS TO WORK
             wc.export_word_cloud(self.alg.run())
         

@@ -10,17 +10,13 @@ import os
 
 
 class Preprocessor(object):
-<<<<<<< HEAD
 
-    def __init__(self, corpus, config_file, files):
-=======
 
     """This holds all the preprocessing which includes removes stop words, lowercases, removes punctuation, and removes symbols. It then has options to either lemmatizes or stem or neither.  """
     
 
     def __init__(self, corpus, config_file, files):
 
->>>>>>> 2cbfa9d9f2f72b4ad2c89555968bec3affe43fdf
         self.corpus = corpus
         self.config = utilities.get_config(config_file)
         self.file_names = [os.path.basename(x) for x in files]
@@ -68,7 +64,7 @@ class Preprocessor(object):
         if self.config['SnowballStemmer']:
             stem_tool = SnowballStemmer('english')
 
-        if not self.config['lemmatize']: 
+        if ((self.config['PorterStemmer'] or self.config['SnowballStemmer']) and not self.config['lemmatize']): 
             stem_words = []
             for item in tokens:
                 stem_words.append(stem_tool.stem(item))

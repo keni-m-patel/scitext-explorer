@@ -32,21 +32,17 @@ for doc in tokens:
 
 doc_names = corpus.get_file_names()
 
-
-
-<<<<<<< HEAD
-token_dict = dict(zip(doc_names, chain(tokenized_docs, repeat(None))))
-=======
 #token_dict = dict(zip(doc_names, chain(tokenized_docs, repeat(None))))
 
 
 #print(file_object)
 #print(file_object.grouping)
 #print(file_object.config)
->>>>>>> 2cbfa9d9f2f72b4ad2c89555968bec3affe43fdf
+
 
 
 alg = Algorithm(tokens, './config/algorithms.yaml')
+
 
 
 vis = Visualization( './config/visualization.yaml',alg, doc_names)
