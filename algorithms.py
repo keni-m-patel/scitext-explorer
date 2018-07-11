@@ -44,6 +44,7 @@ class Algorithm(object):
         print('\n\n\n\nRunning the following algorithms:\n\n')
         print(self.config)
         
+        
     #def __iter__(self):
         #for item in self.corpus:
             #yield item

@@ -9,7 +9,7 @@ new_stop_set_list: []
 
 #To add stopwords to the current list of stopwords enter words into the blank list below
 
-add_stop_list: []
+add_stop_list: [the]
 
 
 #To remove stopwords to the current list of stopwords enter words into the blank list below
@@ -36,7 +36,7 @@ SnowballStemmer: False
 #Automatically stems if both are set to True
 
 
-lemmatize: False
+lemmatize: True
 
 
 #To create a list of Named Entities set to True. If not set to False
