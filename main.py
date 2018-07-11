@@ -37,7 +37,13 @@ for doc in tokens:
     tokenized_docs.append(doc)
     
 
-doc_names = [corpus.get_file_names() for corpus in corpus_list]  # corpus.get_file_names()
+corpus_doc_name_lists = [corpus.get_file_names() for corpus in corpus_list]  # corpus.get_file_names()
+doc_names = []
+for c_list in corpus_doc_name_lists:
+    doc_names += c_list
+
+print('doc_names\n\n', doc_names)
+
 
 
 
