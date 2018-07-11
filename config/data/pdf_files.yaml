@@ -1,3 +1,7 @@
-directory: /Users/597543/scitext-explorer/test/data/BinLaden/
+
+# directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/BinLaden
+
+directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/BinLaden/
+
 
 group_by: 'doc'
