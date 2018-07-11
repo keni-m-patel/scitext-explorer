@@ -1,8 +1,8 @@
 #Ray
-latent_semantic_analysis: False
+latent_semantic_analysis: True
 
 #Ray
-LSA_Concepts: False
+LSA_Concepts: True
 
 #Ray
 kmeans: False
@@ -15,7 +15,7 @@ bag_of_words: True
 
 #Gives a table of words with their frequency
 #Only works when bag_of_words is True
-word_frequency_table: False
+word_frequency_table: True
 
 #Gives a list of Named Entities
 #Only works correctly when undergo no preprocessing

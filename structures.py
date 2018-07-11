@@ -309,7 +309,7 @@ class Tweets(object):
 ###################################
 ####   NEW: (TB IMPLEMENTED)   ####
 ###################################
-'''
+
 class Merge(object):
  
     # class to merge a list corpus objects into one 
@@ -323,7 +323,7 @@ class Merge(object):
             for doc in corpus:
                 yield doc 
 
-'''
+
 
 
 
