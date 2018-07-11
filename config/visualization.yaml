@@ -1,6 +1,15 @@
+#Exports data to an excel doc in the same folder as scitext explorer
+#Excel doc can be used with Tableau to create a word cloud
 export_word_cloud: False
-export_scatter_plot: True
-kmean_hist: True
-tsne: True
+
+#Exports data to an excel doc in the same folder as scitext explorer
+#Excel doc can be used with Tableau to create a word cloud
+export_scatter_plot: False
+
+#Ray
+kmean_hist: False
+
+#Ray
+tsne: False
 
 # do T or F to turn on or off
