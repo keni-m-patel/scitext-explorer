@@ -1,8 +1,9 @@
 
 import logging
-from structures import Corpus
+from structures import Corpus, Merge
 from algorithms import Algorithm
 from visualization import Visualization
+import utilities
 
 
 
@@ -13,14 +14,20 @@ logging.basicConfig(level=logging.DEBUG,
                     filemode='w')
 '''
 TODO:
-# if select something (ie for PP) that doesn't work for ALG or VIZ, spit out warning
+# ADD MERGE class and functionality with master config and then allow link to all config classes
+
 '''
+print('\n\nreading from the following configuration files: \n\n ', utilities.get_config('./config/data/master.yaml')['config_files'])
+corpus_list = [Corpus(config_file) for config_file in utilities.get_config('./config/data/master.yaml')['config_files']]
+corpi = Merge([corpus() for corpus in corpus_list])
+# run stuff
 
+# corpus = Corpus('./config/data/text_files.yaml')
+print('corpi', corpi)
+for c in corpi:
+    print(c)
 
-corpus = Corpus('./config/data/pdf_files.yaml')
-
-
-tokens = corpus()
+tokens = corpi  # corpus()
 
 
 tokenized_docs = []
@@ -30,14 +37,21 @@ for doc in tokens:
     tokenized_docs.append(doc)
     
 
-doc_names = corpus.get_file_names()
+corpus_doc_name_lists = [corpus.get_file_names() for corpus in corpus_list]  # corpus.get_file_names()
+doc_names = []
+for c_list in corpus_doc_name_lists:
+    doc_names += c_list
 
-#token_dict = dict(zip(doc_names, chain(tokenized_docs, repeat(None))))
+print('doc_names\n\n', doc_names)
 
 
-#print(file_object)
-#print(file_object.grouping)
-#print(file_object.config)
+
+# token_dict = dict(zip(doc_names, chain(tokenized_docs, repeat(None))))
+
+
+# print(file_object)
+# print(file_object.grouping)
+# print(file_object.config)
 
 
 

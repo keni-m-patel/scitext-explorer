@@ -74,7 +74,7 @@ class Algorithm(object):
             output_text += "\n\nalgorithm: {}\n\nresult:\n\n {}\n\n".format(alg,result)
 
 
-        #print(output_text)
+        print(output_text)
         return result_dict
 
 
@@ -109,8 +109,6 @@ class BagOfWords(VectorSpaceModels):
         sorted_by_value = sorted(vocabulary.items(), key=lambda kv: kv[1])
 
         sorted_vocab = [k for k,v in sorted_by_value]
-
-        print(sorted_vocab) 
 
         dtm_array = sum(self.dtm.toarray())  # [sum(x) for x in zip(list1, list2)]
 

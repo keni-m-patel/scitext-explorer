@@ -5,7 +5,6 @@
 
 2) Open Text_files.yaml 
     A) change file directory to your data folder path (if necessary, not needed for testers on SonjMac)
-    B) under "files:" change files listed to match your dataset corpus
 
 3) Run main.py
     In terminal: 
