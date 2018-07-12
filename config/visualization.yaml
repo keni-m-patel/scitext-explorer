@@ -2,24 +2,24 @@
 #Excel doc can be used with Tableau to create a word cloud
 #Note: Only works when Bag of Words and Word Frequency Table are both set to True in algorithms.yaml
 
-export_word_cloud: True
+export_word_cloud: False
 
 
 #Exports data to an excel doc in the same folder as scitext explorer
 #Excel doc can be used with Tableau to create a word cloud
 #Note: Only works when Latent Semantic Analysis is set to True in algorithms.yaml
 
-export_scatter_plot: True
+export_scatter_plot: False
 
 
 #Ray
 
-kmean_hist: True
+kmean_hist: False
 
 
 #Ray
 
-tsne: True
+tsne: False
 
 
 # do T or F to turn on or off

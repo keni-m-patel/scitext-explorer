@@ -20,6 +20,7 @@ from nltk.tokenize import word_tokenize
 
 
 class Algorithm(object):
+    
 
     def __init__(self, data, config_file):
         self.corpus = data
@@ -63,6 +64,7 @@ class Algorithm(object):
             t.run()
             result_dict['tf_idf'] = t.output
             
+        #HAVE TO SWITCH TO NOT RUN WITH ANY PREPROCESSING
         if self.config['named_entities']:
             ner = Named_Entity_Recognition(self.corpus)
             ner.run()
@@ -176,7 +178,7 @@ class LSA_Concepts(VectorSpaceModels):
             termsInComp = zip (terms,comp)
             self.output =  sorted(termsInComp, key=lambda x: x[1], reverse=True) [:10]
             print("Concept %d:" % i )
-            for term in  self.output:
+            for term in self.output:
                 print(term[0])
             print (" ")
    
@@ -240,6 +242,7 @@ class Named_Entity_Recognition(TopicModels):
         print('\n\n\n\nRunning the following algorithm: \nNamed_Entity_Recognition\n\n')
         
         self.output = []
+        self.test = []
         
     def run(self):
         for item in self.corpus:
@@ -251,16 +254,19 @@ class Named_Entity_Recognition(TopicModels):
                 for chunk in chunked_docs:
                     
                     for i in chunk:
-                    
+                        self.test.append(i)
                         if type(i) == Tree:
                             current_chunk.append(" ".join([token for token, pos in i.leaves()]))
                         elif current_chunk:
+                                
                                 named_entity = " ".join(current_chunk)
+                                
                                 if named_entity not in continuous_chunk:
                                         continuous_chunk.append(named_entity)
                                         current_chunk = []
                         else:
                                 continue
+                        
                             
                     continuous_chunk = ' '.join(continuous_chunk)
                     self.output.append(continuous_chunk)

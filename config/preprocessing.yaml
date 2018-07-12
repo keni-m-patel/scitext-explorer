@@ -1,7 +1,14 @@
-#All the follwing lists must be in format ['a','an','at']
+#To undergo no preprocesssing and ignore all the following preprocessing actions set to False
+undergo_preprocess: False
+
+
+#To use english stopword list from nltk set to True. If set to False uses no stopwords unless added manually in this config file
+
+default_stop_list: True
+
+
+#All the following lists must be in format ['a','an','at']
 #Leave list blank if you do not wish to undergo any changes
-
-
 #To replace current stopword list with a brand new one enter words into the blank list below
 
 new_stop_set_list: []
@@ -17,12 +24,7 @@ add_stop_list: []
 remove_stop_list: []
 
 
-#To use stopword list set to True. To use no stopword list set to False.
-
-use_stop_list: True
-
-
-#To lowercase alll letters set to True
+#To lowercase all letters set to True
 
 lowercase: True
 

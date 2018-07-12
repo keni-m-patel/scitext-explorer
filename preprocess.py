@@ -26,13 +26,18 @@ class Preprocessor(object):
 
         # print('\n\n\n\nRunning the following preprocessing actions:\n\n')
         # print(self.config)
-
-        self.stop = list(set(stopwords.words('english')))
+        if self.config['default_stop_list']:
+            self.stop = list(set(stopwords.words('english')))
+        else:
+            self.stop = []
         self.tokenized_docs = []
         self.named_entities_list = []
         
         
     def run(self):
+        
+        if not self.config['undergo_preprocess']:
+            return self.corpus
 
         if self.config['new_stop_set_list']:    
             self.stop = self.config['new_stop_set_list']
@@ -51,16 +56,16 @@ class Preprocessor(object):
                 tokens = [t[0].lower() for t in tokens]
             if self.config['alpha_only']:
                 tokens = [t for t in tokens if t[0].isalpha()]   #and t[0] not in self.stop]
-            if self.config['use_stop_list']:
-                tokens = [t for t in tokens if t[0] not in self.stop]
+          
+            tokens = [t for t in tokens if t[0] not in self.stop]
                 
         else:
             if self.config['lowercase']:
                 tokens = [t.lower() for t in tokens]    
             if self.config['alpha_only']:
                 tokens = [t for t in tokens if t.isalpha()]  #and t not in self.stop]   
-            if self.config['use_stop_list']:
-                tokens = [t for t in tokens if t not in self.stop]
+            
+            tokens = [t for t in tokens if t not in self.stop]
          
              
         self.token_list = []
@@ -98,12 +103,6 @@ class Preprocessor(object):
                 lem_words.append(lemmatized)
 
             self.output = lem_words
-        
-       
-        if not self.config['lemmatize'] and self.config['PorterStemmer'] and self.config['SnowballStemmer']:
-            self.output = tokens
-
-
 
         return ' '.join(self.output)
 

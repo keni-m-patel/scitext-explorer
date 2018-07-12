@@ -19,16 +19,7 @@ TODO:
 
 corpus = Corpus('./config/data/pdf_files.yaml')
 
-
 tokens = corpus()
-
-
-tokenized_docs = []
-
-
-for doc in tokens:
-    tokenized_docs.append(doc)
-    
 
 doc_names = corpus.get_file_names()
 
