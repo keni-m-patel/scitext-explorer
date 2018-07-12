@@ -9,13 +9,32 @@ new_stop_set_list: []
 
 #To add stopwords to the current list of stopwords enter words into the blank list below
 
-add_stop_list: []
+add_stop_list: [the]
 
 
 #To remove stopwords to the current list of stopwords enter words into the blank list below
 
 remove_stop_list: []
 
+
+#To use stopword list set to True. To use no stopword list set to False.
+
+use_stop_list: True
+
+
+#To lowercase alll letters set to True
+
+lowercase: True
+
+
+#To use use only alphabetical letters set to True
+
+alpha_only: True
+
+
+#Note: NOT able to do both stemming and lemmatization 
+#Would suggestion picking one method
+#Automatically lemmatizes if both are set to True
 
 #To undergo stemming for tokenized words set to True. If not set to False
 #Choose either PorterStemmer() or SnowballStemmer from nltk
@@ -30,12 +49,8 @@ SnowballStemmer: False
 #Uses WordNetLemmatizer() from nltk
 #Lemmatization is the process of grouping together the different inflected forms of a word so they can be analysed as a single item by using vocabulary and part of speech rules
 #Example run --> ran
-#Note: NOT able to do both stemming and lemmatization 
-#Would suggestion picking one method
-#Automatically stems if both are set to True
 
-
-lemmatize: False
+lemmatize: True
 
 
 #To create a list of Named Entities set to True. If not set to False
