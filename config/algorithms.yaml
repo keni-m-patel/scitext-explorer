@@ -1,13 +1,16 @@
-#Ray
+#Process Tfidf results through SVD and gives a matrix
+#Requirements tf_idf 
 latent_semantic_analysis: True
 
-#Ray
+#Gives top 5 concepts for each document in relation to corpus
+#Requirements LSA to work
 LSA_Concepts: True
 
-#Ray
+#Outputs corpus clusters
+#Requirements LSA
 kmeans: False
 
-#Ray
+#Process corpus for term frequency inverse document frequency
 tf_idf: False
 
 #Gives a dictionary of words with their frequency
