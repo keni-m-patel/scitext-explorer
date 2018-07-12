@@ -1,32 +1,28 @@
 # scitext-explorer
 ## Getting Started
-1)  Open algorithms.yaml 
-        A.) Type "True" to turn on an alg, otherwise type "False"
-
-2) Open Text_files.yaml 
-    A) change file directory to your data folder path (if necessary, not needed for testers on SonjMac)
-
-3) Run main.py
-    In terminal: 
-    1. navigate to scitext-explorer folder 
-    2. enter $python3 main.py
 
 
-4) View results
-
-Preprocessing:
-
-Stopwords: Stopwords are common, filler words (such as a, an, the) that are found across    most documents.
-
-Remove punctuation: Remove punctuation that may be filtered in along with the words.
-
-Word Stemming: Removes affixes of words in order to get the root word (i.e. "jumping", "jumper", "jumped" all turns into to "jump).
-
-Word Lemmatization: Reduces different forms of words down to the base word (i.e. "sing", "sang", and "sung" all turn into "sing").
+Open the config folder to edit the configuration files for each of the following steps:
 
 
+1. DATA INGESTION
+
+Open master.yaml in the data folder and enter the config file names you want to use for each directory of data. Model data config files off of pdf_files.yaml and text_files.yaml, and make one config file for each directory of documents you'd like to use. The directory entry can be used to specify where your files are located for each folder of documents.
 
 
+2. PREPROCESSING
+
+Open the preprocessing.yaml file and edit your preprocessing preferences as modeled.
+
+
+3. ALGORITHMS
+
+Open the algorithm.yaml file and toggle desired algorithms to run as modeled.
+
+
+4. VISUALIZATION
+
+Open the visualization.yaml file and toggle desired visualizations to run as modeled.
 
 
 
@@ -41,6 +37,5 @@ Word Lemmatization: Reduces different forms of words down to the base word (i.e.
 *edit config file
 *run main.py
 ### Author(s)
-
-
-
+Sonja Lindberg, Tom Walsh, Perri Solhjou, Brendan Gochett, Ray Akhonbay
+###
