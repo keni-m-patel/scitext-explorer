@@ -4,14 +4,14 @@ latent_semantic_analysis: True
 
 #Gives top 5 concepts for each document in relation to corpus
 #Requirements LSA to work
-LSA_Concepts: True
+LSA_Concepts: False
 
 #Outputs corpus clusters
 #Requirements LSA
-kmeans: False
+kmeans: True
 
 #Process corpus for term frequency inverse document frequency
-tf_idf: False
+tf_idf: True
 
 #Gives a dictionary of words with their frequency
 bag_of_words: True

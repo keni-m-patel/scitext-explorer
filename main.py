@@ -20,12 +20,12 @@ TODO:
 print('\n\nreading from the following configuration files: \n\n ', utilities.get_config('./config/data/master.yaml')['config_files'])
 corpus_list = [Corpus(config_file) for config_file in utilities.get_config('./config/data/master.yaml')['config_files']]
 corpi = Merge([corpus() for corpus in corpus_list])
-# run stuff
+#run stuff
 
-# corpus = Corpus('./config/data/text_files.yaml')
-print('corpi', corpi)
-for c in corpi:
-    print(c)
+#corpus = Corpus('./config/data/pdf_files.yaml')
+#print('corpi', corpi)
+#for c in corpi:
+#   print(c)
 
 tokens = corpi  # corpus()
 
