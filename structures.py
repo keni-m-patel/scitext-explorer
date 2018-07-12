@@ -11,6 +11,7 @@ todo:
 '''
 
 import os
+import ntpath
 import utilities
 import logging
 import decorators
@@ -71,8 +72,7 @@ class Corpus(object):
 
 
     def get_file_names(self):
-        onlyfiles = [f for f in self.files] 
-        return onlyfiles
+        return [os.path.splitext(ntpath.basename(f))[0] for f in self.files]
 
     # def __log(self):
     #     logger.info('Data Map created for: ' + ', '.join(self.config['files']))
