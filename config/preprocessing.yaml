@@ -1,5 +1,5 @@
 #To undergo no preprocesssing and ignore all the following preprocessing actions set to False
-undergo_preprocess: False
+undergo_preprocess: True
 
 
 #To use english stopword list from nltk set to True. If set to False uses no stopwords unless added manually in this config file
@@ -31,7 +31,7 @@ lowercase: True
 
 #To use use only alphabetical letters set to True
 
-alpha_only: True
+alpha_only: False
 
 
 #Note: NOT able to do both stemming and lemmatization 
@@ -43,7 +43,7 @@ alpha_only: True
 #Stemming is the process for reducing inflected words to their word stem, base or root form by chopping off word endings
 #Example: dropping --> drop
 
-PorterStemmer: True
+PorterStemmer: False
 SnowballStemmer: False
 
 
