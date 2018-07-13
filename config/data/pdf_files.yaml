@@ -1,7 +1,8 @@
 
-# directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/BinLaden/  <- be sure to inculde this final forward slash
+directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/BinLaden/  
+# NOTE: be sure to inculde the final  slash
 
-directory: /users/597667/scitext-explorer/test/data/BinLaden/
+# directory: /users/597667/scitext-explorer/test/data/BinLaden/
 
 
 group_by: 'doc'
