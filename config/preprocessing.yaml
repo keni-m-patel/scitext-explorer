@@ -1,59 +1,60 @@
-#All the follwing lists must be in format ['a','an','at']
-#Leave list blank if you do not wish to undergo any changes
+# All the follwing lists must be in format ['a','an','at']
+# Leave list blank if you do not wish to undergo any changes
 
 
-#To replace current stopword list with a brand new one enter words into the blank list below
+# To replace current stopword list with a brand new one enter words into the blank list below
 
 new_stop_set_list: []
 
 
-#To add stopwords to the current list of stopwords enter words into the blank list below
+# To add stopwords to the current list of stopwords enter words into the blank list below
 
-add_stop_list: [the]
+add_stop_list: []
 
 
-#To remove stopwords to the current list of stopwords enter words into the blank list below
+# To remove stopwords to the current list of stopwords enter words into the blank list below
 
 remove_stop_list: []
 
 
-#To use stopword list set to True. To use no stopword list set to False.
+# To use stopword list set to True. To use no stopword list set to False.
 
-use_stop_list: True
+use_stop_list: False
 
 
-#To lowercase alll letters set to True
+# To lowercase alll letters set to True, must turn on for 
 
 lowercase: True
 
 
-#To use use only alphabetical letters set to True
+# To use use only alphabetical letters set to True, NOTE: must turn on for lemmatizing
 
-alpha_only: True
+alpha_only: False
 
 
-#Note: NOT able to do both stemming and lemmatization 
-#Would suggestion picking one method
-#Automatically lemmatizes if both are set to True
+# Note: NOT able to do both stemming and lemmatization 
+# Would suggestion picking one method
+# Automatically lemmatizes if both are set to True
 
-#To undergo stemming for tokenized words set to True. If not set to False
-#Choose either PorterStemmer() or SnowballStemmer from nltk
-#Stemming is the process for reducing inflected words to their word stem, base or root form by chopping off word endings
-#Example: dropping --> drop
+# To undergo stemming for tokenized words set to True. If not set to False
+# Choose either PorterStemmer() or SnowballStemmer from nltk
+# Stemming is the process for reducing inflected words to their word stem, base or root form by chopping off word endings
+# Example: dropping --> drop
 
-PorterStemmer: True
+PorterStemmer: False
 SnowballStemmer: False
 
 
-#To undergo lemmatization for tokenized words set to True. If not set to False
-#Uses WordNetLemmatizer() from nltk
-#Lemmatization is the process of grouping together the different inflected forms of a word so they can be analysed as a single item by using vocabulary and part of speech rules
-#Example run --> ran
+# To undergo lemmatization for tokenized words set to True. If not set to False
+# NOTE: lemmatizer requires alpha_only a
+# Uses WordNetLemmatizer() from nltk
+# Lemmatization is the process of grouping together the different inflected forms of a word so they can be analysed as a single item by using vocabulary and part of speech rules
+# Example run --> ran
 
 lemmatize: True
 
 
-#To create a list of Named Entities set to True. If not set to False
-#Named Entities are names of persons, organizations, locations, expressions of times, quantities, monetary values, ect.
+# To create a list of Named Entities set to True. If not set to False
+# Named Entities are names of persons, organizations, locations, expressions of times, quantities, monetary values, ect.
 
 
