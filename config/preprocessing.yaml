@@ -46,7 +46,7 @@ SnowballStemmer: False
 
 
 # To undergo lemmatization for tokenized words set to True. If not set to False
-# NOTE: lemmatizer requires alpha_only a
+# NOTE: lemmatizer requires lowercasing, please run with lowercasing set to True.
 # Uses WordNetLemmatizer() from nltk
 # Lemmatization is the process of grouping together the different inflected forms of a word so they can be analysed as a single item by using vocabulary and part of speech rules
 # Example run --> ran
