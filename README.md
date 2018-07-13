@@ -7,7 +7,7 @@ Open the config folder to edit the configuration files for each of the following
 
 1. DATA INGESTION
 
-Open master.yaml in the data folder and enter the config file names you want to use for each directory of data. Model data config files off of pdf_files.yaml and text_files.yaml, and make one config file for each directory of documents you'd like to use. The directory entry can be used to specify where your files are located for each folder of documents.
+Open master.yaml in the data folder and enter the config file names you want to use for each directory of data. Model data config files off of pdf_files.yaml and text_files.yaml, and make one config file for each directory of documents you'd like to use. The directory entry can be used to specify where your files are located for each folder of documents in the format of "directory/thing/"
 
 
 2. PREPROCESSING
