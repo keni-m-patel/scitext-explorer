@@ -3,5 +3,5 @@
 
 config_files: 
   # examples:
-  # - './config/data/text_files.yaml'
-  # - './config/data/pdf_files.yaml'
+  - './config/data/text_files.yaml'
+  - './config/data/pdf_files.yaml'
