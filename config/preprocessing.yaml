@@ -16,7 +16,7 @@ new_stop_set_list: []
 
 #To add stopwords to the current list of stopwords enter words into the blank list below
 
-add_stop_list: []
+add_stop_list: [the]
 
 
 #To remove stopwords to the current list of stopwords enter words into the blank list below
@@ -52,7 +52,7 @@ SnowballStemmer: False
 #Lemmatization is the process of grouping together the different inflected forms of a word so they can be analysed as a single item by using vocabulary and part of speech rules
 #Example run --> ran
 
-lemmatize: False
+lemmatize: True
 
 
 #To create a list of Named Entities set to True. If not set to False
