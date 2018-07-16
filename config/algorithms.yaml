@@ -24,8 +24,5 @@ bag_of_words: True
 #Only works when bag_of_words is True
 word_frequency_table: True
 
-#Can add your own algorithm code
-custom: print(self.corpus)
-
 # do T or F to turn on or off
 
