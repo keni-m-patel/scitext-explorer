@@ -47,12 +47,12 @@ class Visualization(object):
                 t.run()
                 result_dict['tsne'] = t.output
                 
-                if self.config['export_scatter_plot']:
+                if self.config['export_scatter_plot_data']:
                     sp = File_Export()
                     sp.export_scatter_plot(t.output, k.clusters_and_names)
                     
     
-        if self.config['export_word_cloud'] and self.config_alg['word_frequency_table']:
+        if self.config['export_word_cloud_data'] and self.config_alg['word_frequency_table']:
             wc = File_Export() #,self.corpus):                   ###GET THIS TO WORK
             wc.export_word_cloud(self.alg_ran)
         

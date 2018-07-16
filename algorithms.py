@@ -32,6 +32,15 @@ class Algorithm(object):
 
     def run(self):
         result_dict = {}
+        
+        
+         #HAVE TO SWITCH TO NOT RUN WITH ANY PREPROCESSING
+        if self.config['named_entities']:
+            ner = Named_Entity_Recognition(self.corpus)
+            ner.run()
+            self.corpus = ner.output
+            result_dict['named_entities'] = self.corpus
+            
 
         if self.config['latent_semantic_analysis']:
             l = LatentSemanticAnalysis(self.corpus)
@@ -59,16 +68,12 @@ class Algorithm(object):
                 self.w.run()
                 result_dict['word_frequency'] = self.w.output
                 
+                
         if self.config['tf_idf']:
             t = Tf_Idf(self.corpus)
             t.run()
             result_dict['tf_idf'] = t.output
             
-        #HAVE TO SWITCH TO NOT RUN WITH ANY PREPROCESSING
-        if self.config['named_entities']:
-            ner = Named_Entity_Recognition(self.corpus)
-            ner.run()
-            result_dict['named_entities'] = ner.output
 
         output_text = ""
         self.results = result_dict

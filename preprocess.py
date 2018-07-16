@@ -38,6 +38,14 @@ class Preprocessor(object):
     def run(self):
         
         if not self.config['undergo_preprocess']:
+            
+            '''
+            if self.config['named_entities']:
+                ner = Named_Entity_Recognition(self.corpus)
+                ner.run()
+                self.corpus = ner.output
+                '''
+
             return self.corpus
 
         if self.config['new_stop_set_list']:    
@@ -108,6 +116,46 @@ class Preprocessor(object):
         return ' '.join(self.output)
 
 
+'''
+class Named_Entity_Recognition(object):
+    
+    """This takes in a document strings and obtains the Named Entities from each. """
+    
+    def __init__(self, corpus):
+        self.corpus = corpus
+        print('\n\n\n\nRunning the following algorithm: \nNamed_Entity_Recognition\n\n')
         
+        self.output = []
+        self.test = []
         
+    def run(self):
+        for item in self.corpus:
+                chunked_docs = []
+                chunked = ne_chunk(pos_tag(word_tokenize(item)))
+                chunked_docs.append(chunked)
+                continuous_chunk = []
+                current_chunk = []
+                for chunk in chunked_docs:
+                    
+                    for i in chunk:
+                        self.test.append(i)
+                        if type(i) == Tree:
+                            current_chunk.append(" ".join([token for token, pos in i.leaves()]))
+                        elif current_chunk:
+                                
+                                named_entity = " ".join(current_chunk)
+                                
+                                if named_entity not in continuous_chunk:
+                                        continuous_chunk.append(named_entity)
+                                        current_chunk = []
+                        else:
+                                continue
+                        
+                            
+                    continuous_chunk = ' '.join(continuous_chunk)
+                    self.output.append(continuous_chunk)
+       
+        #Replace 'the_word' with * 'the_word' * -> "highlight" it
+        #filedata.replace(the_word,  "*" + the_word + '*')
 
+'''
