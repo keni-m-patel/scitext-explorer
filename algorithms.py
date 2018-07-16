@@ -154,7 +154,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 
     def run(self):
 
-        self.vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
+        self.vectorizer = TfidfVectorizer(stop_words = None, lowercase=False)
         print('\n\n\n\nTFIDF vectorizer', self.vectorizer)
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         self.lsa = TruncatedSVD(n_components=200)  # , algorithm = 'arpack')
