@@ -34,7 +34,6 @@ print('doc_names\n\n', doc_names)
 
 
 
-
 # token_dict = dict(zip(doc_names, chain(tokenized_docs, repeat(None))))
 
 

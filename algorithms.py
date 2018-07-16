@@ -20,6 +20,7 @@ from nltk.tokenize import word_tokenize
 
 
 class Algorithm(object):
+    
 
     def __init__(self, data, config_file):
         self.corpus = data
@@ -31,6 +32,15 @@ class Algorithm(object):
 
     def run(self):
         result_dict = {}
+        
+        
+         #HAVE TO SWITCH TO NOT RUN WITH ANY PREPROCESSING
+        if self.config['named_entities']:
+            ner = Named_Entity_Recognition(self.corpus)
+            ner.run()
+            self.corpus = ner.output
+            result_dict['named_entities'] = self.corpus
+            
 
         if self.config['latent_semantic_analysis']:
             l = LatentSemanticAnalysis(self.corpus)
@@ -58,15 +68,12 @@ class Algorithm(object):
                 self.w.run()
                 result_dict['word_frequency'] = self.w.output
                 
+                
         if self.config['tf_idf']:
             t = Tf_Idf(self.corpus)
             t.run()
             result_dict['tf_idf'] = t.output
             
-        if self.config['named_entities']:
-            ner = Named_Entity_Recognition(self.corpus)
-            ner.run()
-            result_dict['named_entities'] = ner.output
 
         output_text = ""
         self.results = result_dict
@@ -147,7 +154,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 
     def run(self):
 
-        self.vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
+        self.vectorizer = TfidfVectorizer(stop_words = None, lowercase=False)
         print('\n\n\n\nTFIDF vectorizer', self.vectorizer)
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         self.lsa = TruncatedSVD(n_components=200)  # , algorithm = 'arpack')
@@ -174,7 +181,7 @@ class LSA_Concepts(VectorSpaceModels):
             termsInComp = zip (terms,comp)
             self.output =  sorted(termsInComp, key=lambda x: x[1], reverse=True) [:10]
             print("Concept %d:" % i )
-            for term in  self.output:
+            for term in self.output:
                 print(term[0])
             print (" ")
    
@@ -249,16 +256,18 @@ class Named_Entity_Recognition(TopicModels):
                 for chunk in chunked_docs:
                     
                     for i in chunk:
-                    
                         if type(i) == Tree:
                             current_chunk.append(" ".join([token for token, pos in i.leaves()]))
                         elif current_chunk:
+                                
                                 named_entity = " ".join(current_chunk)
+                                
                                 if named_entity not in continuous_chunk:
                                         continuous_chunk.append(named_entity)
                                         current_chunk = []
                         else:
                                 continue
+                        
                             
                     continuous_chunk = ' '.join(continuous_chunk)
                     self.output.append(continuous_chunk)
