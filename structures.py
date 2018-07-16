@@ -31,17 +31,13 @@ class Corpus(object):
         self.config = utilities.get_config(config_file) # read the config file and set the log_file name
         self.path = self.config['directory']
         self.files = glob.glob(self.path + '*')
-        # print(self.files)
-        # for file in self.files:
-        #     print(file)
+
         if group_by:
             self.grouping = group_by
         else:
             self.grouping = self.config['group_by']
         self.filetype = None
-        print('\n\n\n\nReading in {} file(s)\n\n'.format(len(self.files)))
-        # print(self.files)
-
+        print('\n\n\n\nReading in {} file(s) from {}\n\n'.format(len(self.files), config_file))
 
 
     def __call__(self):
@@ -77,7 +73,6 @@ class Corpus(object):
     # def __log(self):
     #     logger.info('Data Map created for: ' + ', '.join(self.config['files']))
     
-   
 
 
 class DotPDF(object):
@@ -103,8 +98,6 @@ class DotPDF(object):
             print(utilities.get_config('./config/preprocessing.yaml'))
             self.msg_flag = 0
 
-
-
         if self.grouping == 'doc':
             for PDFObj in self.data_map:
                 pdf_reader = PDFR(PDFObj)
@@ -114,7 +107,6 @@ class DotPDF(object):
                     text_file = text_file + ' ' + page_text
                 yield Preprocessor(text_file,'./config/preprocessing.yaml', self.files).run()
             self.__read_data(self.files) # get data    
-
 
         elif self.grouping == 'page':
             for PDFObj in self.data_map:
@@ -166,10 +158,9 @@ class DotTXT(object):
         # records according to the configuration specified
         # INTERFACE DEFINITION: this iterator should always yield a string
         if self.msg_flag:
-            print('\n\n\n\nRunning the following preprocessing actions:\n\n')
+            print('\n\n\n\nRunning the following preprocessing actions on group of files:\n\n')
             print(utilities.get_config('./config/preprocessing.yaml'))
             self.msg_flag = 0
-
 
         for doc in self.data_map:
             yield Preprocessor(doc,'./config/preprocessing.yaml', self.files).run()
@@ -208,7 +199,7 @@ class DotCSV(DotTXT):
 
     def __iter__(self):
         if self.msg_flag:
-            print('\n\n\n\nRunning the following preprocessing actions:\n\n')
+            print('\n\n\n\nRunning the following preprocessing actions on group of files:\n\n')
             print(utilities.get_config('./config/preprocessing.yaml'))
             self.msg_flag = 0
 
@@ -223,7 +214,6 @@ class DotCSV(DotTXT):
                         row_cells += ' ' + cell + ' '
                     # print('row_cells:\n', row_cells)
                     yield Preprocessor(row_cells,'./config/preprocessing.yaml', self.files).run()
-
 
             elif self.grouping == "col":
                 columns = zip(*reader)
@@ -285,7 +275,7 @@ class Tweets(object):
 
     def __iter__(self):  
         if self.msg_flag:
-            print('\n\n\n\nRunning the following preprocessing actions:\n\n')
+            print('\n\n\n\nRunning the following preprocessing actions on group of files:\n\n')
             print(utilities.get_config('./config/preprocessing.yaml'))
             self.msg_flag = 0
         for doc in self.data_map:

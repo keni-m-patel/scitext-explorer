@@ -39,10 +39,11 @@ for doc in tokens:
 
 corpus_doc_name_lists = [corpus.get_file_names() for corpus in corpus_list]  # corpus.get_file_names()
 doc_names = []
-for c_list in corpus_doc_name_lists:
-    doc_names += c_list
 
-print('doc_names\n\n', doc_names)
+# for c_list in corpus_doc_name_lists:
+#     doc_names += c_list
+
+# print('doc_names\n\n', doc_names)
 
 
 
