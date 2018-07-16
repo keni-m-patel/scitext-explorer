@@ -1,8 +1,17 @@
-# All the follwing lists must be in format ['a','an','at']
-# Leave list blank if you do not wish to undergo any changes
+
+#To undergo no preprocesssing and ignore all the following preprocessing actions set to False
+undergo_preprocess: False
 
 
-# To replace current stopword list with a brand new one enter words into the blank list below
+#To use english stopword list from nltk set to True. If set to False uses no stopwords unless added manually in this config file
+
+default_stop_list: True
+
+
+#All the following lists must be in format ['a','an','at']
+#Leave list blank if you do not wish to undergo any changes
+#To replace current stopword list with a brand new one enter words into the blank list below
+
 
 new_stop_set_list: []
 
@@ -17,19 +26,28 @@ add_stop_list: []
 remove_stop_list: []
 
 
+
+#To lowercase all letters set to True, Note: must turn on for lemmatizing
+
 # To use stopword list set to True. To use no stopword list set to False.
 
-use_stop_list: False
+use_stop_list: True
 
+# To use regex to find and remove custom patterns, 
+# enter a string below representing the rule for experessions to be removed, 
+# otherwise, set to None
+# ex. '\ba\b\s+'
 
-# To lowercase alll letters set to True, must turn on for 
+regex_stopwords: '\ba\b\s+'
+
+#To lowercase all letters set to True, Note: must turn on for lemmatizing
 
 lowercase: True
 
 
 # To use use only alphabetical letters set to True, NOTE: must turn on for lemmatizing
 
-alpha_only: False
+alpha_only: True
 
 
 # Note: NOT able to do both stemming and lemmatization 
@@ -41,7 +59,7 @@ alpha_only: False
 # Stemming is the process for reducing inflected words to their word stem, base or root form by chopping off word endings
 # Example: dropping --> drop
 
-PorterStemmer: False
+PorterStemmer: True
 SnowballStemmer: False
 
 
