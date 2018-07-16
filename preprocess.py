@@ -5,6 +5,7 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer, PorterStemmer, SnowballStemmer
 from nltk import pos_tag
 import os
+import re
 
 
 
@@ -20,6 +21,7 @@ class Preprocessor(object):
         self.corpus = corpus
         self.config = utilities.get_config(config_file)
         self.file_names = [os.path.basename(x) for x in files]
+        self.regex = self.config['regex_stopwords']
 
         if not self.file_names:
             print('\n\nERROR: no files selected, must select at least one file to process, exiting program\n\n')
@@ -43,6 +45,11 @@ class Preprocessor(object):
             
         if self.config['remove_stop_list']:            
             self.stop = list(set(self.stop) - set(self.config['remove_stop_list']))
+
+        if self.regex:
+                self.corpus = re.sub(self.regex, "", self.corpus)
+
+
         
         tokens = word_tokenize(self.corpus)
         
@@ -54,7 +61,8 @@ class Preprocessor(object):
                 tokens = [t for t in tokens if t[0].isalpha()]   #and t[0] not in self.stop]
             if self.config['use_stop_list']:
                 tokens = [t for t in tokens if t[0] not in self.stop]
-                
+            
+
         else:
             if self.config['lowercase']:
                 tokens = [t.lower() for t in tokens]    

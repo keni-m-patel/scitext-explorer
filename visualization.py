@@ -12,7 +12,7 @@ from bokeh.io import output_notebook, show
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, HoverTool, BoxSelectTool, CrosshairTool, SaveTool
 
-output_notebook()
+# output_notebook()
 
 from collections import Counter
 
@@ -83,19 +83,19 @@ class kmean_hist(VectorSpaceModels):
     def run(self):
             km_dict = dict()
             max_clusters = 5
-    
+            models = dict()
+
+
             for index in range(2,max_clusters + 1):
                 km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
                 km.fit(self.dtm_lsa)
                 clusters = km.labels_.tolist()
-                km_dict[index] = Counter(clusters)
-                
-                
-                models = dict()
+                km_dict[index] = Counter(clusters) 
                 models[index] = {'KMeans Model': km,
                                      'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
                                      'Document-Clustering': Counter(clusters),
                                      'Frame': pd.DataFrame({'Document Name': self.doc_names, 'Cluster': clusters})}
+            print('models:', models)
                 
             
             self.clusters_and_names = models[index]['Frame']
