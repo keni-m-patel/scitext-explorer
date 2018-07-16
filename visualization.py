@@ -8,7 +8,11 @@ from sklearn.manifold import TSNE
 
 import pandas as pd
 
+from bokeh.io import output_notebook, show
+from bokeh.plotting import figure
+from bokeh.models import ColumnDataSource, HoverTool, BoxSelectTool, CrosshairTool, SaveTool
 
+output_notebook()
 
 from collections import Counter
 
@@ -87,12 +91,12 @@ class kmean_hist(VectorSpaceModels):
                 km_dict[index] = Counter(clusters)
                 
                 
-            models = dict()
-            models[index] = {'KMeans Model': km,
-                                 'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
-                                 'Document-Clustering': Counter(clusters),
-                                 'Frame': pd.DataFrame({'Document Name': self.doc_names, 'Cluster': clusters})}
-            
+                models = dict()
+                models[index] = {'KMeans Model': km,
+                                     'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
+                                     'Document-Clustering': Counter(clusters),
+                                     'Frame': pd.DataFrame({'Document Name': self.doc_names, 'Cluster': clusters})}
+                
             
             self.clusters_and_names = models[index]['Frame']
             
@@ -182,15 +186,65 @@ class File_Export(VectorSpaceModels):
         self.clusters_and_names.columns = ['docnames', 'label']
         self.clusters_and_names['title'] = self.clusters_and_names['label']
         self.x_and_y.columns = ['x','y']
-        scatter_plot_data = self.clusters_and_names.join(self.x_and_y)
-        scatter_plot_data = scatter_plot_data.set_index('docnames')
+        self.scatter_plot_data = self.clusters_and_names.join(self.x_and_y)
+        self.scatter_plot_data = self.scatter_plot_data.set_index('docnames')
         
         # Create a Pandas Excel writer using XlsxWriter as the engine.
         writer = pd.ExcelWriter('scatter_plot_form.xlsx', engine='xlsxwriter')
         #bow_max.to_excel(writer, sheet_name='Sheet1')
-        scatter_plot_data.to_excel(writer, sheet_name='Sheet1')
+        self.scatter_plot_data.to_excel(writer, sheet_name='Sheet1')
         # Get the xlsxwriter objects from the dataframe writer object.
 
         #worksheet = writer.sheets['Sheet1']
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
+
+
+        # ## X-Y coordinates for a scatter plot
+        # x = self.scatter_plot_data.to_excel.loc[: , "x"]
+        # y = self.scatter_plot_data.to_excel.loc[: , "y"]
+        
+        # ## Cluster Numbers, Document Names and the Number of Documents in each cluster
+        # clusters = self.scatter_plot_data.to_excel.loc[: , "label"]
+        # names = self.scatter_plot_data.to_excel.loc[: , "docnames"]
+        # num_docs_in_cluster = self.scatter_plot_data.to_excel.loc[: , "'num_docs_in_cluster'"]
+        
+        # ## Creates a list of HEX colors using the colors dictionary above to color
+        # cluster_colors = {0: '#a6cee3', 
+        #                   1: '#1f78b4', 
+        #                   2: '#b2df8a', 
+        #                   3: '#33a02c', 
+        #                   4: '#fb0a99',
+        #                   5: '#e31a1c',
+        #                   6: '#fdbf6f',
+        #                   7: 'yellow',
+        #                   8: '#ff7f00',
+        #                   9: '#cab2d6',
+        #                   10: 'gray'}
+        # ## each point in the scatter plot according the cluster they belong to
+        # cluster_colors = [colors[cluster] for cluster in self.scatter_plot_data.to_excel.loc['label'].tolist()]
+  
+        # source = ColumnDataSource({'x': x,
+        #                            'y': y,
+        #                            'Cluster': clusters,
+        #                            'NumberofDocuments': num_docs_in_cluster,
+        #                            'Cluster Colors': cluster_colors,
+        #                            'DocumentName': names})
+
+        
+        # TOOLS = "hover,crosshair,pan,wheel_zoom,zoom_in,zoom_out,box_zoom,undo,redo,reset,tap,save,box_select,poly_select,lasso_select,"
+        
+        # ## Configure the HoverTool popup dialog
+        # hover = HoverTool(tooltips=[('Cluster', '@Cluster'),('# of Documents', "@NumberofDocuments"),('Document Name', "@DocumentName")])
+        
+        # ## Create a Bokeh figure object
+        # p = figure(plot_width=600, plot_height=600, 
+        #            tools = [hover,BoxSelectTool(),CrosshairTool(),SaveTool()], toolbar_location="above",
+        #            title = 'Clustered Corpus')
+        
+        # # add a circle renderer with a size, color, and alpha
+        # p.circle('x', 'y', size = 15, source = source,
+        #          line_color = 'dimgray', line_width = 0.5,
+        #          fill_color = 'Cluster Colors', fill_alpha = 1.0)
+        
+        # show(p) # show the results

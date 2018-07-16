@@ -20,12 +20,13 @@ TODO:
 print('\n\nreading from the following configuration files: \n\n ', utilities.get_config('./config/data/master.yaml')['config_files'])
 corpus_list = [Corpus(config_file) for config_file in utilities.get_config('./config/data/master.yaml')['config_files']]
 corpi = Merge([corpus() for corpus in corpus_list])
-# run stuff
+#run stuff
 
 
 #print('corpi', corpi)
 #for c in corpi:
    # print(c)
+
 
 tokens = corpi  # corpus()
 
@@ -45,15 +46,13 @@ for c_list in corpus_doc_name_lists:
 print('doc_names\n\n', doc_names)
 
 
-
-
-
 # token_dict = dict(zip(doc_names, chain(tokenized_docs, repeat(None))))
 
 
 # print(file_object)
 # print(file_object.grouping)
 # print(file_object.config)
+
 
 
 alg = Algorithm(tokens, './config/algorithms.yaml')

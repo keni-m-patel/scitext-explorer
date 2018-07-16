@@ -11,15 +11,14 @@ export_word_cloud: False
 
 export_scatter_plot: True
 
-
-#Ray
-
+#Outputs .png histogram of corpus clusters
+#Requirements Kmeans
 kmean_hist: True
 
 
-#Ray
-
-tsne: False
+#Outputs (X, Y) coordinates of documents for visualization, through dimensionality reduction
+#Requirements Kmeans
+tsne: True
 
 
 # do T or F to turn on or off

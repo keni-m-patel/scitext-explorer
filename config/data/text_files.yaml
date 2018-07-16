@@ -8,7 +8,6 @@
 directory: /Users/597543/scitext-explorer/test/data/text/
 
 
-
 # enter 'doc', 'page', 'tweet', row', or 'col' for how you want to group/iterate through you documents
 group_by: 'doc'
 
