@@ -145,7 +145,6 @@ class Named_Entity_Recognition(object):
                 for chunk in chunked_docs:
                     
                     for i in chunk:
-                        self.test.append(i)
                         if type(i) == Tree:
                             current_chunk.append(" ".join([token for token, pos in i.leaves()]))
                         elif current_chunk:
