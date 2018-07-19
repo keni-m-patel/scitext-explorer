@@ -2,6 +2,8 @@
 import inspect
 import utilities
 
+import warnings
+
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -41,7 +43,14 @@ class Algorithm(object):
             self.corpus = ner.output
             result_dict['named_entities'] = self.corpus
             
-
+        
+        if not self.config['latent_semantic_analysis'] and self.config['LSA_Concepts']:
+            warnings.warn("NEED LATENT SEMANTIC ANALYSIS TO RUN LSA CONCEPTS")
+            
+        if not self.config['latent_semantic_analysis'] and self.config['kmeans']:
+            warnings.warn("NEED LATENT SEMANTIC ANALYSIS TO RUN KMEANS")
+            
+            
         if self.config['latent_semantic_analysis']:
             l = LatentSemanticAnalysis(self.corpus)
             l.run()
@@ -57,6 +66,10 @@ class Algorithm(object):
                 k.run()
                 result_dict['kmeans'] = k.output
              
+                
+        if not self.config['bag_of_words'] and self.config['word_frequency_table']:
+            warnings.warn("NEED BAG OF WORDS TO RUN WORD FREQUENCY TABLE")
+            
 
         if self.config['bag_of_words']:
             b = BagOfWords(self.corpus)
@@ -68,11 +81,22 @@ class Algorithm(object):
                 self.w.run()
                 result_dict['word_frequency'] = self.w.output
                 
-                
+        
+        if self.config['LSA_Concepts'] or self.config['kmeans']:
+            warnings.warn("NEED LATENT SEMANTIC ANALYSIS")
+            
         if self.config['tf_idf']:
             t = Tf_Idf(self.corpus)
             t.run()
             result_dict['tf_idf'] = t.output
+          
+            '''
+        if self.config['sentiment_analysis']:
+            filepath = 
+            self.sa = Sentiment_Analysis(self.corpus, filepath)
+            self.sa.run()
+            result_dict['sentiment_analysis'] = self.sa.output
+            '''
             
 
         output_text = ""
@@ -275,8 +299,58 @@ class Named_Entity_Recognition(TopicModels):
         #Replace 'the_word' with * 'the_word' * -> "highlight" it
         #filedata.replace(the_word,  "*" + the_word + '*')
 
-     
+
+class Sentiment_Analysis(TopicModels):
+    
+    """This takes undergoes sentiment analysis using training data to analyze the positivity/negativity of data """
+    
+    def __init__(self, corpus):
+        super().__init__(corpus)
+        print('\n\n\n\nRunning the following algorithm: \nSentiment_Analysis\n\n')
+        
+    def run(self):
+        
+        top_words = 10000
+        (x_test, y_test) = imdb.load_data(num_words = top_words)
+        
+        tokenizer = Tokenizer(num_words=1000)
+        x_train = tokenizer.sequences_to_matrix(x_train, mode='binary')
+        x_test = tokenizer.sequences_to_matrix(x_test, mode='binary')
+        score = model.evaluate(x_test, y_test, verbose=0)
+        print("Accuracy: ", score[1])
+  
+        
+        
+        
+        
+#taken from https://streamhacker.com/2010/05/10/text-classification-sentiment-analysis-naive-bayes-classifier/
+
+import nltk.classify.util
+from nltk.classify import NaiveBayesClassifier
+from nltk.corpus import movie_reviews
  
+def word_feats(words):
+    return dict([(word, True) for word in words])
+ 
+negids = movie_reviews.fileids('neg')
+posids = movie_reviews.fileids('pos')
+ 
+negfeats = [(word_feats(movie_reviews.words(fileids=[f])), 'neg') for f in negids]
+posfeats = [(word_feats(movie_reviews.words(fileids=[f])), 'pos') for f in posids]
+ 
+negcutoff = len(negfeats)*3/4
+poscutoff = len(posfeats)*3/4
+ 
+trainfeats = negfeats[:negcutoff] + posfeats[:poscutoff]
+testfeats = negfeats[negcutoff:] + posfeats[poscutoff:]
+print 'train on %d instances, test on %d instances' % (len(trainfeats), len(testfeats))
+ 
+classifier = NaiveBayesClassifier.train(trainfeats)
+print 'accuracy:', nltk.classify.util.accuracy(classifier, testfeats)
+classifier.show_most_informative_features()
+        
+     
+ '''
  
 
         
