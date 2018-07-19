@@ -84,6 +84,7 @@ class DotPDF(object):
 
     def __init__(self, files, group_by='doc'):
         self.files = files
+        self.doc_names = []
         self.__read_data(self.files)
         self.grouping = group_by
         self.msg_flag = 1  # flag if preprocessing message should be sent by __iter__, should only do once.
@@ -105,16 +106,26 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     text_file = text_file + ' ' + page_text
+                #pdfdoc_names = []
+                #pdfdoc_names.append(PDFObj)
+                #pdfdoc_names.append()
+                #data_name = 
                 yield Preprocessor(text_file,'./config/preprocessing.yaml', self.files).run()
-            self.__read_data(self.files) # get data    
+                
+            self.__read_data(self.files) # get data  
+            
 
         elif self.grouping == 'page':
             for PDFObj in self.data_map:
                 pdf_reader = PDFR(PDFObj)
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
-                    yield Preprocessor(page_text,'./config/preprocessing.yaml', self.files).run()
+                pdf_page_doc_name = []
+                pdf_page_doc_name.append()
+                yield Preprocessor(page_text,'./config/preprocessing.yaml', self.files).run()
             self.__read_data(self.files) # get data    
+            
+       
 
     
     def __len__(self):
@@ -266,9 +277,10 @@ class DotCSV(DotTXT):
  
 class Tweets(object):
 
-    def __init__(self, files, group_by):
-        self.files = files
-        self.__read_data(self.files)
+    def __init__(self, files, group_by = 'tweet'):
+        self.filenames = files
+        self.files = list()
+        self.__read_data(self.filenames)
         self.grouping = group_by
         self.msg_flag = 1
       
@@ -277,21 +289,26 @@ class Tweets(object):
         if self.msg_flag:
             print('\n\n\n\nRunning the following preprocessing actions on group of files:\n\n')
             print(utilities.get_config('./config/preprocessing.yaml'))
-            self.msg_flag = 0
-        for doc in self.data_map:
-            tweets = json.loads(doc.read(), encoding = "utf-8")
-            for tweet in tweets:
-                yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml', self.files).run()
-        self.__read_data(self.files)
+            self.msg_flag = 0        
+            
+        if self.grouping == 'tweet':   
+            for doc in self.data_map:
+                 tweets = json.loads(doc.read(), encoding = "utf-8")
+                 for tweet in tweets:                                              
+                       self.files.append(tweet['ID'])  
+                       yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml', self.filenames).run()
+        
+        self.__read_data(self.filenames)
 
     def __len__(self):
         pass
 
 
     def __read_data(self, files):
-        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.files]])
+        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.filenames]])
+        self.filetype = filetype
         if filetype == {'.json'}:
-            self.data_map = map(lambda x: open(os.path.join('', x),'rU'), self.files)
+            self.data_map = map(lambda x: open(os.path.join('', x),'rU'), self.filenames)
         else:
             print("ERROR: NON-JSON PASSED TO TWEET CLASS")
 
