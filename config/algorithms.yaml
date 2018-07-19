@@ -8,7 +8,7 @@ latent_semantic_analysis: True
 
 #Gives top 5 concepts for each document in relation to corpus
 #Requirements LSA to work
-LSA_Concepts: False
+LSA_Concepts: True
 
 #Outputs corpus clusters
 #Requirements LSA
