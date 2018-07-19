@@ -20,6 +20,7 @@ from nltk.tokenize import word_tokenize
 
 
 class Algorithm(object):
+    """Reads the algorithm config file to see the selected algorithm(s)."""
 
     def __init__(self, data, config_file):
         self.corpus = data
@@ -30,6 +31,7 @@ class Algorithm(object):
         
 
     def run(self):
+        """Runs algorithm assigned to the user-selected algorithm."""
         result_dict = {}
 
         if self.config['latent_semantic_analysis']:
@@ -94,7 +96,7 @@ class BagOfWords(VectorSpaceModels):
         print('\n\n\n\nRunning the following algorithm: \nBag of Words\n\n')
         
      def run(self):
-        """Vectorizes words and fits words to a matrix"""
+        """Vectorizes words and fits words to a matrix."""
 
         self.vectorizer = CountVectorizer(lowercase = False, stop_words = None) #, preprocessor = None, tokenizer = None
         self.dtm = self.vectorizer.fit_transform(self.corpus)
@@ -115,7 +117,7 @@ class BagOfWords(VectorSpaceModels):
 class WordFreq(VectorSpaceModels):
     """Initiates Word Frequency table: outputs how many times a word occurs."""
     
-    """Used to output Bag of Words as a DataFrame"""
+    """Used to output Bag of Words as a DataFrame."""
     
     def __init__(self, corpus, bow_output):
         super().__init__(corpus)
@@ -138,7 +140,7 @@ class WordFreq(VectorSpaceModels):
 
 
 class LatentSemanticAnalysis(VectorSpaceModels):
-    """Initiates LSA. """
+    """Initiates LSA: computing document similarity. """
 
     def __init__(self, corpus):
         super().__init__(corpus)
@@ -146,6 +148,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 
 
     def run(self):
+        """Data goes through dimensionality reduction with cosine similarity and returns lsa."""
 
         self.vectorizer = TfidfVectorizer(stop_words = None, lowercase=False)
         print('\n\n\n\nTFIDF vectorizer', self.vectorizer)
@@ -160,6 +163,8 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 # ,'dataframe': dataframe}}
         
 class LSA_Concepts(VectorSpaceModels):
+    """Analyzes the conceptual ideas within the data."""
+    
     def __init__(self, corpus, dtm_lsa, lsa, vectorizer):
         super().__init__(corpus)
         
@@ -168,6 +173,8 @@ class LSA_Concepts(VectorSpaceModels):
         self.vectorizer = vectorizer
         
     def run(self):
+        """Vectorizes data and returns the top concepts in each documents."""
+        
         terms = Normalizer(copy=False).fit_transform(self.dtm_lsa)
         terms = self.vectorizer.get_feature_names()
         for i, comp in enumerate(self.lsa.components_): 
@@ -180,7 +187,7 @@ class LSA_Concepts(VectorSpaceModels):
 
             
 class kmeans(LatentSemanticAnalysis): 
-    """Initiates k-means: clustering data according to means"""
+    """Initiates k-means: clustering data according to means."""
     
 
     def __init__(self, corpus, dtm_lsa):
@@ -188,6 +195,8 @@ class kmeans(LatentSemanticAnalysis):
         self.dtm_lsa = dtm_lsa
         
     def run(self):
+        """Function of k-means that fits data into matrix and clusters the data."""
+        
         km_dict = dict()
         max_clusters = 5
         for index in range(2,max_clusters + 1):
@@ -208,7 +217,7 @@ class Tf_Idf(VectorSpaceModels):
         print('\n\n\n\nRunning the following algorithm: \nTFIDF \n\n')
         
     def run(self):
-        """Vectorize the words."""
+        """Vectorizes the words."""
         
         #figure out how to link up with preprocess
         self.vectorizer = TfidfVectorizer(stop_words=None, lowercase=False, encoding='utf-8')
@@ -222,7 +231,7 @@ class Tf_Idf(VectorSpaceModels):
         #Prints doc-term matrix
         # print(self.dtm)
         
-        """Prints and returns Data Table of doc-term matrix."""
+        """Returns Data Table of doc-term matrix."""
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
         
@@ -248,7 +257,7 @@ class Named_Entity_Recognition(TopicModels):
         self.output = []
         
     def run(self):
-        """Chunks docs and adds named entities to a list"""
+        """Chunks docs and adds named entities to a list."""
         
         for item in self.corpus:
                 chunked_docs = []
