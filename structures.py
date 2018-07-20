@@ -106,10 +106,6 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     text_file = text_file + ' ' + page_text
-                #pdfdoc_names = []
-                #pdfdoc_names.append(PDFObj)
-                #pdfdoc_names.append()
-                #data_name = 
                 yield Preprocessor(text_file,'./config/preprocessing.yaml', self.files).run()
                 
             self.__read_data(self.files) # get data  
@@ -120,9 +116,7 @@ class DotPDF(object):
                 pdf_reader = PDFR(PDFObj)
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
-                pdf_page_doc_name = []
-                pdf_page_doc_name.append()
-                yield Preprocessor(page_text,'./config/preprocessing.yaml', self.files).run()
+                    yield Preprocessor(page_text,'./config/preprocessing.yaml', self.files).run()
             self.__read_data(self.files) # get data    
             
        
