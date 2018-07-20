@@ -26,3 +26,8 @@ word_frequency_table: True
 
 # do T or F to turn on or off
 
+sentiment_analysis: True
+
+sa_model_filepath: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/sa_model
+# /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/tweets
+

@@ -21,8 +21,7 @@ from collections import Counter
 class Visualization(object):
 
     def __init__(self, config_file, config_file_alg, alg_ran, doc_names):
-        #self.corpus = data
-        #pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
+        # self.corpus = data
         self.config = utilities.get_config(config_file)
         self.config_alg = utilities.get_config(config_file_alg)
         self.alg_ran=alg_ran
@@ -40,7 +39,7 @@ class Visualization(object):
         if self.config['kmean_hist'] and self.config_alg['latent_semantic_analysis']:
             k = kmean_hist(self.alg_ran, self.doc_names)
             k.run()
-            #result_dict['kmean_hist'] = k.output
+            # result_dict['kmean_hist'] = k.output
             
             if self.config['tsne']:
                 t = tsne(self.alg_ran, self.doc_names, k.dtm_lsa)
@@ -95,13 +94,13 @@ class kmean_hist(VectorSpaceModels):
                                      'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
                                      'Document-Clustering': Counter(clusters),
                                      'Frame': pd.DataFrame({'Document Name': self.doc_names, 'Cluster': clusters})}
-            print('models:', models)
+            # print('models:', models)
                 
             
             self.clusters_and_names = models[index]['Frame']
             
-            #self.clusters_and_names.columns['docnames','labels']
-            #self.clusters_and_names['title'] = self.clusters_and_names['labels']
+            # self.clusters_and_names.columns['docnames','labels']
+            # self.clusters_and_names['title'] = self.clusters_and_names['labels']
            
             
             

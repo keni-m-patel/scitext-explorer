@@ -16,6 +16,17 @@ from nltk import ne_chunk, pos_tag
 from nltk.tree import Tree
 from nltk.tokenize import word_tokenize
 
+# IMPORTS for Sentiment Analysis:
+import numpy as np
+import keras
+from keras.datasets import imdb
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation
+from keras.preprocessing.text import Tokenizer
+from keras.callbacks import ModelCheckpoint 
+# import matplotlib.pyplot as plt
+
+
 
 
 
@@ -34,7 +45,7 @@ class Algorithm(object):
         result_dict = {}
         
         
-         #HAVE TO SWITCH TO NOT RUN WITH ANY PREPROCESSING
+         # HAVE TO SWITCH TO NOT RUN WITH ANY PREPROCESSING
         if self.config['named_entities']:
             ner = Named_Entity_Recognition(self.corpus)
             ner.run()
@@ -74,6 +85,11 @@ class Algorithm(object):
             t.run()
             result_dict['tf_idf'] = t.output
             
+        # if self.config['sentiment_analysis']:
+        #     sa_model_filepath = self.config['sa_model_filepath']
+        #     s = SentimentAnalysis(self.corpus)
+        #     s.run(sa_model_filepath)
+        #     result_dict['sentiment_analysis'] = s.output
 
         output_text = ""
         self.results = result_dict
@@ -98,7 +114,9 @@ class VectorSpaceModels(object):
         
 class BagOfWords(VectorSpaceModels):
     
-     """Gives words and their word count"""
+     """
+     Gives words and their word count
+     """
   
      def __init__(self, corpus):
         super().__init__(corpus)
@@ -125,7 +143,9 @@ class BagOfWords(VectorSpaceModels):
 
 class WordFreq(VectorSpaceModels):
     
-    """Used to output Bag of Words as a DataFrame"""
+    """
+    Used to output Bag of Words as a DataFrame
+    """
     
     def __init__(self, corpus, bow_output):
         super().__init__(corpus)
@@ -230,16 +250,18 @@ class Tf_Idf(VectorSpaceModels):
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
     
-    """Parent Class for Named Entity Recognition"""
+    """
+    Parent Class for Named Entity Recognition
+    """
 
     
     def __init__(self, corpus):
         self.corpus = corpus
 
 class Named_Entity_Recognition(TopicModels):
-    
-    """This takes in a document strings and obtains the Named Entities from each. """
-    
+    """
+    This takes in a document strings and obtains the Named Entities from each. 
+    """
     def __init__(self, corpus):
         super().__init__(corpus)
         print('\n\n\n\nRunning the following algorithm: \nNamed_Entity_Recognition\n\n')
@@ -272,8 +294,55 @@ class Named_Entity_Recognition(TopicModels):
                     continuous_chunk = ' '.join(continuous_chunk)
                     self.output.append(continuous_chunk)
        
-        #Replace 'the_word' with * 'the_word' * -> "highlight" it
-        #filedata.replace(the_word,  "*" + the_word + '*')
+        # Replace 'the_word' with * 'the_word' * -> "highlight" it
+        # filedata.replace(the_word,  "*" + the_word + '*')
+
+# NEED TO GET MODEL INTO SYSTEM AND GET THE FILEPATH SOMEWHERE 
+
+
+# class SentimentAnalysis(TopicModels):
+
+#     # Runs sentiment analysis on a group of docs, 
+#     # returns a 2 x (number docs) array of positivity and negativity scores
+
+#     def __init__(self, corpus):
+#         super().__init__(corpus)
+#         print('\n\n\n\nRunning the following algorithm: \nSentiment Analysis\n\n')
+#         self.output = None
+
+
+#     def run(self, model_filepath):
+        
+#         # run sentiment analysis on the initialized corpus with 
+#         # a particular model that is specfied by the model_filepath
+
+#         model = keras.models.load_model(model_filepath)
+
+#         # for the following, x must be a list of numpy arrays 
+        
+#         word_index = imdb.get_word_index()
+        
+#         sentiment_analysis_input = [np.array([word_index[word] if 
+#             word in word_index else 0 for word in doc]) for doc in self.corpus] 
+
+#         sa_list = predict(self, sentiment_analysis_input, batch_size=None, verbose=0, steps=None)
+
+#         self.output = sa_list
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
      
  

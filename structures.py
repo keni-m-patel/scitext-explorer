@@ -296,10 +296,6 @@ class Tweets(object):
             print("ERROR: NON-JSON PASSED TO TWEET CLASS")
 
 
-###################################
-####   NEW: (TB IMPLEMENTED)   ####
-###################################
-
 class Merge(object):
  
     # class to merge a list corpus objects into one 
