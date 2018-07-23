@@ -12,11 +12,9 @@ from bokeh.io import output_notebook, show
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, HoverTool, BoxSelectTool, CrosshairTool, SaveTool
 
-<<<<<<< HEAD
+
 #output_notebook()
-=======
-# output_notebook()
->>>>>>> 9dde96e2bff17c321e316da2400e312cf7e012c0
+
 
 from collections import Counter
 
