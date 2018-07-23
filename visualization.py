@@ -13,9 +13,6 @@ from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, HoverTool, BoxSelectTool, CrosshairTool, SaveTool
 
 
-#output_notebook()
-
-
 from collections import Counter
 
 
