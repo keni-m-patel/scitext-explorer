@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.DEBUG,
                     filemode='w')
 '''
 TODO:
-# ADD MERGE class and functionality with master config and then allow link to all config classes
+# ADD MERGE class and functionality with master config and then allow linek to all config classes
 
 '''
 print('\n\nreading from the following configuration files: \n\n ', utilities.get_config('./config/data/master.yaml')['config_files'])
@@ -24,13 +24,13 @@ corpi = Merge([corpus() for corpus in corpus_list])
 
 tokens = corpi  # corpus()
     
-
 corpus_doc_name_lists = [corpus.get_file_names() for corpus in corpus_list]  # corpus.get_file_names()
 doc_names = []
 for c_list in corpus_doc_name_lists:
     doc_names += c_list
 
 print('doc_names\n\n', doc_names)
+print(len(doc_names))
 
 
 
