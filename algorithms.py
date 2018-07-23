@@ -37,6 +37,11 @@ class Algorithm(object):
         
         
          #HAVE TO SWITCH TO NOT RUN WITH ANY PREPROCESSING
+         
+        #For each if self.config if set to true in the config, will set if statement to true
+        #If the if statement is read as true an object for that algorithm type class is made, run, and added to the result dictionary
+        #Wwarnings are triggered when a necessary component is not included when an algorithm is set to true in the config file
+        
         if self.config['named_entities']:
             ner = Named_Entity_Recognition(self.corpus)
             ner.run()
@@ -125,7 +130,6 @@ class BagOfWords(VectorSpaceModels):
 
         self.vectorizer = CountVectorizer(lowercase = False, stop_words = None) #, preprocessor = None, tokenizer = None
         self.dtm = self.vectorizer.fit_transform(self.corpus)
-        dtm_dense = self.dtm.todense()
 
         vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
 
