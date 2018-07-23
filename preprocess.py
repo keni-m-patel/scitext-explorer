@@ -26,7 +26,7 @@ class Preprocessor(object):
         self.config = utilities.get_config(config_file)
         
         
-        #self.file_names  = [os.path.basename(x) for x in files]
+        self.file_names  = [os.path.basename(x) for x in files]
         
         self.regex = self.config['regex_stopwords']
 
