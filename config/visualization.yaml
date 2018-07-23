@@ -1,6 +1,7 @@
 #Exports data to an excel doc in the same folder as scitext explorer
 #Excel doc can be used with Tableau to create a word cloud
 #Note: Only works when Bag of Words and Word Frequency Table are both set to True in algorithms.yaml
+#bow_hist: True
 
 export_word_cloud_data: True
 
@@ -19,6 +20,9 @@ kmean_hist: True
 #Outputs (X, Y) coordinates of documents for visualization, through dimensionality reduction
 #Requirements Kmeans
 tsne: True
+#to use bokeh interactive plots open bokeh pynb file after running main.py
+#Bokeh interative plot gives users interactive scatterplot
+export_bokeh: True
 
 
 # do T or F to turn on or off

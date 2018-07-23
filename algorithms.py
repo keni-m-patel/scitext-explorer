@@ -22,7 +22,7 @@ from nltk.tokenize import word_tokenize
 
 
 class Algorithm(object):
-    
+    """Reads the algorithm config file to see the selected algorithm(s)."""
 
     def __init__(self, data, config_file):
         self.corpus = data
@@ -33,6 +33,7 @@ class Algorithm(object):
         
 
     def run(self):
+        """Runs algorithm assigned to the user-selected algorithm."""
         result_dict = {}
         
         
@@ -54,8 +55,8 @@ class Algorithm(object):
             
         if not self.config['latent_semantic_analysis'] and self.config['kmeans']:
             warnings.warn("NEED LATENT SEMANTIC ANALYSIS TO RUN KMEANS")
-            
-            
+     
+        
         if self.config['latent_semantic_analysis']:
             l = LatentSemanticAnalysis(self.corpus)
             l.run()
@@ -116,17 +117,16 @@ class VectorSpaceModels(object):
         self.vectorizer = None
     
 
-        
+     
 class BagOfWords(VectorSpaceModels):
-    
-     """Gives words and their word count"""
   
      def __init__(self, corpus):
         super().__init__(corpus)
         self.bow = None
         print('\n\n\n\nRunning the following algorithm: \nBag of Words\n\n')
         
-     def run(self): 
+     def run(self):
+        """Vectorizes words and fits words to a matrix."""
 
         self.vectorizer = CountVectorizer(lowercase = False, stop_words = None) #, preprocessor = None, tokenizer = None
         self.dtm = self.vectorizer.fit_transform(self.corpus)
@@ -144,8 +144,9 @@ class BagOfWords(VectorSpaceModels):
 
 
 class WordFreq(VectorSpaceModels):
+    """Initiates Word Frequency table: outputs how many times a word occurs."""
     
-    """Used to output Bag of Words as a DataFrame"""
+    """Used to output Bag of Words as a DataFrame."""
     
     def __init__(self, corpus, bow_output):
         super().__init__(corpus)
@@ -156,6 +157,8 @@ class WordFreq(VectorSpaceModels):
         self.run()
     
     def run(self):
+        """Takes Bag of Words and outputs into table."""
+        
         bow_series = pd.Series(self.bow_output)
         bow_data = bow_series.to_frame().reset_index()
         bow_data.columns = ['Word', 'Word Count']
@@ -166,6 +169,7 @@ class WordFreq(VectorSpaceModels):
 
 
 class LatentSemanticAnalysis(VectorSpaceModels):
+    """Initiates LSA: computing document similarity. """
 
     def __init__(self, corpus):
         super().__init__(corpus)
@@ -173,6 +177,7 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 
 
     def run(self):
+        """Data goes through dimensionality reduction with cosine similarity and returns lsa."""
 
         self.vectorizer = TfidfVectorizer(stop_words = None, lowercase=False)
         print('\n\n\n\nTFIDF vectorizer', self.vectorizer)
@@ -187,6 +192,8 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 # ,'dataframe': dataframe}}
         
 class LSA_Concepts(VectorSpaceModels):
+    """Analyzes the conceptual ideas within the data."""
+    
     def __init__(self, corpus, dtm_lsa, lsa, vectorizer):
         super().__init__(corpus)
         
@@ -195,6 +202,8 @@ class LSA_Concepts(VectorSpaceModels):
         self.vectorizer = vectorizer
         
     def run(self):
+        """Vectorizes data and returns the top concepts in each documents."""
+        
         terms = Normalizer(copy=False).fit_transform(self.dtm_lsa)
         terms = self.vectorizer.get_feature_names()
         for i, comp in enumerate(self.lsa.components_): 
@@ -204,14 +213,19 @@ class LSA_Concepts(VectorSpaceModels):
             for term in self.output:
                 print(term[0])
             print (" ")
-   
-         
-class kmeans(LatentSemanticAnalysis):  
+
+            
+class kmeans(LatentSemanticAnalysis): 
+    """Initiates k-means: clustering data according to means."""
+    
+
     def __init__(self, corpus, dtm_lsa):
         super().__init__(corpus) 
         self.dtm_lsa = dtm_lsa
         
     def run(self):
+        """Function of k-means that fits data into matrix and clusters the data."""
+        
         km_dict = dict()
         max_clusters = 5
         for index in range(2,max_clusters + 1):
@@ -222,7 +236,9 @@ class kmeans(LatentSemanticAnalysis):
             self.output = (index, Counter(clusters))
 
 
+
 class Tf_Idf(VectorSpaceModels):
+    """Initiates Tf-Idf algorithm: compares word frequency in a collection of documents."""
     
     def __init__(self, corpus):
         super().__init__(corpus)
@@ -230,6 +246,8 @@ class Tf_Idf(VectorSpaceModels):
         print('\n\n\n\nRunning the following algorithm: \nTFIDF \n\n')
         
     def run(self):
+        """Vectorizes the words."""
+        
         #figure out how to link up with preprocess
         self.vectorizer = TfidfVectorizer(stop_words=None, lowercase=False, encoding='utf-8')
         
@@ -242,7 +260,7 @@ class Tf_Idf(VectorSpaceModels):
         #Prints doc-term matrix
         # print(self.dtm)
         
-        #Prints and returns Data Table of doc-term matrix
+        """Returns Data Table of doc-term matrix."""
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
         
@@ -257,6 +275,7 @@ class TopicModels(object):
         self.corpus = corpus
 
 class Named_Entity_Recognition(TopicModels):
+    """Initiates NER: identifies categories such as names, organizations, locations, etc."""
     
     """This takes in a document strings and obtains the Named Entities from each. """
     
@@ -267,6 +286,8 @@ class Named_Entity_Recognition(TopicModels):
         self.output = []
         
     def run(self):
+        """Chunks docs and adds named entities to a list."""
+        
         for item in self.corpus:
                 chunked_docs = []
                 chunked = ne_chunk(pos_tag(word_tokenize(item)))
