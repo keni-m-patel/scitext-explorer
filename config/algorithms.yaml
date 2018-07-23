@@ -1,33 +1,3 @@
-#Gives a list of Named Entities
-#Only works correctly when undergo no preprocessing
-named_entities: True
-
-#Process Tfidf results through SVD and gives a matrix
-#Requirements tf_idf 
-latent_semantic_analysis: True
-
-#Gives top 5 concepts for each document in relation to corpus
-#Requirements LSA to work
-LSA_Concepts: False
-
-#Outputs corpus clusters
-#Requirements LSA
-kmeans: True
-
-#Process corpus for term frequency inverse document frequency
-tf_idf: True
-
-#Gives a dictionary of words with their frequency
-bag_of_words: True
-
-#Gives a table of words with their frequency
-#Only works when bag_of_words is True
-word_frequency_table: True
-
-# do T or F to turn on or off
-
-sentiment_analysis: True
-
-sa_model_filepath: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/sa_model
-# /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/tweets
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:e22befed6c742083e587c24590c5a122389f94286d4f7197790512b94b93f4f9
+size 888

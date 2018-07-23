@@ -1,9 +1,3 @@
-
-directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/BinLaden/  
-# NOTE: be sure to inculde the final  slash
-
-# directory: /Users/597543/scitext-explorer/test/data/BinLaden/
-
-# directory: /users/597667/scitext-explorer/test/data/BinLaden/
-
-group_by: 'doc'
+version https://git-lfs.github.com/spec/v1
+oid sha256:e2dfbff1685a698983d6403895f912f7136b79ef835e7e4b381f2b5fdaf0d1f4
+size 279
