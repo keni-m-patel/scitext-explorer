@@ -12,7 +12,6 @@ from bokeh.io import output_notebook, show
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, HoverTool, BoxSelectTool, CrosshairTool, SaveTool
 
-# output_notebook()
 
 from collections import Counter
 
@@ -36,7 +35,10 @@ class Visualization(object):
 
     def run(self):
         result_dict = {}
-        
+        #if self.config['bow_hist'] and self.config_alg['WordFreq']:
+            #b = bow_hist(self.alg_ran, self.doc_names)
+            #b.run()   
+            
         if self.config['kmean_hist'] and self.config_alg['latent_semantic_analysis']:
             k = kmean_hist(self.alg_ran, self.doc_names)
             k.run()
@@ -50,6 +52,10 @@ class Visualization(object):
                 if self.config['export_scatter_plot_data']:
                     sp = File_Export()
                     sp.export_scatter_plot(t.output, k.clusters_and_names)
+                    
+                if self.config['export_bokeh']:
+                    b = File_Export()
+                    b.export_bokeh( t.output, k.modeldum, t.output)
                     
     
         if self.config['export_word_cloud_data'] and self.config_alg['word_frequency_table']:
@@ -72,8 +78,49 @@ class VectorSpaceModels(object):
         self.dtm = None
         self.vectorizer = None
         self.dist = None
+        self.cluster_colors = {0: '#a6cee3', 
+                               1: '#1f78b4', 
+                               2: '#b2df8a', 
+                               3: '#33a02c', 
+                               4: '#fb0a99',
+                               5: '#e31a1c',
+                               6: '#fdbf6f',
+                               7: 'yellow',
+                               8: '#ff7f00',
+                               9: '#cab2d6',
+                               10: 'gray'}
+        self.cluster_names =  {0: 'Cluster 0', 
+                               1: 'Cluster 1', 
+                               2: 'Cluster 2', 
+                               3: 'Cluster 3',
+                               4: 'Cluster 4',
+                               5: 'Cluster 5',
+                               6: 'Cluster 6',
+                               7: 'Cluster 7',
+                               8: 'Cluster 8',
+                               9: 'Cluster 9',
+                               10: 'Cluster 10'}
+'''
+ bow_hist(VectorSpaceModels):
+    def __init__(self, result_dict, doc_names): #,corpus):
+        super().__init__(doc_names)     
+        self.words = result_dict['wordfreq']['bow_max']  
+    def run(self):
+       
+        background = 'gray'
+        font_size = 8.0
         
-
+        fig = plt.figure(figsize=(18,4))
+        ax = fig.add_subplot(111)
+        plt.bar(self.words)
+        plt.xticks(rotation=90)
+        ax.tick_params(direction='out', length = 4, width = 1, colors = background,
+                   labelsize = font_size, labelcolor = background)
+        ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+        ax.spines['top'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)  
+'''
 class kmean_hist(VectorSpaceModels):
     def __init__(self, result_dict, doc_names): #,corpus):
         super().__init__(doc_names)      
@@ -82,45 +129,55 @@ class kmean_hist(VectorSpaceModels):
         
     def run(self):
             km_dict = dict()
-            max_clusters = 5
-            models = dict()
 
+            self.models = dict()
+            color_dict = dict()
+            max_clusters = 9
+    
 
             for index in range(2,max_clusters + 1):
                 km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
                 km.fit(self.dtm_lsa)
                 clusters = km.labels_.tolist()
-                km_dict[index] = Counter(clusters) 
-                models[index] = {'KMeans Model': km,
+
+                km_dict[index] = Counter(clusters)
+                self.models[index] = {'KMeans Model': km,
                                      'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
                                      'Document-Clustering': Counter(clusters),
+                                     'Document Cluster Id': clusters,
+                                     'Cluster Colors': [self.cluster_colors[cluster] for cluster in clusters],
                                      'Frame': pd.DataFrame({'Document Name': self.doc_names, 'Cluster': clusters})}
             print('models:', models)
                 
+            self.modeldum = self.models#[index]
             
-            self.clusters_and_names = models[index]['Frame']
+            print("modeldum")
+            print('n/n/n/')
+            
+            print (self.modeldum)
+            color_dict[index] = [self.cluster_colors[cluster] for cluster in clusters] 
+            self.clusters_and_names = self.models[index]['Frame']
             
             #self.clusters_and_names.columns['docnames','labels']
             #self.clusters_and_names['title'] = self.clusters_and_names['labels']
            
             
             
-            background = 'gray'
-            higlight = '#2171b5'
-            accent = 'dimgray'
+            background = 'purple'
+            accent = 'purple'
             font_size = 10.0
             index = 0
-            for key,val in models.items():
+            for key,val in self.models.items():
     
                 if index%5 == 0:
                     fig = plt.figure(figsize=(12,2))
     
                 ax = fig.add_subplot(151 + index%5)
     
-                x = [k for k,v in sorted(val['Document-Clustering'].items())]
-                y = [v for k,v in sorted(val['Document-Clustering'].items())]
+                self.x = [k for k,v in sorted(val['Document-Clustering'].items())]
+                self.y = [v for k,v in sorted(val['Document-Clustering'].items())]
     
-                plt.bar(x,y,width = 0.8, color = background)
+                plt.bar(self.x,self.y,width = 0.8, color = background)
     
                 plt.title(str(key) + ' Document\nClusters', fontweight = 'normal', color = accent)
     
@@ -133,11 +190,10 @@ class kmean_hist(VectorSpaceModels):
                 ax.spines['top'].set_visible(False)
                 ax.spines['bottom'].set_visible(False)
     
-                plt.savefig('Corpus2 Clusters ' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
+                plt.savefig('Hist_Clusters' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
     
                 index += 1
                 
-
 class tsne(kmean_hist):
     def __init__(self, result_dict, doc_names, dtm_lsa):
         #super().__init__(doc_names)      
@@ -154,16 +210,17 @@ class tsne(kmean_hist):
         
         position = tsne_matrix.fit_transform(self.dist)
         
+        x, y = position[:, 0], position[:, 1]
+        
         self.output = pd.DataFrame(position)
         
           
 class File_Export(VectorSpaceModels):
-    
-    def __init__(self): #,corpus):
-        #super().__init__(doc_names) #corpus)
-        results_dict = None
-        
 
+    def __init__(self):
+        #super().__init__(doc_names) #corpus)
+        result_dict = None
+    
     def export_word_cloud(self, result_dict): #, alg.wordfreq):
         
         self.word_frequency = result_dict['word_frequency']
@@ -177,6 +234,7 @@ class File_Export(VectorSpaceModels):
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
         
+
         print("word_cloud_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
     
         
@@ -200,52 +258,27 @@ class File_Export(VectorSpaceModels):
         writer.save()
         print("scatter_plot_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
 
+    def export_bokeh(self, x_and_y, models, output):
+       
+        max_clusters = 9
+        clusters =  models
+       
+         
+        base = {'x': output['x'].tolist(), 
+                'y': output['y'].tolist(),
+                'docname': ['Doc ' + str(i).zfill(2) for i in range(len(output))]}
+        #,
+               #'Document Name': clusters['Frame']['Document Name']
+       # for index in range(2, max_clusters + 1):
+       #     base[index] = [pair for pair in zip(clusters[index]['Document Cluster Id'],clusters[index]['Cluster Colors'])]
+        
+        for key,val in sorted(clusters.items()):
+            #print(key,': ', len(val['Document Cluster Id']), len(val['Cluster Colors']))
+            base[key] = [pair for pair in zip(val['Document Cluster Id'],val['Cluster Colors'])]
+        
+        column_order = ['docname','x','y'] + sorted(list(clusters.keys()))
+        df = pd.DataFrame(base)[column_order]
+        
+        df.to_excel('Bokeh_Test.xlsx', index = False)
 
-        # ## X-Y coordinates for a scatter plot
-        # x = self.scatter_plot_data.to_excel.loc[: , "x"]
-        # y = self.scatter_plot_data.to_excel.loc[: , "y"]
-        
-        # ## Cluster Numbers, Document Names and the Number of Documents in each cluster
-        # clusters = self.scatter_plot_data.to_excel.loc[: , "label"]
-        # names = self.scatter_plot_data.to_excel.loc[: , "docnames"]
-        # num_docs_in_cluster = self.scatter_plot_data.to_excel.loc[: , "'num_docs_in_cluster'"]
-        
-        # ## Creates a list of HEX colors using the colors dictionary above to color
-        # cluster_colors = {0: '#a6cee3', 
-        #                   1: '#1f78b4', 
-        #                   2: '#b2df8a', 
-        #                   3: '#33a02c', 
-        #                   4: '#fb0a99',
-        #                   5: '#e31a1c',
-        #                   6: '#fdbf6f',
-        #                   7: 'yellow',
-        #                   8: '#ff7f00',
-        #                   9: '#cab2d6',
-        #                   10: 'gray'}
-        # ## each point in the scatter plot according the cluster they belong to
-        # cluster_colors = [colors[cluster] for cluster in self.scatter_plot_data.to_excel.loc['label'].tolist()]
-  
-        # source = ColumnDataSource({'x': x,
-        #                            'y': y,
-        #                            'Cluster': clusters,
-        #                            'NumberofDocuments': num_docs_in_cluster,
-        #                            'Cluster Colors': cluster_colors,
-        #                            'DocumentName': names})
-
-        
-        # TOOLS = "hover,crosshair,pan,wheel_zoom,zoom_in,zoom_out,box_zoom,undo,redo,reset,tap,save,box_select,poly_select,lasso_select,"
-        
-        # ## Configure the HoverTool popup dialog
-        # hover = HoverTool(tooltips=[('Cluster', '@Cluster'),('# of Documents', "@NumberofDocuments"),('Document Name', "@DocumentName")])
-        
-        # ## Create a Bokeh figure object
-        # p = figure(plot_width=600, plot_height=600, 
-        #            tools = [hover,BoxSelectTool(),CrosshairTool(),SaveTool()], toolbar_location="above",
-        #            title = 'Clustered Corpus')
-        
-        # # add a circle renderer with a size, color, and alpha
-        # p.circle('x', 'y', size = 15, source = source,
-        #          line_color = 'dimgray', line_width = 0.5,
-        #          fill_color = 'Cluster Colors', fill_alpha = 1.0)
-        
-        # show(p) # show the results
+        df
