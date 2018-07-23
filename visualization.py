@@ -147,7 +147,6 @@ class kmean_hist(VectorSpaceModels):
                                      'Document Cluster Id': clusters,
                                      'Cluster Colors': [self.cluster_colors[cluster] for cluster in clusters],
                                      'Frame': pd.DataFrame({'Document Name': self.doc_names, 'Cluster': clusters})}
-            print('models:', models)
                 
             self.modeldum = self.models#[index]
             
@@ -262,10 +261,9 @@ class File_Export(VectorSpaceModels):
        
         max_clusters = 9
         clusters =  models
-       
-         
-        base = {'x': output['x'].tolist(), 
-                'y': output['y'].tolist(),
+        print(output)
+        base = {'x': output[0].tolist(), 
+                'y': output[1].tolist(),
                 'docname': ['Doc ' + str(i).zfill(2) for i in range(len(output))]}
         #,
                #'Document Name': clusters['Frame']['Document Name']
