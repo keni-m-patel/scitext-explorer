@@ -12,7 +12,11 @@ from bokeh.io import output_notebook, show
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, HoverTool, BoxSelectTool, CrosshairTool, SaveTool
 
+<<<<<<< HEAD
 #output_notebook()
+=======
+# output_notebook()
+>>>>>>> 9dde96e2bff17c321e316da2400e312cf7e012c0
 
 from collections import Counter
 
@@ -50,7 +54,7 @@ class Visualization(object):
                 t.run()
                 result_dict['tsne'] = t.output
                 
-                if self.config['export_scatter_plot']:
+                if self.config['export_scatter_plot_data']:
                     sp = File_Export()
                     sp.export_scatter_plot(t.output, k.clusters_and_names)
                     
@@ -59,7 +63,7 @@ class Visualization(object):
                     b.export_bokeh( t.output, k.modeldum, t.output)
                     
     
-        if self.config['export_word_cloud'] and self.config_alg['word_frequency_table']:
+        if self.config['export_word_cloud_data'] and self.config_alg['word_frequency_table']:
             wc = File_Export() #,self.corpus):                   ###GET THIS TO WORK
             wc.export_word_cloud(self.alg_ran)
         
@@ -130,14 +134,17 @@ class kmean_hist(VectorSpaceModels):
         
     def run(self):
             km_dict = dict()
+
             self.models = dict()
             color_dict = dict()
             max_clusters = 9
     
+
             for index in range(2,max_clusters + 1):
                 km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
                 km.fit(self.dtm_lsa)
                 clusters = km.labels_.tolist()
+
                 km_dict[index] = Counter(clusters)
                 self.models[index] = {'KMeans Model': km,
                                      'KMeans Centroids': km.cluster_centers_.argsort()[:, ::-1],
@@ -145,6 +152,7 @@ class kmean_hist(VectorSpaceModels):
                                      'Document Cluster Id': clusters,
                                      'Cluster Colors': [self.cluster_colors[cluster] for cluster in clusters],
                                      'Frame': pd.DataFrame({'Document Name': self.doc_names, 'Cluster': clusters})}
+            print('models:', models)
                 
             self.modeldum = self.models#[index]
             
@@ -222,7 +230,7 @@ class File_Export(VectorSpaceModels):
         
         self.word_frequency = result_dict['word_frequency']
         # Create a Pandas Excel writer using XlsxWriter as the engine.
-        writer = pd.ExcelWriter('word_cloud_form.xlsx', engine='xlsxwriter')
+        writer = pd.ExcelWriter('word_cloud_data.xlsx', engine='xlsxwriter')
         #bow_max.to_excel(writer, sheet_name='Sheet1')
         self.word_frequency.to_excel(writer, sheet_name='Sheet1')
         # Get the xlsxwriter objects from the dataframe writer object.
@@ -231,18 +239,21 @@ class File_Export(VectorSpaceModels):
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
         
+
+        print("word_cloud_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
+    
+        
     def export_scatter_plot(self, x_and_y, clusters_and_names):
         
         self.x_and_y = x_and_y
         self.clusters_and_names = clusters_and_names
-        self.clusters_and_names.columns = ['docnames', 'label']
-        self.clusters_and_names['title'] = self.clusters_and_names['label']
+        self.clusters_and_names.columns = ['docnames', 'cluster']
         self.x_and_y.columns = ['x','y']
         self.scatter_plot_data = self.clusters_and_names.join(self.x_and_y)
         self.scatter_plot_data = self.scatter_plot_data.set_index('docnames')
         
         # Create a Pandas Excel writer using XlsxWriter as the engine.
-        writer = pd.ExcelWriter('scatter_plot_form.xlsx', engine='xlsxwriter')
+        writer = pd.ExcelWriter('scatter_plot_data.xlsx', engine='xlsxwriter')
         #bow_max.to_excel(writer, sheet_name='Sheet1')
         self.scatter_plot_data.to_excel(writer, sheet_name='Sheet1')
         # Get the xlsxwriter objects from the dataframe writer object.
@@ -250,6 +261,7 @@ class File_Export(VectorSpaceModels):
         #worksheet = writer.sheets['Sheet1']
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
+        print("scatter_plot_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
 
     def export_bokeh(self, x_and_y, models, output):
        
