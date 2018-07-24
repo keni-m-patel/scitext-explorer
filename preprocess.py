@@ -26,7 +26,7 @@ class Preprocessor(object):
         self.config = utilities.get_config(config_file)
         
         
-        #self.file_names  = [os.path.basename(x) for x in files]
+        self.file_names  = [os.path.basename(x) for x in files]
         
         self.regex = self.config['regex_stopwords']
 
@@ -104,11 +104,11 @@ class Preprocessor(object):
                 
             #gets rid of punctuation if set to true
             if self.config['alpha_only']:
-                tokens = [t for t in tokens if t[0].isalpha()]   #and t[0] not in self.stop]
+                tokens = [t for t in tokens if t[0].isalpha()]
             
             #gets rid of stop words
             tokens = [t for t in tokens if t[0] not in self.stop]
-                
+            
         
         #goes through necessary preprocessing steps for stemming
         else:
@@ -166,6 +166,7 @@ class Preprocessor(object):
             self.output = lem_words
 
         #returns the list of preprocessed words as a string in order to work with algorithms
+        
         return ' '.join(self.output)
 
 

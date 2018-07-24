@@ -1,6 +1,6 @@
 
 #To undergo no preprocesssing and ignore all the following preprocessing actions set to False
-undergo_preprocess: False
+undergo_preprocess: True
 
 
 #To use english stopword list from nltk set to True. If set to False uses no stopwords unless added manually in this config file
@@ -59,7 +59,7 @@ alpha_only: True
 # Stemming is the process for reducing inflected words to their word stem, base or root form by chopping off word endings
 # Example: dropping --> drop
 
-PorterStemmer: True
+PorterStemmer: False
 SnowballStemmer: False
 
 
@@ -70,7 +70,6 @@ SnowballStemmer: False
 # Example run --> ran
 
 lemmatize: True
-
 
 # To create a list of Named Entities set to True. If not set to False
 # Named Entities are names of persons, organizations, locations, expressions of times, quantities, monetary values, ect.

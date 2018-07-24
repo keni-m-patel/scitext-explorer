@@ -1,4 +1,5 @@
 
+
 import logging
 from structures import Corpus, Merge
 from algorithms import Algorithm
@@ -23,7 +24,9 @@ corpus_list = [Corpus(config_file) for config_file in utilities.get_config('./co
 corpi = Merge([corpus() for corpus in corpus_list])
 
 tokens = corpi  # corpus()
-    
+
+
+
 corpus_doc_name_lists = [corpus.get_file_names() for corpus in corpus_list]  # corpus.get_file_names()
 doc_names = []
 for c_list in corpus_doc_name_lists:
@@ -31,6 +34,7 @@ for c_list in corpus_doc_name_lists:
 
 print('doc_names\n\n', doc_names)
 print(len(doc_names))
+
 
 
 
@@ -50,4 +54,3 @@ vis = Visualization( './config/visualization.yaml', './config/algorithms.yaml', 
 
 
 vis.run()
-

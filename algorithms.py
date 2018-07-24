@@ -20,6 +20,11 @@ from nltk.tokenize import word_tokenize
 
 
 
+import gensim
+from gensim.test.utils import common_texts
+from gensim.corpora.dictionary import Dictionary
+
+
 
 class Algorithm(object):
     """Reads the algorithm config file to see the selected algorithm(s)."""
@@ -87,14 +92,23 @@ class Algorithm(object):
                 self.w.run()
                 result_dict['word_frequency'] = self.w.output
                 
-        
-        if self.config['LSA_Concepts'] or self.config['kmeans']:
-            warnings.warn("NEED LATENT SEMANTIC ANALYSIS")
             
         if self.config['tf_idf']:
             t = Tf_Idf(self.corpus)
             t.run()
             result_dict['tf_idf'] = t.output
+            
+            
+        if not self.config['bag_of_words'] and self.config['LDA']:
+            warnings.warn("NEED BAG OF WORDS TO RUN Latent Dirchlet Allocation")
+          
+            
+        '''
+        if self.config['LDA'] and self.config['bag_of_words']:
+            lda = LDA(self.corpus, b.output)
+            lda.run()
+            result_dict['LDA'] = lda.output
+        '''
             
 
         output_text = ""
@@ -263,8 +277,37 @@ class Tf_Idf(VectorSpaceModels):
         """Returns Data Table of doc-term matrix."""
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
+    
+'''    
+class LDA(VectorSpaceModels):
+    """Initiates Latent Dirichlet Allocation algorithm: shows how much a bag of words represents different topics"""
+    
+    def __init__(self, corpus, bow):
+        super().__init__(corpus)
+        self.output = []
+        self.bow = bow
+        print('\n\n\n\nRunning the following algorithm: \nLatent Dirichlet Allocation \n\n')
         
-
+    def run(self):
+        
+        # Create a corpus from a list of texts
+        common_dictionary = Dictionary(common_texts)
+        
+        common_corpus = [common_dictionary.doc2bow(text) for text in common_texts]
+        
+        # Train the model on the corpus.
+        lda = gensim.models.ldamodel.LdaModel(common_corpus, num_topics=10)
+        
+        
+        other_corpus = common_dictionary.doc2bow(self.bow) # for text in other_texts] #needs txt as dict
+        
+        vector = lda[other_corpus]
+        
+        for v in vector:
+            self.output.append(v)
+'''
+        
+        
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
     
