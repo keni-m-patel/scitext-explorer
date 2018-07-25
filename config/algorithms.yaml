@@ -17,16 +17,17 @@ kmeans: False
 #Process corpus for term frequency inverse document frequency
 tf_idf: False
 
+#Shows how much each topic is represented in each document
+#Needs bag_of_words
+#Change False to a number for the number of topics
+LDA: False
+
 #Gives a dictionary of words with their frequency
 bag_of_words: True
 
 #Gives a table of words with their frequency
 #Only works when bag_of_words is True
-word_frequency_table: False
-
-#Gives a vector for each doc for an LDA analysis
-#Only works when bag_of_words is True
-LDA: True
+word_frequency_table: True
 
 # do T or F to turn on or off
 

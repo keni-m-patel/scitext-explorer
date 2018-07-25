@@ -21,7 +21,7 @@ from nltk.tokenize import word_tokenize
 
 
 import gensim
-from gensim.test.utils import common_texts
+
 from gensim.corpora.dictionary import Dictionary
 
 
@@ -103,12 +103,12 @@ class Algorithm(object):
             warnings.warn("NEED BAG OF WORDS TO RUN Latent Dirchlet Allocation")
           
             
-        '''
+        
         if self.config['LDA'] and self.config['bag_of_words']:
-            lda = LDA(self.corpus, b.output)
+            lda = LDA(self.corpus, self.config['LDA'])
             lda.run()
             result_dict['LDA'] = lda.output
-        '''
+       
             
 
         output_text = ""
@@ -142,7 +142,8 @@ class BagOfWords(VectorSpaceModels):
      def run(self):
         """Vectorizes words and fits words to a matrix."""
 
-        self.vectorizer = CountVectorizer(lowercase = False, stop_words = None) #, preprocessor = None, tokenizer = None
+        self.vectorizer = CountVectorizer(lowercase = False, stop_words = 'english') #, preprocessor = None, tokenizer = None
+
         self.dtm = self.vectorizer.fit_transform(self.corpus)
 
         vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
@@ -278,35 +279,46 @@ class Tf_Idf(VectorSpaceModels):
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
     
-'''    
+   
 class LDA(VectorSpaceModels):
     """Initiates Latent Dirichlet Allocation algorithm: shows how much a bag of words represents different topics"""
     
-    def __init__(self, corpus, bow):
+    def __init__(self, corpus, num_topics):
         super().__init__(corpus)
         self.output = []
-        self.bow = bow
+        self.num = num_topics
         print('\n\n\n\nRunning the following algorithm: \nLatent Dirichlet Allocation \n\n')
         
     def run(self):
         
-        # Create a corpus from a list of texts
-        common_dictionary = Dictionary(common_texts)
+        tokens = []
+        for text in self.corpus:
+            tokens.append(word_tokenize(text))
         
-        common_corpus = [common_dictionary.doc2bow(text) for text in common_texts]
+        # Create a corpus from a list of texts
+        common_dictionary = Dictionary(tokens)
+        
+        common_corpus = [common_dictionary.doc2bow(text) for text in tokens]
         
         # Train the model on the corpus.
-        lda = gensim.models.ldamodel.LdaModel(common_corpus, num_topics=10)
+        lda = gensim.models.ldamodel.LdaModel(tokens, num_topics=self.num)
+        self.output = lda.show_topics(num_topics = self.num, num_words = 8)
+ 
+        for i in range(0, lda.num_topics):
+    
+        
+            for word, prob in lda.show_topic(i, topn=20):
+                print(word, prob)
+        #other_corpus = common_dictionary.doc2bow(self.bow) # for text in other_texts] #needs txt as dict
+        
+        #vector = lda[common_corpus]
         
         
-        other_corpus = common_dictionary.doc2bow(self.bow) # for text in other_texts] #needs txt as dict
         
-        vector = lda[other_corpus]
-        
-        for v in vector:
-            self.output.append(v)
-'''
-        
+        #for v in vector:
+          #self.output.append(v)
+
+   
         
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):

@@ -84,7 +84,7 @@ class DotPDF(object):
 
     def __init__(self, files, group_by='doc'):
         self.files = files
-        self.doc_names = []
+        self.doc_ids = []
         self.__read_data(self.files)
         self.grouping = group_by
         self.msg_flag = 1  # flag if preprocessing message should be sent by __iter__, should only do once.
@@ -100,22 +100,24 @@ class DotPDF(object):
             self.msg_flag = 0
 
         if self.grouping == 'doc':
-            for PDFObj in self.data_map:
+            for PDFObj, f in zip(self.data_map, self.files):
                 pdf_reader = PDFR(PDFObj)
                 text_file = ""
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     text_file = text_file + ' ' + page_text
+                self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0])
                 yield Preprocessor(text_file,'./config/preprocessing.yaml', self.files).run()
                 
             self.__read_data(self.files) # get data  
             
 
         elif self.grouping == 'page':
-            for PDFObj in self.data_map:
+            for PDFObj, f in zip(self.data_map, self.files):
                 pdf_reader = PDFR(PDFObj)
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
+                    self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0] + ' Page ' + str(pg_num+1) + ' of ' + str(pdf_reader.numPages))
                     yield Preprocessor(page_text,'./config/preprocessing.yaml', self.files).run()
             self.__read_data(self.files) # get data    
             
@@ -157,6 +159,7 @@ class DotTXT(object):
         self.__read_data(self.files) # get data    
         self.grouping = group_by
         self.msg_flag = 1
+        self.doc_ids = []
         
     def __iter__(self):
         # custom iterator function that defines how to iterate over 
@@ -166,8 +169,10 @@ class DotTXT(object):
             print('\n\n\n\nRunning the following preprocessing actions on group of files:\n\n')
             print(utilities.get_config('./config/preprocessing.yaml'))
             self.msg_flag = 0
-
-        for doc in self.data_map:
+        
+        
+        for doc, f in zip(self.data_map, self.files):
+            self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0])
             yield Preprocessor(doc,'./config/preprocessing.yaml', self.files).run()
         self.__read_data(self.files) # get data    
 
@@ -199,6 +204,7 @@ class DotCSV(DotTXT):
         self.files = files
         self.__read_data(self.files)
         self.msg_flag = 1
+        self.doc_ids = []
         # self.__log() # log things
         
 
@@ -208,7 +214,7 @@ class DotCSV(DotTXT):
             print(utilities.get_config('./config/preprocessing.yaml'))
             self.msg_flag = 0
 
-        for csv_file in self.data_map:
+        for csv_file, f in zip(self.data_map, self.files):
             reader = csv.reader(csv_file, delimiter=',')
             if self.grouping == "row":
                 for row in reader:
@@ -218,6 +224,7 @@ class DotCSV(DotTXT):
                         # print('cell: \n', cell)
                         row_cells += ' ' + cell + ' '
                     # print('row_cells:\n', row_cells)
+
                     yield Preprocessor(row_cells,'./config/preprocessing.yaml', self.files).run()
 
             elif self.grouping == "col":
@@ -272,9 +279,9 @@ class DotCSV(DotTXT):
 class Tweets(object):
 
     def __init__(self, files, group_by = 'tweet'):
-        self.filenames = files
-        self.files = list()
-        self.__read_data(self.filenames)
+        self.files = files
+        self.doc_ids = []
+        self.__read_data(self.files)
         self.grouping = group_by
         self.msg_flag = 1
       
@@ -289,20 +296,19 @@ class Tweets(object):
             for doc in self.data_map:
                  tweets = json.loads(doc.read(), encoding = "utf-8")
                  for tweet in tweets:                                              
-                       self.files.append(tweet['ID'])  
-                       yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml', self.filenames).run()
+                       yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml', self.files).run()
         
-        self.__read_data(self.filenames)
+        self.__read_data(self.files)
 
     def __len__(self):
         pass
 
 
     def __read_data(self, files):
-        filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.filenames]])
+        filetype = set([ext for filename,ext in [os.path.splitext(doc) for doc in self.files]])
         self.filetype = filetype
         if filetype == {'.json'}:
-            self.data_map = map(lambda x: open(os.path.join('', x),'rU'), self.filenames)
+            self.data_map = map(lambda x: open(os.path.join('', x),'rU'), self.files)
         else:
             print("ERROR: NON-JSON PASSED TO TWEET CLASS")
 
@@ -323,6 +329,10 @@ class Merge(object):
         for corpus in self.corpus_list:
             for doc in corpus:
                 yield doc 
+                
+                
+                
+
 
 
 
