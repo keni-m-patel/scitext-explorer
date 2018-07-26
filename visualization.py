@@ -125,7 +125,7 @@ class kmean_hist(VectorSpaceModels):
                                      'Cluster Colors': [self.cluster_colors[cluster] for cluster in clusters],
                                      'Frame': pd.DataFrame({'Document Name': self.doc_names, 'Cluster': clusters})}
                 
-            self.output = self.models#[index]
+            self.output = self.models
             
 
             color_dict[index] = [self.cluster_colors[cluster] for cluster in clusters] 
