@@ -319,9 +319,6 @@ class LDA(VectorSpaceModels):
         
         #for v in vector:
           #self.output.append(v)
-=======
-        Tf_Idf_Table.to_excel('dtm.xlsx', index = False)
->>>>>>> 1d361e3640b5d8dfdbe346e0626f7092667b5cf6
 
    
         

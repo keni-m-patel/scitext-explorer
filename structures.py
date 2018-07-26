@@ -108,9 +108,14 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     text_file = text_file + ' ' + page_text
+<<<<<<< HEAD
 
                 self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0])
                 yield Preprocessor(text_file,'./config/preprocessing.yaml').run()
+=======
+                self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0]) 
+                yield Preprocessor(text_file,'./config/preprocessing.yaml', self.files).run()
+>>>>>>> 47152831c8b4f9c2e16980e3f8c35ba752a5eadf
                 
             self.__read_data(self.files) # get data  
             
@@ -121,9 +126,13 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0] + ' Page ' + str(pg_num+1) + ' of ' + str(pdf_reader.numPages))
+<<<<<<< HEAD
 
                     yield Preprocessor(page_text,'./config/preprocessing.yaml').run()
 
+=======
+                    yield Preprocessor(page_text,'./config/preprocessing.yaml', self.files).run()
+>>>>>>> 47152831c8b4f9c2e16980e3f8c35ba752a5eadf
             self.__read_data(self.files) # get data    
             
        
@@ -180,6 +189,12 @@ class DotTXT(object):
             self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0])
             yield Preprocessor(doc,'./config/preprocessing.yaml').run()
 
+<<<<<<< HEAD
+=======
+        for doc, f in zip(self.data_map, self.files):
+            self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0])
+            yield Preprocessor(doc,'./config/preprocessing.yaml', self.files).run()
+>>>>>>> 47152831c8b4f9c2e16980e3f8c35ba752a5eadf
         self.__read_data(self.files) # get data    
 
     
@@ -281,11 +296,18 @@ class DotCSV(DotTXT):
 
 class Tweets(object):
 
+<<<<<<< HEAD
     
     def __init__(self, files, group_by = 'tweet'):
         self.files = files
         self.doc_ids = []
         self.__read_data(self.files)
+=======
+    def __init__(self, files, config_file, group_by = 'tweet'):
+        self.filenames = files
+        self.doc_ids = list()
+        self.__read_data(self.filenames)
+>>>>>>> 47152831c8b4f9c2e16980e3f8c35ba752a5eadf
         self.grouping = group_by
         self.msg_flag = 1
         
@@ -301,9 +323,15 @@ class Tweets(object):
                  tweets = json.loads(doc.read(), encoding = "utf-8")
                  for tweet in tweets:                                              
                        self.doc_ids.append(tweet['ID'])  
+<<<<<<< HEAD
                        yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml').run()
 
         self.__read_data(self.files)
+=======
+                       yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml', self.filenames).run()
+        
+        self.__read_data(self.filenames)
+>>>>>>> 47152831c8b4f9c2e16980e3f8c35ba752a5eadf
 
     def __len__(self):
         pass
