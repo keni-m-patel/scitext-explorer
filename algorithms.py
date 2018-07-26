@@ -2,6 +2,8 @@
 import inspect
 import utilities
 
+import warnings
+
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -35,6 +37,28 @@ class Algorithm(object):
         result_dict = {}
         
         
+
+         #HAVE TO SWITCH TO NOT RUN WITH ANY PREPROCESSING
+         
+        #For each if self.config if set to true in the config, will set if statement to true
+        #If the if statement is read as true an object for that algorithm type class is made, run, and added to the result dictionary
+        #Wwarnings are triggered when a necessary component is not included when an algorithm is set to true in the config file
+        
+        if self.config['named_entities']:
+            ner = Named_Entity_Recognition(self.corpus)
+            ner.run()
+            self.corpus = ner.output
+            result_dict['named_entities'] = self.corpus
+            
+        
+        if not self.config['latent_semantic_analysis'] and self.config['LSA_Concepts']:
+            warnings.warn("NEED LATENT SEMANTIC ANALYSIS TO RUN LSA CONCEPTS")
+            
+        if not self.config['latent_semantic_analysis'] and self.config['kmeans']:
+            warnings.warn("NEED LATENT SEMANTIC ANALYSIS TO RUN KMEANS")
+     
+        
+
         if self.config['latent_semantic_analysis']:
             l = LatentSemanticAnalysis(self.corpus)
             l.run()
@@ -51,6 +75,10 @@ class Algorithm(object):
                 k.run()
                 result_dict['kmeans'] = k.output
              
+                
+        if not self.config['bag_of_words'] and self.config['word_frequency_table']:
+            warnings.warn("NEED BAG OF WORDS TO RUN WORD FREQUENCY TABLE")
+            
 
         if self.config['bag_of_words']:
             b = BagOfWords(self.corpus)
@@ -62,7 +90,10 @@ class Algorithm(object):
                 self.w.run()
                 result_dict['word_frequency'] = self.w.output
                 
-                
+        
+        if self.config['LSA_Concepts'] or self.config['kmeans']:
+            warnings.warn("NEED LATENT SEMANTIC ANALYSIS")
+            
         if self.config['tf_idf']:
             t = Tf_Idf(self.corpus)
             t.run()
@@ -136,6 +167,9 @@ class WordFreq(VectorSpaceModels):
         bow_data.columns = ['Word', 'Word Count']
         bow_max = bow_data.sort_values(by='Word Count', ascending=False)
         #bow_max = bow_max.set_index('Word')
+        bow_top = bow_max[:10]
+        df = pd.DataFrame(bow_top)
+        df.to_excel('BOW.xlsx', index = False)
         self.output = bow_max
         return self.output
 
@@ -230,15 +264,15 @@ class Tf_Idf(VectorSpaceModels):
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         
         #Prints idf'd words
-        # print(self.vectorizer.get_feature_names())
+        #print(self.dtm.get_feature_names())
         
         #Prints doc-term matrix
-        # print(self.dtm)
+        #print(self.dtm)
         
         """Returns Data Table of doc-term matrix."""
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
-        
+        Tf_Idf_Table.to_excel('dtm.xlsx', index = False)
 
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
@@ -290,10 +324,4 @@ class Named_Entity_Recognition(TopicModels):
        
         #Replace 'the_word' with * 'the_word' * -> "highlight" it
         #filedata.replace(the_word,  "*" + the_word + '*')
-
-     
- 
- 
-
-        
 
