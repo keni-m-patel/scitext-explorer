@@ -38,11 +38,9 @@ class Algorithm(object):
         
         
 
-<<<<<<< HEAD
-         #HAVE TO SWITCH TO NOT RUN WITH ANY PREPROCESSING
-=======
+
         #HAVE TO SWITCH TO NOT RUN WITH ANY PREPROCESSING
->>>>>>> dd40a635d271f7fd4f3133af5171dd6ebbc0c8c9
+
          
         #For each if self.config if set to true in the config, will set if statement to true
         #If the if statement is read as true an object for that algorithm type class is made, run, and added to the result dictionary
@@ -134,15 +132,9 @@ class BagOfWords(VectorSpaceModels):
         """Vectorizes words and fits words to a matrix."""
 
         self.vectorizer = CountVectorizer(lowercase = False, stop_words = None) #, preprocessor = None, tokenizer = None
-<<<<<<< HEAD
-        self.dtm = self.vectorizer.fit_transform(self.corpi)
-        dtm_dense = self.dtm.todense()
-=======
-
         self.dtm = self.vectorizer.fit_transform(self.corpi)
         dtm_dense = self.dtm.todense()
 
->>>>>>> dd40a635d271f7fd4f3133af5171dd6ebbc0c8c9
 
         vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
 
