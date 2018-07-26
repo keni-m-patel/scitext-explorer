@@ -141,7 +141,6 @@ class BagOfWords(VectorSpaceModels):
      def run(self):
         """Vectorizes words and fits words to a matrix."""
 
-
         self.vectorizer = CountVectorizer(lowercase = False, stop_words = 'english') #, preprocessor = None, tokenizer = None
         self.dtm = self.vectorizer.fit_transform(self.corpi)
  
@@ -176,11 +175,6 @@ class WordFreq(VectorSpaceModels):
         bow_data = bow_series.to_frame().reset_index()
         bow_data.columns = ['Word', 'Word Count']
         self.output = bow_data.sort_values(by='Word Count', ascending=False)
-        #bow_max = bow_max.set_index('Word')
-        bow_top = self.output[:10]
-        df = pd.DataFrame(bow_top)
-        df.to_excel('BOW.xlsx', index = False)
-
 
 class LatentSemanticAnalysis(VectorSpaceModels):
     """Initiates LSA: computing document similarity. """
@@ -211,8 +205,8 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 class LSA_Concepts(VectorSpaceModels):
     """Analyzes the conceptual ideas within the data."""
     
-    def __init__(self, corpus, dtm_lsa, lsa, vectorizer):
-        super().__init__(corpus)
+    def __init__(self, corpi, dtm_lsa, lsa, vectorizer):
+        super().__init__(corpi)
         
         self.dtm_lsa = dtm_lsa
         self.lsa = lsa
@@ -236,8 +230,8 @@ class kmeans(LatentSemanticAnalysis):
     """Initiates k-means: clustering data according to means."""
     
 
-    def __init__(self, corpus, dtm_lsa):
-        super().__init__(corpus) 
+    def __init__(self, corpi, dtm_lsa):
+        super().__init__(corpi) 
         self.dtm_lsa = dtm_lsa
         
     def run(self):
@@ -257,8 +251,8 @@ class kmeans(LatentSemanticAnalysis):
 class Tf_Idf(VectorSpaceModels):
     """Initiates Tf-Idf algorithm: compares word frequency in a collection of documents."""
     
-    def __init__(self, corpus):
-        super().__init__(corpus)
+    def __init__(self, corpi):
+        super().__init__(corpi)
         self.output = None
         print('\n\n\n\nRunning the following algorithm: \nTFIDF \n\n')
         
@@ -269,7 +263,7 @@ class Tf_Idf(VectorSpaceModels):
         self.vectorizer = TfidfVectorizer(stop_words=None, lowercase=False, encoding='utf-8')
         
         #Tranforms corpus into vectorized words
-        self.dtm = self.vectorizer.fit_transform(self.corpus)
+        self.dtm = self.vectorizer.fit_transform(self.corpi)
         
         #Prints idf'd words
         #print(self.dtm.get_feature_names())
@@ -280,8 +274,8 @@ class Tf_Idf(VectorSpaceModels):
         """Returns Data Table of doc-term matrix."""
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
+
     
-   
 class LDA(VectorSpaceModels):
     """Initiates Latent Dirichlet Allocation algorithm: shows how much a bag of words represents different topics"""
     
@@ -320,7 +314,6 @@ class LDA(VectorSpaceModels):
         #for v in vector:
           #self.output.append(v)
 
-   
         
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
@@ -328,16 +321,16 @@ class TopicModels(object):
     """Parent Class for Named Entity Recognition"""
 
     
-    def __init__(self, corpus):
-        self.corpus = corpus
+    def __init__(self, corpi):
+        self.corpus = corpi
 
 class Named_Entity_Recognition(TopicModels):
     """Initiates NER: identifies categories such as names, organizations, locations, etc."""
     
     """This takes in a document strings and obtains the Named Entities from each. """
     
-    def __init__(self, corpus):
-        super().__init__(corpus)
+    def __init__(self, corpi):
+        super().__init__(corpi)
         print('\n\n\n\nRunning the following algorithm: \nNamed_Entity_Recognition\n\n')
         
         self.output = []

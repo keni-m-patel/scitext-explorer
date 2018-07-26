@@ -24,18 +24,12 @@ corpus_list = [Corpus(config_file) for config_file in utilities.get_config('./co
 corpi = Merge([corpus() for corpus in corpus_list])
 
 
-<<<<<<< HEAD
-
 alg = Algorithm(corpi, './config/algorithms.yaml')
 
-=======
-alg = Algorithm(corpi, './config/algorithms.yaml')
->>>>>>> 47152831c8b4f9c2e16980e3f8c35ba752a5eadf
 
 alg_ran = alg.run()
-doc_ids = alg_ran['latent_semantic_analysis']['doc_ids']
 
-vis = Visualization( './config/visualization.yaml', './config/algorithms.yaml', alg_ran, doc_ids)
+vis = Visualization( './config/visualization.yaml', './config/algorithms.yaml', alg_ran)
 
 
 vis.run()
