@@ -1,16 +1,11 @@
 
 # directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/BinLaden
 
-#directory: /Users/Brendan Gochett/scitext-explorer/test/data/tweets/Sample_tweets/
+directory: /Users/Brendan Gochett/scitext-explorer/test/data/tweets/Sample_tweets/
 
-#files:
-        #-capstone_sample_twitter_dataset.json
-        #-capstone_sample_twitter_dataset2.json
-        #-capstone_sample_twitter_dataset3.json
+files:
+        -capstone_sample_twitter_dataset.json
+        -capstone_sample_twitter_dataset2.json
+        -capstone_sample_twitter_dataset3.json
         
-directory: /Users/Brendan Gochett/scitext-explorer/test/data/url/        
-        
-files: 
-    -webscrape.json
-
-group_by: 'gsi'
+group_by: 'tweet'        
