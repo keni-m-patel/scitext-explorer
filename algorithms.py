@@ -63,7 +63,6 @@ class Algorithm(object):
             l = LatentSemanticAnalysis(self.corpus)
             l.run()
             result_dict['latent_semantic_analysis'] = l.output
-            result_dict['doc_ids'] = l.doc_ids
 
             if self.config['LSA_Concepts']:
                 c = LSA_Concepts(self.corpus, l.dtm_lsa, l.lsa, l.vectorizer)
