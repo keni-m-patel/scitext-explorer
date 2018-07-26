@@ -205,8 +205,8 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 class LSA_Concepts(VectorSpaceModels):
     """Analyzes the conceptual ideas within the data."""
     
-    def __init__(self, corpus, dtm_lsa, lsa, vectorizer):
-        super().__init__(corpus)
+    def __init__(self, corpi, dtm_lsa, lsa, vectorizer):
+        super().__init__(corpi)
         
         self.dtm_lsa = dtm_lsa
         self.lsa = lsa
@@ -230,8 +230,8 @@ class kmeans(LatentSemanticAnalysis):
     """Initiates k-means: clustering data according to means."""
     
 
-    def __init__(self, corpus, dtm_lsa):
-        super().__init__(corpus) 
+    def __init__(self, corpi, dtm_lsa):
+        super().__init__(corpi) 
         self.dtm_lsa = dtm_lsa
         
     def run(self):
@@ -251,8 +251,8 @@ class kmeans(LatentSemanticAnalysis):
 class Tf_Idf(VectorSpaceModels):
     """Initiates Tf-Idf algorithm: compares word frequency in a collection of documents."""
     
-    def __init__(self, corpus):
-        super().__init__(corpus)
+    def __init__(self, corpi):
+        super().__init__(corpi)
         self.output = None
         print('\n\n\n\nRunning the following algorithm: \nTFIDF \n\n')
         
@@ -263,7 +263,7 @@ class Tf_Idf(VectorSpaceModels):
         self.vectorizer = TfidfVectorizer(stop_words=None, lowercase=False, encoding='utf-8')
         
         #Tranforms corpus into vectorized words
-        self.dtm = self.vectorizer.fit_transform(self.corpus)
+        self.dtm = self.vectorizer.fit_transform(self.corpi)
         
         #Prints idf'd words
         #print(self.dtm.get_feature_names())
@@ -282,16 +282,16 @@ class TopicModels(object):
     """Parent Class for Named Entity Recognition"""
 
     
-    def __init__(self, corpus):
-        self.corpus = corpus
+    def __init__(self, corpi):
+        self.corpus = corpi
 
 class Named_Entity_Recognition(TopicModels):
     """Initiates NER: identifies categories such as names, organizations, locations, etc."""
     
     """This takes in a document strings and obtains the Named Entities from each. """
     
-    def __init__(self, corpus):
-        super().__init__(corpus)
+    def __init__(self, corpi):
+        super().__init__(corpi)
         print('\n\n\n\nRunning the following algorithm: \nNamed_Entity_Recognition\n\n')
         
         self.output = []
