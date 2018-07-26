@@ -107,7 +107,7 @@ class DotPDF(object):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     text_file = text_file + ' ' + page_text
                 self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0])
-                yield Preprocessor(text_file,'./config/preprocessing.yaml', self.files).run()
+                yield Preprocessor(text_file,'./config/preprocessing.yaml').run()
                 
             self.__read_data(self.files) # get data  
             
@@ -118,7 +118,7 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0] + ' Page ' + str(pg_num+1) + ' of ' + str(pdf_reader.numPages))
-                    yield Preprocessor(page_text,'./config/preprocessing.yaml', self.files).run()
+                    yield Preprocessor(page_text,'./config/preprocessing.yaml').run()
             self.__read_data(self.files) # get data    
             
        
@@ -173,7 +173,7 @@ class DotTXT(object):
         
         for doc, f in zip(self.data_map, self.files):
             self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0])
-            yield Preprocessor(doc,'./config/preprocessing.yaml', self.files).run()
+            yield Preprocessor(doc,'./config/preprocessing.yaml').run()
         self.__read_data(self.files) # get data    
 
     
@@ -234,7 +234,7 @@ class DotCSV(DotTXT):
                         # print ('COLUMN:\n\n', column )
                         for cell in column:
                             col_text += ' ' + cell + ' '
-                        yield Preprocessor(col_text,'./config/preprocessing.yaml', self.files).run()
+                        yield Preprocessor(col_text,'./config/preprocessing.yaml').run()
         self.__read_data(self.files) # get data   
 
             
@@ -296,7 +296,7 @@ class Tweets(object):
             for doc in self.data_map:
                  tweets = json.loads(doc.read(), encoding = "utf-8")
                  for tweet in tweets:                                              
-                       yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml', self.files).run()
+                       yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml').run()
         
         self.__read_data(self.files)
 

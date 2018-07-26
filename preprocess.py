@@ -17,7 +17,7 @@ class Preprocessor(object):
     """This holds all the preprocessing which includes removes stop words, lowercases, removes punctuation, and removes symbols. It then has options to either lemmatizes or stem or neither.  """
     
 
-    def __init__(self, data, config_file, files):
+    def __init__(self, data, config_file):
         
         #data represents a single doc (or page, tweet, ect.)
         self.data = data
@@ -25,15 +25,8 @@ class Preprocessor(object):
         #connects to preprocess config file
         self.config = utilities.get_config(config_file)
         
-        
-        self.file_names  = [os.path.basename(x) for x in files]
-        
         self.regex = self.config['regex_stopwords']
 
-        #if there is nothing found in the file program gives a warning
-        if not self.file_names:
-            warnings.warn('\n\nERROR: no files selected, must select at least one file to process, exiting program\n\n')
-            
 
         # print('\n\n\n\nRunning the following preprocessing actions:\n\n')
         # print(self.config)
@@ -209,7 +202,5 @@ class Named_Entity_Recognition(object):
                     continuous_chunk = ' '.join(continuous_chunk)
                     self.output.append(continuous_chunk)
        
-        #Replace 'the_word' with * 'the_word' * -> "highlight" it
-        #filedata.replace(the_word,  "*" + the_word + '*')
 
 '''
