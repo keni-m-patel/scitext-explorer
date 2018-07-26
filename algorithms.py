@@ -33,11 +33,13 @@ class Algorithm(object):
     def run(self):
         """Runs algorithm assigned to the user-selected algorithm."""
         result_dict = {}
-
+        
+        
         if self.config['latent_semantic_analysis']:
             l = LatentSemanticAnalysis(self.corpus)
             l.run()
             result_dict['latent_semantic_analysis'] = l.output
+            result_dict['doc_ids'] = l.doc_ids
 
             if self.config['LSA_Concepts']:
                 c = LSA_Concepts(self.corpus, l.dtm_lsa, l.lsa, l.vectorizer)
@@ -81,17 +83,16 @@ class Algorithm(object):
 # Base class for Vector Space Models (Bag of Words, LSA, LDA, Word2Vec, Doc2Vec)
 class VectorSpaceModels(object):
     
-    def __init__(self, corpus):
-        self.corpus = corpus
+    def __init__(self, corpi):
+        self.corpi = corpi
         self.dtm = None
         self.vectorizer = None
-    
+        self.doc_ids = []
 
-     
 class BagOfWords(VectorSpaceModels):
   
-     def __init__(self, corpus):
-        super().__init__(corpus)
+     def __init__(self, corpi):
+        super().__init__(corpi)
         self.bow = None
         print('\n\n\n\nRunning the following algorithm: \nBag of Words\n\n')
         
@@ -99,7 +100,7 @@ class BagOfWords(VectorSpaceModels):
         """Vectorizes words and fits words to a matrix."""
 
         self.vectorizer = CountVectorizer(lowercase = False, stop_words = None) #, preprocessor = None, tokenizer = None
-        self.dtm = self.vectorizer.fit_transform(self.corpus)
+        self.dtm = self.vectorizer.fit_transform(self.corpi)
         dtm_dense = self.dtm.todense()
 
         vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
@@ -119,8 +120,8 @@ class WordFreq(VectorSpaceModels):
     
     """Used to output Bag of Words as a DataFrame."""
     
-    def __init__(self, corpus, bow_output):
-        super().__init__(corpus)
+    def __init__(self, corpi, bow_output):
+        super().__init__(corpi)
         print('\n\n\n\nRunning the following algorithm: \nWord Frequency\n\n')
         # print('bow output\n', bow_output)
         self.bow_output = bow_output
@@ -142,8 +143,8 @@ class WordFreq(VectorSpaceModels):
 class LatentSemanticAnalysis(VectorSpaceModels):
     """Initiates LSA: computing document similarity. """
 
-    def __init__(self, corpus):
-        super().__init__(corpus)
+    def __init__(self, corpi):
+        super().__init__(corpi)
         print('\n\n\n\nRunning the following algorithm: \nLatent Semantic Analysis\n\n')
 
 
@@ -152,15 +153,18 @@ class LatentSemanticAnalysis(VectorSpaceModels):
 
         self.vectorizer = TfidfVectorizer(stop_words = None, lowercase=False)
         print('\n\n\n\nTFIDF vectorizer', self.vectorizer)
-        self.dtm = self.vectorizer.fit_transform(self.corpus)
+        self.dtm = self.vectorizer.fit_transform(self.corpi)
         self.lsa = TruncatedSVD(n_components=200)  # , algorithm = 'arpack')
         self.dtm_lsa = self.lsa.fit_transform(self.dtm)
         self.dist = 1 - cosine_similarity(self.dtm_lsa)
         
+        for corpus in self.corpi.corpus_list:
+            self.doc_ids.extend(corpus.doc_ids)
+            
         # dataframe = pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
         self.output = {'dtm': self.dtm,
-                        'dtm_lsa': self.dtm_lsa}
-# ,'dataframe': dataframe}}
+                       'dtm_lsa': self.dtm_lsa,
+                       'doc_ids': self.doc_ids}
         
 class LSA_Concepts(VectorSpaceModels):
     """Analyzes the conceptual ideas within the data."""
