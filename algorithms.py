@@ -164,6 +164,9 @@ class WordFreq(VectorSpaceModels):
         bow_data.columns = ['Word', 'Word Count']
         bow_max = bow_data.sort_values(by='Word Count', ascending=False)
         #bow_max = bow_max.set_index('Word')
+        bow_top = bow_max[:10]
+        df = pd.DataFrame(bow_top)
+        df.to_excel('BOW.xlsx', index = False)
         self.output = bow_max
         return self.output
 
@@ -255,15 +258,15 @@ class Tf_Idf(VectorSpaceModels):
         self.dtm = self.vectorizer.fit_transform(self.corpus)
         
         #Prints idf'd words
-        # print(self.vectorizer.get_feature_names())
+        #print(self.dtm.get_feature_names())
         
         #Prints doc-term matrix
-        # print(self.dtm)
+        #print(self.dtm)
         
         """Returns Data Table of doc-term matrix."""
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
-        
+        Tf_Idf_Table.to_excel('dtm.xlsx', index = False)
 
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
