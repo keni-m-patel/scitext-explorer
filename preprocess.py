@@ -26,21 +26,8 @@ class Preprocessor(object):
         self.config = utilities.get_config(config_file)
         
         self.regex = self.config['regex_stopwords']
-
-
-        # print('\n\n\n\nRunning the following preprocessing actions:\n\n')
-        # print(self.config)
         
-        #if chooses default stop list, gives english stopword set from nltk
-        if self.config['default_stop_list']:
-            self.stop = list(set(stopwords.words('english')))
-            
-        #if default stopword list is not chosen, allows user to create their own from scratch
-        else:
-            self.stop = []
-            
-        
-        
+   
     def run(self):
         
         
@@ -64,7 +51,15 @@ class Preprocessor(object):
         #if NER selected, returns named entities for the data
         if not self.config['undergo_preprocess']:
             return self.data
-
+        
+        #if chooses default stop list, gives english stopword set from nltk
+        if self.config['default_stop_list']:
+            self.stop = list(set(stopwords.words('english')))
+            
+        #if default stopword list is not chosen, allows user to create their own from scratch
+        else:
+            self.stop = []
+            
         #adds brand new user implemented stopset
         if self.config['new_stop_set_list']:    
             self.stop = self.config['new_stop_set_list']

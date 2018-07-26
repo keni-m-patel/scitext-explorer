@@ -19,13 +19,13 @@ from collections import Counter
 
 class Visualization(object):
 
-    def __init__(self, config_file, config_file_alg, alg_ran, doc_names):
+    def __init__(self, config_file, config_file_alg, alg_ran, doc_ids):
         #self.corpus = data
         #pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
         self.config_alg = utilities.get_config(config_file_alg)
         self.alg_ran=alg_ran
-        self.doc_names = doc_names
+        self.doc_names = doc_ids
         print('\n\n\n\nRunning the following visualization:\n\n')
         print(self.config)
         
@@ -35,15 +35,13 @@ class Visualization(object):
 
     def run(self):
         result_dict = {}
-        #if self.config['bow_hist'] and self.config_alg['WordFreq']:
-            #b = bow_hist(self.alg_ran, self.doc_names)
-            #b.run()   
             
         if self.config['kmean_hist'] and self.config_alg['latent_semantic_analysis']:
             k = kmean_hist(self.alg_ran, self.doc_names)
             k.run()
-            #result_dict['kmean_hist'] = k.output
-            
+            result_dict['kmean_hist'] = k.output
+
+  
             if self.config['tsne']:
                 t = tsne(self.alg_ran, self.doc_names, k.dtm_lsa)
                 t.run()
@@ -55,7 +53,7 @@ class Visualization(object):
                     
                 if self.config['export_bokeh']:
                     b = File_Export()
-                    b.export_bokeh( t.output, k.modeldum, t.output)
+                    b.export_bokeh( t.output, k.models, t.output)
                     
     
         if self.config['export_word_cloud_data'] and self.config_alg['word_frequency_table']:
@@ -100,27 +98,6 @@ class VectorSpaceModels(object):
                                8: 'Cluster 8',
                                9: 'Cluster 9',
                                10: 'Cluster 10'}
-'''
- bow_hist(VectorSpaceModels):
-    def __init__(self, result_dict, doc_names): #,corpus):
-        super().__init__(doc_names)     
-        self.words = result_dict['wordfreq']['bow_max']  
-    def run(self):
-       
-        background = 'gray'
-        font_size = 8.0
-        
-        fig = plt.figure(figsize=(18,4))
-        ax = fig.add_subplot(111)
-        plt.bar(self.words)
-        plt.xticks(rotation=90)
-        ax.tick_params(direction='out', length = 4, width = 1, colors = background,
-                   labelsize = font_size, labelcolor = background)
-        ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_visible(False)
-        ax.spines['top'].set_visible(False)
-        ax.spines['bottom'].set_visible(False)  
-'''
 class kmean_hist(VectorSpaceModels):
     def __init__(self, result_dict, doc_names): #,corpus):
         super().__init__(doc_names)      
@@ -148,20 +125,11 @@ class kmean_hist(VectorSpaceModels):
                                      'Cluster Colors': [self.cluster_colors[cluster] for cluster in clusters],
                                      'Frame': pd.DataFrame({'Document Name': self.doc_names, 'Cluster': clusters})}
                 
-            self.modeldum = self.models#[index]
+            self.output = self.models
             
-            print("modeldum")
-            print('n/n/n/')
-            
-            print (self.modeldum)
+
             color_dict[index] = [self.cluster_colors[cluster] for cluster in clusters] 
             self.clusters_and_names = self.models[index]['Frame']
-            
-            #self.clusters_and_names.columns['docnames','labels']
-            #self.clusters_and_names['title'] = self.clusters_and_names['labels']
-           
-            
-            
             background = 'purple'
             accent = 'purple'
             font_size = 10.0
@@ -192,7 +160,7 @@ class kmean_hist(VectorSpaceModels):
                 plt.savefig('Hist_Clusters' + str(index) + '.png', transparent = True, bbox_inches = 'tight', dpi = 600)
     
                 index += 1
-                
+
 class tsne(kmean_hist):
     def __init__(self, result_dict, doc_names, dtm_lsa):
         #super().__init__(doc_names)      
@@ -248,11 +216,11 @@ class File_Export(VectorSpaceModels):
         
         # Create a Pandas Excel writer using XlsxWriter as the engine.
         writer = pd.ExcelWriter('scatter_plot_data.xlsx', engine='xlsxwriter')
-        #bow_max.to_excel(writer, sheet_name='Sheet1')
-        self.scatter_plot_data.to_excel(writer, sheet_name='Sheet1')
+       
         # Get the xlsxwriter objects from the dataframe writer object.
+        self.scatter_plot_data.to_excel(writer, sheet_name='Sheet1')
 
-        #worksheet = writer.sheets['Sheet1']
+
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
         print("scatter_plot_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
@@ -261,22 +229,15 @@ class File_Export(VectorSpaceModels):
        
         max_clusters = 9
         clusters =  models
-        print(output)
         base = {'x': output[0].tolist(), 
                 'y': output[1].tolist(),
                 'docname': ['Doc ' + str(i).zfill(2) for i in range(len(output))]}
-        #,
-               #'Document Name': clusters['Frame']['Document Name']
-       # for index in range(2, max_clusters + 1):
-       #     base[index] = [pair for pair in zip(clusters[index]['Document Cluster Id'],clusters[index]['Cluster Colors'])]
-        
+       
         for key,val in sorted(clusters.items()):
-            #print(key,': ', len(val['Document Cluster Id']), len(val['Cluster Colors']))
+           
             base[key] = [pair for pair in zip(val['Document Cluster Id'],val['Cluster Colors'])]
         
         column_order = ['docname','x','y'] + sorted(list(clusters.keys()))
         df = pd.DataFrame(base)[column_order]
         
         df.to_excel('Bokeh_Test.xlsx', index = False)
-
-        df

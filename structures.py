@@ -20,6 +20,7 @@ from PyPDF2 import PdfFileReader as PDFR
 import csv
 from preprocess import Preprocessor
 import glob
+import urllib.request as ur
 
 
 
@@ -32,7 +33,7 @@ class Corpus(object):
         self.config = utilities.get_config(config_file) # read the config file and set the log_file name
         self.path = self.config['directory']
         self.files = glob.glob(self.path + '*')
-
+        self.doc_ids = []
         if group_by:
             self.grouping = group_by
         else:
@@ -52,6 +53,7 @@ class Corpus(object):
 
         elif filetype == {'.pdf'}:
             p = DotPDF(self.files, self.grouping)
+            #self.doc_ids.extend(p.doc_ids)
             return p
 
         elif filetype == {'.csv'}:
@@ -106,6 +108,7 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     text_file = text_file + ' ' + page_text
+
                 self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0])
                 yield Preprocessor(text_file,'./config/preprocessing.yaml').run()
                 
@@ -118,7 +121,9 @@ class DotPDF(object):
                 for pg_num in range(pdf_reader.numPages):
                     page_text = pdf_reader.getPage(pg_num).extractText()
                     self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0] + ' Page ' + str(pg_num+1) + ' of ' + str(pdf_reader.numPages))
+
                     yield Preprocessor(page_text,'./config/preprocessing.yaml').run()
+
             self.__read_data(self.files) # get data    
             
        
@@ -174,6 +179,7 @@ class DotTXT(object):
         for doc, f in zip(self.data_map, self.files):
             self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0])
             yield Preprocessor(doc,'./config/preprocessing.yaml').run()
+
         self.__read_data(self.files) # get data    
 
     
@@ -271,20 +277,18 @@ class DotCSV(DotTXT):
             # map to implement "lazy loading"; only read files as we need
             self.data_map = map(lambda x: open(os.path.join('', x),'rU'), self.files)        
         else:
-            print('ERROR: NON-CSV PASSED TO CSV CLASS')
+            print('ERROR: NON-CSV PASSED TO CSV CLASS')      
 
-
-
- 
 class Tweets(object):
 
+    
     def __init__(self, files, group_by = 'tweet'):
         self.files = files
         self.doc_ids = []
         self.__read_data(self.files)
         self.grouping = group_by
         self.msg_flag = 1
-      
+        
 
     def __iter__(self):  
         if self.msg_flag:
@@ -296,8 +300,9 @@ class Tweets(object):
             for doc in self.data_map:
                  tweets = json.loads(doc.read(), encoding = "utf-8")
                  for tweet in tweets:                                              
+                       self.doc_ids.append(tweet['ID'])  
                        yield Preprocessor(tweet['Text'],'./config/preprocessing.yaml').run()
-        
+
         self.__read_data(self.files)
 
     def __len__(self):
@@ -311,8 +316,7 @@ class Tweets(object):
             self.data_map = map(lambda x: open(os.path.join('', x),'rU'), self.files)
         else:
             print("ERROR: NON-JSON PASSED TO TWEET CLASS")
-
-
+    
 ###################################
 ####   NEW: (TB IMPLEMENTED)   ####
 ###################################
