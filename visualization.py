@@ -216,11 +216,11 @@ class File_Export(VectorSpaceModels):
         
         # Create a Pandas Excel writer using XlsxWriter as the engine.
         writer = pd.ExcelWriter('scatter_plot_data.xlsx', engine='xlsxwriter')
-        #bow_max.to_excel(writer, sheet_name='Sheet1')
-        self.scatter_plot_data.to_excel(writer, sheet_name='Sheet1')
+       
         # Get the xlsxwriter objects from the dataframe writer object.
+        self.scatter_plot_data.to_excel(writer, sheet_name='Sheet1')
 
-        #worksheet = writer.sheets['Sheet1']
+
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
         print("scatter_plot_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
@@ -232,18 +232,12 @@ class File_Export(VectorSpaceModels):
         base = {'x': output[0].tolist(), 
                 'y': output[1].tolist(),
                 'docname': ['Doc ' + str(i).zfill(2) for i in range(len(output))]}
-        #,
-               #'Document Name': clusters['Frame']['Document Name']
-       # for index in range(2, max_clusters + 1):
-       #     base[index] = [pair for pair in zip(clusters[index]['Document Cluster Id'],clusters[index]['Cluster Colors'])]
-        
+       
         for key,val in sorted(clusters.items()):
-            #print(key,': ', len(val['Document Cluster Id']), len(val['Cluster Colors']))
+           
             base[key] = [pair for pair in zip(val['Document Cluster Id'],val['Cluster Colors'])]
         
         column_order = ['docname','x','y'] + sorted(list(clusters.keys()))
         df = pd.DataFrame(base)[column_order]
         
         df.to_excel('Bokeh_Test.xlsx', index = False)
-
-        df
