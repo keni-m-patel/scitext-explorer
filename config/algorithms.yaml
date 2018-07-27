@@ -1,3 +1,34 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a398fab6a0ea68130d5c42c2a63fb734e14846534adf324fb261b0b6e6d74393
-size 887
+
+
+#Gives a list of Named Entities
+#Only works correctly when undergo no preprocessing
+named_entities: False
+
+#Process Tfidf results through SVD and gives a matrix
+#Requirements tf_idf 
+latent_semantic_analysis: False
+
+#Gives top 5 concepts for each document in relation to corpus
+#Requirements LSA to work
+LSA_Concepts: False
+
+#Outputs corpus clusters
+#Requirements LSA
+kmeans: False
+
+#Process corpus for term frequency inverse document frequency
+tf_idf: False
+
+#Shows how much each topic is represented in each document
+#Needs bag_of_words
+#Change False to a number for the number of topics
+LDA: False
+
+#Gives a dictionary of words with their frequency
+bag_of_words: True
+
+#Gives a table of words with their frequency
+#Only works when bag_of_words is True
+word_frequency_table: True
+
+# do T or F to turn on or off

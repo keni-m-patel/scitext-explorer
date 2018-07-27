@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:af10211ec95027b2818941da32ae530186f316676fe4f6424beabb8a225e77c5
-size 560
+
+
+# "text" files aren't just files with a .txt extension, csv and tsv files are also simple text files
+# but the only difference is that there is a specific specified between data elements
+
+# example directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/tweets/
+
+#directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/text/
+
+directory: /Users/597543/scitext-explorer/test/data/Dummy/
+
+
+# enter 'doc', 'page', 'tweet', row', or 'col' for how you want to group/iterate through you documents
+group_by: 'doc'
+
+
+
+
+        
