@@ -1,4 +1,5 @@
 
+
 import logging
 from structures import Corpus, Merge
 from algorithms import Algorithm
@@ -25,11 +26,10 @@ corpi = Merge([corpus() for corpus in corpus_list])
 
 alg = Algorithm(corpi, './config/algorithms.yaml')
 
-alg_ran = alg.run()
-doc_ids = alg_ran['latent_semantic_analysis']['doc_ids']
 
-vis = Visualization( './config/visualization.yaml', './config/algorithms.yaml', alg_ran, doc_ids)
+alg_ran = alg.run()
+
+vis = Visualization( './config/visualization.yaml', './config/algorithms.yaml', alg_ran)
 
 
 vis.run()
-

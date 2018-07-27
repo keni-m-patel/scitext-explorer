@@ -1,21 +1,26 @@
 #Gives a list of Named Entities
 #Only works correctly when undergo no preprocessing
-named_entities: True
+named_entities: False
 
 #Process Tfidf results through SVD and gives a matrix
 #Requirements tf_idf 
-latent_semantic_analysis: True
+latent_semantic_analysis: False
 
 #Gives top 5 concepts for each document in relation to corpus
 #Requirements LSA to work
-LSA_Concepts: True
+LSA_Concepts: False
 
 #Outputs corpus clusters
 #Requirements LSA
-kmeans: True
+kmeans: False
 
 #Process corpus for term frequency inverse document frequency
-tf_idf: True
+tf_idf: False
+
+#Shows how much each topic is represented in each document
+#Needs bag_of_words
+#Change False to a number for the number of topics
+LDA: False
 
 #Gives a dictionary of words with their frequency
 bag_of_words: True

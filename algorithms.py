@@ -20,6 +20,11 @@ from nltk.tokenize import word_tokenize
 
 
 
+import gensim
+
+from gensim.corpora.dictionary import Dictionary
+
+
 
 class Algorithm(object):
     """Reads the algorithm config file to see the selected algorithm(s)."""
@@ -34,13 +39,9 @@ class Algorithm(object):
 
     def run(self):
         """Runs algorithm assigned to the user-selected algorithm."""
+        
         result_dict = {}
         
-        
-
-
-        #HAVE TO SWITCH TO NOT RUN WITH ANY PREPROCESSING
-
          
         #For each if self.config if set to true in the config, will set if statement to true
         #If the if statement is read as true an object for that algorithm type class is made, run, and added to the result dictionary
@@ -91,14 +92,23 @@ class Algorithm(object):
                 self.w.run()
                 result_dict['word_frequency'] = self.w.output
                 
-        
-        if self.config['LSA_Concepts'] or self.config['kmeans']:
-            warnings.warn("NEED LATENT SEMANTIC ANALYSIS")
             
         if self.config['tf_idf']:
             t = Tf_Idf(self.corpus)
             t.run()
             result_dict['tf_idf'] = t.output
+            
+            
+        if not self.config['bag_of_words'] and self.config['LDA']:
+            warnings.warn("NEED BAG OF WORDS TO RUN Latent Dirchlet Allocation")
+          
+            
+        
+        if self.config['LDA'] and self.config['bag_of_words']:
+            lda = LDA(self.corpus, self.config['LDA'])
+            lda.run()
+            result_dict['LDA'] = lda.output
+       
             
 
         output_text = ""
@@ -131,11 +141,9 @@ class BagOfWords(VectorSpaceModels):
      def run(self):
         """Vectorizes words and fits words to a matrix."""
 
-        self.vectorizer = CountVectorizer(lowercase = False, stop_words = None) #, preprocessor = None, tokenizer = None
+        self.vectorizer = CountVectorizer(lowercase = False, stop_words = 'english') #, preprocessor = None, tokenizer = None
         self.dtm = self.vectorizer.fit_transform(self.corpi)
-        dtm_dense = self.dtm.todense()
-
-
+ 
         vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
 
         sorted_by_value = sorted(vocabulary.items(), key=lambda kv: kv[1])
@@ -144,8 +152,7 @@ class BagOfWords(VectorSpaceModels):
 
         dtm_array = sum(self.dtm.toarray())  # [sum(x) for x in zip(list1, list2)]
 
-        self.bow = {word:freq for word,freq in zip(sorted_vocab, dtm_array)}
-        self.output = self.bow
+        self.output = {word:freq for word,freq in zip(sorted_vocab, dtm_array)}
 
 
 class WordFreq(VectorSpaceModels):
@@ -167,14 +174,7 @@ class WordFreq(VectorSpaceModels):
         bow_series = pd.Series(self.bow_output)
         bow_data = bow_series.to_frame().reset_index()
         bow_data.columns = ['Word', 'Word Count']
-        bow_max = bow_data.sort_values(by='Word Count', ascending=False)
-        #bow_max = bow_max.set_index('Word')
-        bow_top = bow_max[:10]
-        df = pd.DataFrame(bow_top)
-        df.to_excel('BOW.xlsx', index = False)
-        self.output = bow_max
-        return self.output
-
+        self.output = bow_data.sort_values(by='Word Count', ascending=False)
 
 class LatentSemanticAnalysis(VectorSpaceModels):
     """Initiates LSA: computing document similarity. """
@@ -274,8 +274,47 @@ class Tf_Idf(VectorSpaceModels):
         """Returns Data Table of doc-term matrix."""
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
-        Tf_Idf_Table.to_excel('dtm.xlsx', index = False)
 
+    
+class LDA(VectorSpaceModels):
+    """Initiates Latent Dirichlet Allocation algorithm: shows how much a bag of words represents different topics"""
+    
+    def __init__(self, corpus, num_topics):
+        super().__init__(corpus)
+        self.output = []
+        self.num = num_topics
+        print('\n\n\n\nRunning the following algorithm: \nLatent Dirichlet Allocation \n\n')
+        
+    def run(self):
+        
+        tokens = []
+        for text in self.corpus:
+            tokens.append(word_tokenize(text))
+        
+        # Create a corpus from a list of texts
+        common_dictionary = Dictionary(tokens)
+        
+        common_corpus = [common_dictionary.doc2bow(text) for text in tokens]
+        
+        # Train the model on the corpus.
+        lda = gensim.models.ldamodel.LdaModel(tokens, num_topics=self.num)
+        self.output = lda.show_topics(num_topics = self.num, num_words = 8)
+ 
+        for i in range(0, lda.num_topics):
+    
+        
+            for word, prob in lda.show_topic(i, topn=20):
+                print(word, prob)
+        #other_corpus = common_dictionary.doc2bow(self.bow) # for text in other_texts] #needs txt as dict
+        
+        #vector = lda[common_corpus]
+        
+        
+        
+        #for v in vector:
+          #self.output.append(v)
+
+        
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
     

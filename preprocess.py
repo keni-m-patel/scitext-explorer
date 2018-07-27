@@ -17,7 +17,7 @@ class Preprocessor(object):
     """This holds all the preprocessing which includes removes stop words, lowercases, removes punctuation, and removes symbols. It then has options to either lemmatizes or stem or neither.  """
     
 
-    def __init__(self, data, config_file, files):
+    def __init__(self, data, config_file):
         
         #data represents a single doc (or page, tweet, ect.)
         self.data = data
@@ -25,29 +25,9 @@ class Preprocessor(object):
         #connects to preprocess config file
         self.config = utilities.get_config(config_file)
         
-        
-        self.file_names  = [os.path.basename(x) for x in files]
-        
         self.regex = self.config['regex_stopwords']
-
-        #if there is nothing found in the file program gives a warning
-        if not self.file_names:
-            warnings.warn('\n\nERROR: no files selected, must select at least one file to process, exiting program\n\n')
-            
-
-        # print('\n\n\n\nRunning the following preprocessing actions:\n\n')
-        # print(self.config)
         
-        #if chooses default stop list, gives english stopword set from nltk
-        if self.config['default_stop_list']:
-            self.stop = list(set(stopwords.words('english')))
-            
-        #if default stopword list is not chosen, allows user to create their own from scratch
-        else:
-            self.stop = []
-            
-        
-        
+   
     def run(self):
         
         
@@ -71,7 +51,15 @@ class Preprocessor(object):
         #if NER selected, returns named entities for the data
         if not self.config['undergo_preprocess']:
             return self.data
-
+        
+        #if chooses default stop list, gives english stopword set from nltk
+        if self.config['default_stop_list']:
+            self.stop = list(set(stopwords.words('english')))
+            
+        #if default stopword list is not chosen, allows user to create their own from scratch
+        else:
+            self.stop = []
+            
         #adds brand new user implemented stopset
         if self.config['new_stop_set_list']:    
             self.stop = self.config['new_stop_set_list']
@@ -104,11 +92,11 @@ class Preprocessor(object):
                 
             #gets rid of punctuation if set to true
             if self.config['alpha_only']:
-                tokens = [t for t in tokens if t[0].isalpha()]   #and t[0] not in self.stop]
+                tokens = [t for t in tokens if t[0].isalpha()]
             
             #gets rid of stop words
             tokens = [t for t in tokens if t[0] not in self.stop]
-                
+            
         
         #goes through necessary preprocessing steps for stemming
         else:
@@ -166,6 +154,7 @@ class Preprocessor(object):
             self.output = lem_words
 
         #returns the list of preprocessed words as a string in order to work with algorithms
+        
         return ' '.join(self.output)
 
 
@@ -208,7 +197,5 @@ class Named_Entity_Recognition(object):
                     continuous_chunk = ' '.join(continuous_chunk)
                     self.output.append(continuous_chunk)
        
-        #Replace 'the_word' with * 'the_word' * -> "highlight" it
-        #filedata.replace(the_word,  "*" + the_word + '*')
 
 '''
