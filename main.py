@@ -1,5 +1,3 @@
-
-
 import logging
 from structures import Corpus, Merge
 from algorithms import Algorithm
@@ -33,3 +31,4 @@ vis = Visualization( './config/visualization.yaml', './config/algorithms.yaml', 
 
 
 vis.run()
+

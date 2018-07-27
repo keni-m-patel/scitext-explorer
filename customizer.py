@@ -1,13 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Jun 24 14:36:43 2018
-
-@author: kenipatel
-"""
-
-def preprocessing(f):
-    return f
-
-def algorithms(f):
-    return f
+version https://git-lfs.github.com/spec/v1
+oid sha256:7dd93d14e1a8439ca8330dfff638453c590a330ba1ccebc9a6b824989fa92238
+size 179
