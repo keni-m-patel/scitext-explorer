@@ -20,16 +20,18 @@ TODO:
 '''
 print('\n\nreading from the following configuration files: \n\n ', utilities.get_config('./config/data/master.yaml')['config_files'])
 
-corpus_list = [Corpus(config_file) for config_file in utilities.get_config('./config/data/master.yaml')['config_files']]
-corpi = Merge([corpus() for corpus in corpus_list])
+corpi_list = [Corpus(config_file) for config_file in utilities.get_config('./config/data/master.yaml')['config_files']]
+corpi = Merge([corpus() for corpus in corpi_list])
 
 
 alg = Algorithm(corpi, './config/algorithms.yaml')
 
 
-alg_ran = alg.run()
+alg.run()
 
-vis = Visualization( './config/visualization.yaml', './config/algorithms.yaml', alg_ran)
+vis = Visualization( './config/visualization.yaml', './config/algorithms.yaml', alg)
 
 
 vis.run()
+
+   

@@ -138,7 +138,7 @@ class Preprocessor(object):
             
             #correctly sets each part of speech
             for item in tokens:
-                if len(item) < 2:
+                if len(item[0]) < 2:
                     position = 'n'
                 elif item[1].startswith('VB'):
                     position = 'v'

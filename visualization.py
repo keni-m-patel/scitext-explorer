@@ -19,13 +19,13 @@ from collections import Counter
 
 class Visualization(object):
 
-    def __init__(self, config_file, config_file_alg, alg_ran):
+    def __init__(self, config_file, config_file_alg, alg):
         #self.corpus = data
         #pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
         self.config_alg = utilities.get_config(config_file_alg)
-        self.alg_ran=alg_ran
-        self.doc_names = alg_ran['latent_semantic_analysis']['doc_ids']
+        self.alg_ran=alg.results
+        self.doc_names = alg.doc_ids
 
         print('\n\n\n\nRunning the following visualization:\n\n')
         print(self.config)

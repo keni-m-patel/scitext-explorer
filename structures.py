@@ -69,9 +69,6 @@ class Corpus(object):
             print('filetypes found: \n\n', filetype)
 
 
-    def get_file_names(self):
-        return [os.path.splitext(ntpath.basename(f))[0] for f in self.files]
-
     # def __log(self):
     #     logger.info('Data Map created for: ' + ', '.join(self.config['files']))
     
