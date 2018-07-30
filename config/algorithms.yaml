@@ -4,7 +4,7 @@ named_entities: False
 
 #Process Tfidf results through SVD and gives a matrix
 #Requirements tf_idf 
-latent_semantic_analysis: False
+latent_semantic_analysis: True
 
 #Gives top 5 concepts for each document in relation to corpus
 #Requirements LSA to work
@@ -12,22 +12,28 @@ LSA_Concepts: False
 
 #Outputs corpus clusters
 #Requirements LSA
-kmeans: False
+kmeans: True
 
 #Process corpus for term frequency inverse document frequency
 tf_idf: False
 
 #Shows how much each topic is represented in each document
 #Needs bag_of_words
-#Change False to a number for the number of topics
-LDA: False
+#Change empty list into list with objects: config for training data location, percentage into training data, number of topics
+#Example: LDA:
+#	-'config/data/LDA_training/'    (if want to use a pretrained model stored in a file or save a new trained model, enter path)
+#	-False				(if want to use a pretrained model, set to True. if want to partition data and use new model set to False)
+#	-.8 		     		(if want to set training test data, enter number from 0 - 1, will not work if second item of list is set to True)
+#	-10		     		(enter number of topics, if preset model is used it is already set in pretrained model)
+LDA: ['C:\Users\597543\scitext-explorer\LDA_model.py',False,.8,10]
+
 
 #Gives a dictionary of words with their frequency
-bag_of_words: True
+bag_of_words: False
 
 #Gives a table of words with their frequency
 #Only works when bag_of_words is True
-word_frequency_table: True
+word_frequency_table: False
 
 # do T or F to turn on or off
 
