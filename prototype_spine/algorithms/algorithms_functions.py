@@ -1,21 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jun 21 13:29:23 2018
-
-@author: Brendan Gochett
-"""
-
-
-def bow(documents):
-    new_dict = {}
-    new_list = list()
-    for i in documents:
-        for j in i:
-            if j in new_dict:
-                new_dict[j] += 1
-            else:
-                new_dict[j] = 1
-        new_list.append(new_dict)
-        new_dict = {}
-    return new_list
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:27539276d196c29467a9a19d6ab53cd99a376ad7e03acbb18f3ce33dd7fea62f
+size 390

@@ -1,2 +1,3 @@
-2018-07-13 12:06:31,972 matplotlib.font_manager DEBUG findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans ('C:\\Users\\597543\\AppData\\Local\\Continuum\\anaconda3\\Scripts\\Python\\lib\\site-packages\\matplotlib\\mpl-data\\fonts\\ttf\\DejaVuSans.ttf') with score of 0.050000
-2018-07-13 12:06:32,019 matplotlib.font_manager DEBUG findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=12.0 to DejaVu Sans ('C:\\Users\\597543\\AppData\\Local\\Continuum\\anaconda3\\Scripts\\Python\\lib\\site-packages\\matplotlib\\mpl-data\\fonts\\ttf\\DejaVuSans.ttf') with score of 0.050000
+version https://git-lfs.github.com/spec/v1
+oid sha256:5af9bd0be0c650b6ef3b122571f73b566f6a05446ae30743ee2f46f772420a30
+size 610

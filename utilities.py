@@ -1,13 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jun 23 14:37:17 2018
-
-@author: patelkm
-"""
-import yaml
-
-def get_config(config_file):
-    with open(config_file,'r') as stream:
-        return yaml.load(stream)
-    
+version https://git-lfs.github.com/spec/v1
+oid sha256:1854f265bf6a74cc7baf3297e569f402b9bf075d0de79b1c4a964721d23f8224
+size 230
