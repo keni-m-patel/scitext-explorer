@@ -1,24 +1,3 @@
-###     This section is for tweets
-
-# directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/BinLaden
-
-#directory: /Users/Brendan Gochett/scitext-explorer/test/data/tweets/Sample_tweets/
-
-#files:
-        #-capstone_sample_twitter_dataset.json
-        #-capstone_sample_twitter_dataset2.json
-        #-capstone_sample_twitter_dataset3.json
-        
-#group_by: 'tweet'   
-
-###     This section is for the API
-
-directory: /Users/Brendan Gochett/scitext-explorer/test/data/url/     
-
-files: 
-    - webscrape.json
-
-#url:
-    #-'https://pathfinder.geointservices.io/api/get_public_pages/'
-
-group_by: 'url'
+version https://git-lfs.github.com/spec/v1
+oid sha256:e5661c9605af8c96e20c4b842f3aea65d43aa83fe0ad3c42fb1b5a0da8578941
+size 620
