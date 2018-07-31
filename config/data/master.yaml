@@ -1,11 +1,3 @@
-
-
-# this is the master config file. 
-# To select a config file to be inputted as a corpus object, list the config file below.
-
-config_files: 
-  # examples:
-  - './config/data/text_files.yaml'
-  #- './config/data/pdf_files.yaml'
-  
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:7f8c98d9514dd49016004c26f222dc6762eb93c2b148463eda403ffdda006c90
+size 277
