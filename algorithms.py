@@ -23,24 +23,33 @@ from nltk.tokenize import word_tokenize
 
 
 import gensim
-
+from gensim.models import LdaModel
 from gensim.corpora.dictionary import Dictionary
+from gensim.test.utils import datapath
+
+import random
 
 
 
 class Algorithm(object):
     """Reads the algorithm config file to see the selected algorithm(s)."""
 
-    def __init__(self, data, config_file):
-        self.corpus = data
+    def __init__(self, corpi, config_file):
+        self.corpi = corpi
         self.config = utilities.get_config(config_file)
         self.results = None
-        print('\n\n\n\nRunning the following algorithms:\n\n')
-        print(self.config)
+        self.doc_ids = []
+        for corpus in corpi.corpus_list:
+            for item in corpus:
+                pass  
+            self.doc_ids.extend(corpus.doc_ids)
         
 
     def run(self):
         """Runs algorithm assigned to the user-selected algorithm."""
+        
+        print('\n\n\n\nRunning the following algorithms:\n\n')
+        print(self.config)
         
         result_dict = {}
         
@@ -49,13 +58,20 @@ class Algorithm(object):
         #If the if statement is read as true an object for that algorithm type class is made, run, and added to the result dictionary
         #Wwarnings are triggered when a necessary component is not included when an algorithm is set to true in the config file
         
-        if self.config['named_entities']:
-            ner = Named_Entity_Recognition(self.corpus)
-            ner.run()
-            self.corpus = ner.output
-            result_dict['named_entities'] = self.corpus
-            
         
+         #if named entities chosen, named entities is returned as the data output
+        
+        if not self.config['named_entities'] and self.config['corpi_to_named_entities']:
+            warnings.warn("NEED NAMED ENTITIES TO CHANGE CORPI TO NAMED ENTITIES ONLY")
+        
+        if self.config['named_entities']:
+            ner = Named_Entity_Recognition(self.corpi)
+            ner.run()
+            if self.config['corpi_to_named_entities']:
+                self.corpi = ner.output
+            result_dict['named_entities'] = ner.output
+            
+            
         if not self.config['latent_semantic_analysis'] and self.config['LSA_Concepts']:
             warnings.warn("NEED LATENT SEMANTIC ANALYSIS TO RUN LSA CONCEPTS")
             
@@ -65,17 +81,17 @@ class Algorithm(object):
         
 
         if self.config['latent_semantic_analysis']:
-            l = LatentSemanticAnalysis(self.corpus)
+            l = LatentSemanticAnalysis(self.corpi, self.doc_ids)
             l.run()
             result_dict['latent_semantic_analysis'] = l.output
 
             if self.config['LSA_Concepts']:
-                c = LSA_Concepts(self.corpus, l.dtm_lsa, l.lsa, l.vectorizer)
+                c = LSA_Concepts(self.corpi, l.dtm_lsa, l.lsa, l.vectorizer)
                 c.run()
                 result_dict['LSA_Concepts'] = c.output
             
             if self.config['kmeans']:
-                k = kmeans(self.corpus, l.dtm_lsa)
+                k = kmeans(self.corpi, l.dtm_lsa)
                 k.run()
                 result_dict['kmeans'] = k.output
              
@@ -85,31 +101,27 @@ class Algorithm(object):
             
 
         if self.config['bag_of_words']:
-            b = BagOfWords(self.corpus)
+            b = BagOfWords(self.corpi)
             b.run()
             result_dict['bag_of_words'] = b.output
             
             if self.config['word_frequency_table']:
-                self.w = WordFreq(self.corpus, b.output)
+                self.w = WordFreq(self.corpi, b.output)
                 self.w.run()
                 result_dict['word_frequency'] = self.w.output
                 
             
         if self.config['tf_idf']:
-            t = Tf_Idf(self.corpus)
+            t = Tf_Idf(self.corpi)
             t.run()
             result_dict['tf_idf'] = t.output
-            
-            
-        if not self.config['bag_of_words'] and self.config['LDA']:
-            warnings.warn("NEED BAG OF WORDS TO RUN Latent Dirchlet Allocation")
-          
-            
+                
         
-        if self.config['LDA'] and self.config['bag_of_words']:
-            lda = LDA(self.corpus, self.config['LDA'])
+        if self.config['LDA']:
+            lda = LDA(self.corpi, self.config['LDA'])
             lda.run()
             result_dict['LDA'] = lda.output
+            result_dict['LDA_Topics'] = lda.topics
        
             
 
@@ -131,19 +143,19 @@ class VectorSpaceModels(object):
         self.corpi = corpi
         self.dtm = None
         self.vectorizer = None
-        self.doc_ids = []
 
 class BagOfWords(VectorSpaceModels):
   
      def __init__(self, corpi):
         super().__init__(corpi)
         self.bow = None
-        print('\n\n\n\nRunning the following algorithm: \nBag of Words\n\n')
-        
+       
      def run(self):
         """Vectorizes words and fits words to a matrix."""
 
-        self.vectorizer = CountVectorizer(lowercase = False, stop_words = 'english') #, preprocessor = None, tokenizer = None
+        print('\n\n\n\nRunning the following algorithm: \nBag of Words\n\n')
+        
+        self.vectorizer = CountVectorizer(lowercase = False, stop_words = None) #, preprocessor = None, tokenizer = None
         self.dtm = self.vectorizer.fit_transform(self.corpi)
  
         vocabulary = self.vectorizer.vocabulary_  # dict of unique word, index key-value pairs 
@@ -164,7 +176,7 @@ class WordFreq(VectorSpaceModels):
     
     def __init__(self, corpi, bow_output):
         super().__init__(corpi)
-        print('\n\n\n\nRunning the following algorithm: \nWord Frequency\n\n')
+        
         # print('bow output\n', bow_output)
         self.bow_output = bow_output
         self.output = None
@@ -173,21 +185,26 @@ class WordFreq(VectorSpaceModels):
     def run(self):
         """Takes Bag of Words and outputs into table."""
         
+        print('\n\n\n\nRunning the following algorithm: \nWord Frequency\n\n')
+        
         bow_series = pd.Series(self.bow_output)
         bow_data = bow_series.to_frame().reset_index()
         bow_data.columns = ['Word', 'Word Count']
         self.output = bow_data.sort_values(by='Word Count', ascending=False)
+        
 
 class LatentSemanticAnalysis(VectorSpaceModels):
     """Initiates LSA: computing document similarity. """
 
-    def __init__(self, corpi):
+    def __init__(self, corpi, doc_ids):
         super().__init__(corpi)
-        print('\n\n\n\nRunning the following algorithm: \nLatent Semantic Analysis\n\n')
-
+        self.doc_ids = doc_ids
+        
 
     def run(self):
         """Data goes through dimensionality reduction with cosine similarity and returns lsa."""
+        
+        print('\n\n\n\nRunning the following algorithm: \nLatent Semantic Analysis\n\n')
 
         self.vectorizer = TfidfVectorizer(stop_words = None, lowercase=False)
         print('\n\n\n\nTFIDF vectorizer', self.vectorizer)
@@ -196,8 +213,6 @@ class LatentSemanticAnalysis(VectorSpaceModels):
         self.dtm_lsa = self.lsa.fit_transform(self.dtm)
         self.dist = 1 - cosine_similarity(self.dtm_lsa)
         
-        for corpus in self.corpi.corpus_list:
-            self.doc_ids.extend(corpus.doc_ids)
             
         # dataframe = pd.DataFrame(lsa.components_, index=["component_1","component_2"], columns=self.vectorizer.get_feature_names())
         self.output = {'dtm': self.dtm,
@@ -228,7 +243,7 @@ class LSA_Concepts(VectorSpaceModels):
             print (" ")
 
             
-class kmeans(LatentSemanticAnalysis): 
+class kmeans(VectorSpaceModels): 
     """Initiates k-means: clustering data according to means."""
     
 
@@ -256,15 +271,16 @@ class Tf_Idf(VectorSpaceModels):
     def __init__(self, corpi):
         super().__init__(corpi)
         self.output = None
-        print('\n\n\n\nRunning the following algorithm: \nTFIDF \n\n')
         
     def run(self):
         """Vectorizes the words."""
         
+        print('\n\n\n\nRunning the following algorithm: \nTFIDF \n\n')
+        
         #figure out how to link up with preprocess
         self.vectorizer = TfidfVectorizer(stop_words=None, lowercase=False, encoding='utf-8')
         
-        #Tranforms corpus into vectorized words
+        #Tranforms corpi into vectorized words
         self.dtm = self.vectorizer.fit_transform(self.corpi)
         
         #Prints idf'd words
@@ -276,45 +292,8 @@ class Tf_Idf(VectorSpaceModels):
         """Returns Data Table of doc-term matrix."""
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
-
+            
     
-class LDA(VectorSpaceModels):
-    """Initiates Latent Dirichlet Allocation algorithm: shows how much a bag of words represents different topics"""
-    
-    def __init__(self, corpus, num_topics):
-        super().__init__(corpus)
-        self.output = []
-        self.num = num_topics
-        print('\n\n\n\nRunning the following algorithm: \nLatent Dirichlet Allocation \n\n')
-        
-    def run(self):
-        
-        tokens = []
-        for text in self.corpus:
-            tokens.append(word_tokenize(text))
-        
-        # Create a corpus from a list of texts
-        common_dictionary = Dictionary(tokens)
-        
-        common_corpus = [common_dictionary.doc2bow(text) for text in tokens]
-        
-        # Train the model on the corpus.
-        lda = gensim.models.ldamodel.LdaModel(tokens, num_topics=self.num)
-        self.output = lda.show_topics(num_topics = self.num, num_words = 8)
- 
-        for i in range(0, lda.num_topics):
-    
-        
-            for word, prob in lda.show_topic(i, topn=20):
-                print(word, prob)
-        #other_corpus = common_dictionary.doc2bow(self.bow) # for text in other_texts] #needs txt as dict
-        
-        #vector = lda[common_corpus]
-        
-        
-        
-        #for v in vector:
-          #self.output.append(v)
 
         
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
@@ -324,7 +303,62 @@ class TopicModels(object):
 
     
     def __init__(self, corpi):
-        self.corpus = corpi
+        self.corpi = corpi
+        
+
+class LDA(TopicModels):
+    """Initiates Latent Dirichlet Allocation algorithm: shows how much a bag of words represents different topics"""
+    
+    def __init__(self, corpi, LDA_settings):
+        super().__init__(corpi)
+        self.settings = LDA_settings
+        
+    def run(self):
+        
+        print('\n\n\n\nRunning the following algorithm: \nLatent Dirichlet Allocation \n\n')
+        
+        #tokenize corpi
+        
+        tokens = [word_tokenize(text) for text in self.corpi]
+        
+        
+        file = datapath(self.settings[0])  
+        
+        if self.settings[1]:
+            
+            # Load a potentially pretrained model from disk.
+            self.lda = LdaModel.load(file)
+            
+            common_dictionary = Dictionary(tokens)
+            
+        else:
+            
+            random.shuffle(tokens)
+            
+            doc_num = int(len(tokens)*self.settings[2])
+            train_data = tokens[:doc_num]
+            tokens = tokens[doc_num:]
+
+            
+            
+            common_dictionary = Dictionary(train_data)
+        
+            common_corpus = [common_dictionary.doc2bow(text) for text in train_data]
+            
+            # Train the model on the corpus.
+            self.lda = gensim.models.ldamodel.LdaModel(common_corpus, num_topics=self.settings[3], id2word = common_dictionary)
+        
+        other_corpus = [common_dictionary.doc2bow(token) for token in tokens]
+        
+        #self.output = map(lambda x: self.lda[x], other_corpus)
+        self.output = [self.lda[doc] for doc in other_corpus]
+        
+            
+        self.topics = self.lda.show_topics(self.settings[3], formatted = False)
+            
+        self.lda.update(other_corpus)
+        self.lda.save(file)
+        
 
 class Named_Entity_Recognition(TopicModels):
     """Initiates NER: identifies categories such as names, organizations, locations, etc."""
@@ -333,12 +367,13 @@ class Named_Entity_Recognition(TopicModels):
     
     def __init__(self, corpi):
         super().__init__(corpi)
-        print('\n\n\n\nRunning the following algorithm: \nNamed_Entity_Recognition\n\n')
         
         self.output = []
         
     def run(self):
         """Chunks docs and adds named entities to a list."""
+        
+        print('\n\n\n\nRunning the following algorithm: \nNamed_Entity_Recognition\n\n')
         
         for item in self.corpus:
                 chunked_docs = []

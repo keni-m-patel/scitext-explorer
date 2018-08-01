@@ -1,5 +1,4 @@
 
-
 import inspect
 import utilities
 import matplotlib.pyplot as plt
@@ -8,11 +7,6 @@ from sklearn.cluster import KMeans
 from sklearn.manifold import TSNE
 
 import pandas as pd
-
-from bokeh.io import output_notebook, show
-from bokeh.plotting import figure
-from bokeh.models import ColumnDataSource, HoverTool, BoxSelectTool, CrosshairTool, SaveTool
-
 
 from collections import Counter
 
@@ -38,18 +32,18 @@ class Visualization(object):
         print('\n\n\n\nRunning the following visualization:\n\n')
         print(self.config)
         
-        result_dict = {}
+        self.result_dict = {}
             
         if self.config['kmean_hist'] and self.config_alg['latent_semantic_analysis']:
             k = kmean_hist(self.alg_ran, self.doc_names)
             k.run()
-            result_dict['kmean_hist'] = k.output
+            self.result_dict['kmean_hist'] = k.output
 
   
             if self.config['tsne']:
                 t = tsne(self.alg_ran, self.doc_names, k.dtm_lsa)
                 t.run()
-                result_dict['tsne'] = t.output
+                self.result_dict['tsne'] = t.output
                 
                 if self.config['export_scatter_plot_excel_data']:
                     sp = File_Export()
@@ -69,7 +63,7 @@ class Visualization(object):
             bg.export_bar_graph_excel_data(self.alg_ran)
         
         output_text = ""
-        for vis,result in result_dict.items():
+        for vis,result in self.result_dict.items():
             output_text += "\n\nvisualization: {}\n\nresult:\n\n {}\n\n".format(vis,result)
 
         #print(output_text)
@@ -195,7 +189,7 @@ class File_Export(VectorSpaceModels):
 
     def __init__(self):
         #super().__init__(doc_names) #corpus)
-        result_dict = None
+        self.result_dict = None
     
     def export_word_cloud_excel_data(self, result_dict):
         '''Creates an excel file for a Tableau WordCloud'''
@@ -215,6 +209,7 @@ class File_Export(VectorSpaceModels):
         
     def export_bar_graph_excel_data(self, result_dict):
         '''Creates an excel file for a Tableau Bar Graph'''
+
         
         self.bar_graph = result_dict['word_frequency'][:10]
         # Create a Pandas Excel writer using XlsxWriter as the engine.
@@ -226,7 +221,8 @@ class File_Export(VectorSpaceModels):
         #worksheet = writer.sheets['Sheet1']
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
-        
+        print("bar_graph_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
+       
     def export_scatter_plot_excel_data(self, x_and_y, clusters_and_names):
         '''Creates an excel file for a Tableau ScatterPlot'''
         self.x_and_y = x_and_y
@@ -249,10 +245,11 @@ class File_Export(VectorSpaceModels):
 
     def export_bokeh(self, x_and_y, models, output):
         '''Creates an excel file for a Bokeh ScatterPlot'''
+
         clusters =  models
         base = {'x': output[0].tolist(), 
                 'y': output[1].tolist(),
-                'docname': ['Doc ' + str(i).zfill(2) for i in range(len(output))]}
+                'docname': [self.doc_names]}
        
         for key,val in sorted(clusters.items()):
            
@@ -262,4 +259,3 @@ class File_Export(VectorSpaceModels):
         df = pd.DataFrame(base)[column_order]
         
         df.to_excel('Bokeh_Test.xlsx', index = False)
-

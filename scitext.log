@@ -1,3 +1,585 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5af9bd0be0c650b6ef3b122571f73b566f6a05446ae30743ee2f46f772420a30
-size 610
+2018-07-31 10:36:44,160 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model.py
+2018-07-31 10:36:44,160 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.py'}
+2018-07-31 10:37:44,133 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer
+2018-07-31 10:37:44,133 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer'}
+2018-07-31 10:38:22,568 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/
+2018-07-31 10:38:22,568 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/'}
+2018-07-31 10:39:12,205 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer
+2018-07-31 10:39:12,205 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer'}
+2018-07-31 10:43:58,682 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 10:43:58,682 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 10:43:58,682 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 10:46:28,071 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 10:46:28,071 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 10:46:28,072 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 11:00:07,733 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 11:00:07,734 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 11:00:07,734 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 11:00:50,216 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 11:00:50,238 gensim.corpora.dictionary INFO built Dictionary(3693 unique tokens: ['.', 'bakr', 'be', 'been', 'being']...) from 44 documents (total 30583 corpus positions)
+2018-07-31 11:00:50,254 gensim.models.ldamodel INFO using symmetric alpha at 0.1
+2018-07-31 11:00:50,254 gensim.models.ldamodel INFO using symmetric eta at 0.1
+2018-07-31 11:00:50,254 gensim.models.ldamodel INFO using serial LDA version on this node
+2018-07-31 11:00:50,260 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 44 documents, updating model once every 44 documents, evaluating perplexity every 44 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 11:00:50,260 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 11:00:50,264 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 11:00:50,368 gensim.models.ldamodel INFO -10.105 per-word bound, 1101.2 perplexity estimate based on a held-out corpus of 44 documents with 30583 words
+2018-07-31 11:00:50,368 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #44/44
+2018-07-31 11:00:50,368 gensim.models.ldamodel DEBUG performing inference on a chunk of 44 documents
+2018-07-31 11:00:50,425 gensim.models.ldamodel DEBUG 3/44 documents converged within 50 iterations
+2018-07-31 11:00:50,425 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 11:00:50,431 gensim.models.ldamodel INFO topic #8 (0.100): 0.021*"for" + 0.012*"with" + 0.011*"we" + 0.011*"from" + 0.010*"be" + 0.009*"will" + 0.008*"who" + 0.008*"god" + 0.008*"he" + 0.008*"his"
+2018-07-31 11:00:50,432 gensim.models.ldamodel INFO topic #4 (0.100): 0.019*"for" + 0.019*"we" + 0.018*"not" + 0.015*"be" + 0.015*"with" + 0.011*"will" + 0.011*"brother" + 0.011*"he" + 0.011*"from" + 0.010*"who"
+2018-07-31 11:00:50,432 gensim.models.ldamodel INFO topic #7 (0.100): 0.025*"for" + 0.022*"be" + 0.019*"will" + 0.014*"his" + 0.014*"with" + 0.014*"god" + 0.013*"he" + 0.013*"we" + 0.012*"not" + 0.012*"him"
+2018-07-31 11:00:50,432 gensim.models.ldamodel INFO topic #1 (0.100): 0.027*"for" + 0.026*"be" + 0.022*"not" + 0.020*"with" + 0.018*"god" + 0.017*"we" + 0.016*"have" + 0.014*"by" + 0.013*"he" + 0.012*"who"
+2018-07-31 11:00:50,432 gensim.models.ldamodel INFO topic #0 (0.100): 0.026*"for" + 0.018*"will" + 0.017*"we" + 0.012*"be" + 0.012*"not" + 0.012*"with" + 0.011*"he" + 0.010*"from" + 0.010*"god" + 0.009*"u"
+2018-07-31 11:00:50,432 gensim.models.ldamodel INFO topic diff=3.763870, rho=1.000000
+2018-07-31 11:00:50,448 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 11 documents, updating model once every 11 documents, evaluating perplexity every 11 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 11:00:50,449 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 11:00:50,452 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 11:00:50,474 gensim.models.ldamodel INFO -8.906 per-word bound, 479.8 perplexity estimate based on a held-out corpus of 11 documents with 9700 words
+2018-07-31 11:00:50,474 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #11/11
+2018-07-31 11:00:50,474 gensim.models.ldamodel DEBUG performing inference on a chunk of 11 documents
+2018-07-31 11:00:50,486 gensim.models.ldamodel DEBUG 0/11 documents converged within 50 iterations
+2018-07-31 11:00:50,486 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 11:00:50,487 gensim.models.ldamodel INFO merging changes from 11 documents into a model of 55 documents
+2018-07-31 11:00:50,491 gensim.models.ldamodel INFO topic #2 (0.100): 0.022*"will" + 0.022*"be" + 0.019*"not" + 0.017*"for" + 0.013*"god" + 0.013*"from" + 0.013*"his" + 0.013*"with" + 0.011*"he" + 0.010*"we"
+2018-07-31 11:00:50,491 gensim.models.ldamodel INFO topic #0 (0.100): 0.022*"for" + 0.015*"will" + 0.015*"we" + 0.010*"be" + 0.010*"not" + 0.010*"with" + 0.010*"he" + 0.009*"from" + 0.008*"god" + 0.008*"u"
+2018-07-31 11:00:50,491 gensim.models.ldamodel INFO topic #1 (0.100): 0.026*"for" + 0.022*"be" + 0.021*"with" + 0.019*"not" + 0.018*"by" + 0.018*"he" + 0.018*"his" + 0.017*"from" + 0.014*"wa" + 0.013*"who"
+2018-07-31 11:00:50,492 gensim.models.ldamodel INFO topic #4 (0.100): 0.017*"for" + 0.016*"we" + 0.016*"not" + 0.013*"be" + 0.013*"with" + 0.010*"will" + 0.010*"brother" + 0.010*"he" + 0.009*"from" + 0.009*"who"
+2018-07-31 11:00:50,492 gensim.models.ldamodel INFO topic #8 (0.100): 0.016*"for" + 0.009*"with" + 0.008*"we" + 0.008*"from" + 0.007*"be" + 0.007*"will" + 0.006*"who" + 0.006*"god" + 0.006*"he" + 0.006*"his"
+2018-07-31 11:00:50,492 gensim.models.ldamodel INFO topic diff=0.922052, rho=0.447214
+2018-07-31 11:00:50,492 gensim.utils INFO saving LdaState object under C:/Users/597543/scitext-explorer/LDA_model.state, separately None
+2018-07-31 11:00:50,493 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 11:00:50,496 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 11:00:50,497 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 11:00:50,498 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 11:00:50,501 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 11:00:50,503 gensim.utils INFO saving LdaModel object under C:/Users/597543/scitext-explorer/LDA_model, separately ['expElogbeta', 'sstats']
+2018-07-31 11:00:50,503 gensim.utils INFO storing np array 'expElogbeta' to C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy
+2018-07-31 11:00:50,507 gensim.utils INFO not storing attribute state
+2018-07-31 11:00:50,507 gensim.utils INFO not storing attribute dispatcher
+2018-07-31 11:00:50,507 gensim.utils INFO not storing attribute id2word
+2018-07-31 11:00:50,507 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 11:00:50,507 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 11:00:50,508 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 11:03:41,579 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 11:03:41,619 gensim.corpora.dictionary INFO built Dictionary(3764 unique tokens: ['back', 'be', 'before', 'being', 'believe']...) from 44 documents (total 31086 corpus positions)
+2018-07-31 11:03:41,647 gensim.models.ldamodel INFO using symmetric alpha at 0.1
+2018-07-31 11:03:41,648 gensim.models.ldamodel INFO using symmetric eta at 0.1
+2018-07-31 11:03:41,649 gensim.models.ldamodel INFO using serial LDA version on this node
+2018-07-31 11:03:41,655 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 44 documents, updating model once every 44 documents, evaluating perplexity every 44 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 11:03:41,655 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 11:03:41,660 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 11:03:41,832 gensim.models.ldamodel INFO -10.133 per-word bound, 1123.0 perplexity estimate based on a held-out corpus of 44 documents with 31086 words
+2018-07-31 11:03:41,833 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #44/44
+2018-07-31 11:03:41,833 gensim.models.ldamodel DEBUG performing inference on a chunk of 44 documents
+2018-07-31 11:03:41,921 gensim.models.ldamodel DEBUG 2/44 documents converged within 50 iterations
+2018-07-31 11:03:41,921 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 11:03:41,930 gensim.models.ldamodel INFO topic #9 (0.100): 0.022*"be" + 0.021*"not" + 0.019*"for" + 0.016*"with" + 0.014*"we" + 0.014*"he" + 0.013*"will" + 0.013*"brother" + 0.009*"have" + 0.009*"who"
+2018-07-31 11:03:41,930 gensim.models.ldamodel INFO topic #6 (0.100): 0.023*"be" + 0.021*"we" + 0.019*"for" + 0.018*"with" + 0.016*"not" + 0.016*"from" + 0.015*"will" + 0.014*"he" + 0.010*"god" + 0.010*"by"
+2018-07-31 11:03:41,930 gensim.models.ldamodel INFO topic #1 (0.100): 0.030*"be" + 0.020*"with" + 0.019*"for" + 0.018*"not" + 0.018*"god" + 0.018*"will" + 0.017*"who" + 0.014*"we" + 0.014*"from" + 0.012*"his"
+2018-07-31 11:03:41,931 gensim.models.ldamodel INFO topic #8 (0.100): 0.036*"for" + 0.025*"be" + 0.022*"we" + 0.017*"he" + 0.016*"with" + 0.016*"not" + 0.014*"god" + 0.012*"who" + 0.011*"him" + 0.011*"will"
+2018-07-31 11:03:41,931 gensim.models.ldamodel INFO topic #3 (0.100): 0.024*"not" + 0.022*"with" + 0.021*"be" + 0.019*"will" + 0.017*"for" + 0.014*"have" + 0.014*"his" + 0.012*"we" + 0.011*"he" + 0.010*"from"
+2018-07-31 11:03:41,931 gensim.models.ldamodel INFO topic diff=3.420831, rho=1.000000
+2018-07-31 11:03:41,961 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 11 documents, updating model once every 11 documents, evaluating perplexity every 11 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 11:03:41,962 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 11:03:41,965 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 11:03:42,005 gensim.models.ldamodel INFO -9.374 per-word bound, 663.4 perplexity estimate based on a held-out corpus of 11 documents with 9329 words
+2018-07-31 11:03:42,006 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #11/11
+2018-07-31 11:03:42,006 gensim.models.ldamodel DEBUG performing inference on a chunk of 11 documents
+2018-07-31 11:03:42,024 gensim.models.ldamodel DEBUG 1/11 documents converged within 50 iterations
+2018-07-31 11:03:42,024 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 11:03:42,025 gensim.models.ldamodel INFO merging changes from 11 documents into a model of 55 documents
+2018-07-31 11:03:42,032 gensim.models.ldamodel INFO topic #5 (0.100): 0.020*"we" + 0.016*"be" + 0.015*"for" + 0.014*"with" + 0.013*"not" + 0.011*"have" + 0.010*"will" + 0.010*"from" + 0.009*"god" + 0.008*"his"
+2018-07-31 11:03:42,032 gensim.models.ldamodel INFO topic #8 (0.100): 0.037*"for" + 0.029*"we" + 0.022*"be" + 0.020*"he" + 0.018*"with" + 0.017*"not" + 0.015*"god" + 0.013*"u" + 0.011*"from" + 0.011*"will"
+2018-07-31 11:03:42,032 gensim.models.ldamodel INFO topic #1 (0.100): 0.023*"be" + 0.021*"for" + 0.020*"from" + 0.019*"with" + 0.017*"not" + 0.017*"wa" + 0.016*"he" + 0.016*"egypt" + 0.015*"his" + 0.015*"by"
+2018-07-31 11:03:42,033 gensim.models.ldamodel INFO topic #4 (0.100): 0.027*"we" + 0.025*"with" + 0.022*"not" + 0.018*"for" + 0.017*"brother" + 0.015*"will" + 0.014*"he" + 0.014*"his" + 0.014*"be" + 0.013*"by"
+2018-07-31 11:03:42,033 gensim.models.ldamodel INFO topic #2 (0.100): 0.021*"we" + 0.018*"with" + 0.018*"for" + 0.017*"he" + 0.014*"be" + 0.013*"his" + 0.013*"not" + 0.011*"from" + 0.011*"god" + 0.010*"will"
+2018-07-31 11:03:42,033 gensim.models.ldamodel INFO topic diff=1.105209, rho=0.447214
+2018-07-31 11:03:42,033 gensim.utils INFO saving LdaState object under C:/Users/597543/scitext-explorer/LDA/.state, separately None
+2018-07-31 11:03:42,034 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA/.state'}
+2018-07-31 11:03:42,037 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA/.state'>}
+2018-07-31 11:03:42,039 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA/.state
+2018-07-31 11:03:42,039 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA/.id2word'}
+2018-07-31 11:03:42,044 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA/.id2word'>}
+2018-07-31 11:03:42,047 gensim.utils INFO saving LdaModel object under C:/Users/597543/scitext-explorer/LDA/, separately ['expElogbeta', 'sstats']
+2018-07-31 11:03:42,047 gensim.utils INFO storing np array 'expElogbeta' to C:/Users/597543/scitext-explorer/LDA/.expElogbeta.npy
+2018-07-31 11:03:42,053 gensim.utils INFO not storing attribute state
+2018-07-31 11:03:42,053 gensim.utils INFO not storing attribute dispatcher
+2018-07-31 11:03:42,053 gensim.utils INFO not storing attribute id2word
+2018-07-31 11:03:42,053 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA/'}
+2018-07-31 11:06:27,491 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 11:06:27,515 gensim.corpora.dictionary INFO built Dictionary(4148 unique tokens: ['be', 'bel', 'belongs', 'beloved', 'beneficial']...) from 44 documents (total 36253 corpus positions)
+2018-07-31 11:06:27,532 gensim.models.ldamodel INFO using symmetric alpha at 0.1
+2018-07-31 11:06:27,532 gensim.models.ldamodel INFO using symmetric eta at 0.1
+2018-07-31 11:06:27,533 gensim.models.ldamodel INFO using serial LDA version on this node
+2018-07-31 11:06:27,539 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 44 documents, updating model once every 44 documents, evaluating perplexity every 44 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 11:06:27,539 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 11:06:27,543 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 11:06:27,656 gensim.models.ldamodel INFO -10.151 per-word bound, 1136.8 perplexity estimate based on a held-out corpus of 44 documents with 36253 words
+2018-07-31 11:06:27,657 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #44/44
+2018-07-31 11:06:27,657 gensim.models.ldamodel DEBUG performing inference on a chunk of 44 documents
+2018-07-31 11:06:27,723 gensim.models.ldamodel DEBUG 2/44 documents converged within 50 iterations
+2018-07-31 11:06:27,723 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 11:06:27,730 gensim.models.ldamodel INFO topic #5 (0.100): 0.020*"be" + 0.018*"with" + 0.015*"not" + 0.015*"for" + 0.015*"we" + 0.012*"he" + 0.011*"will" + 0.011*"him" + 0.010*"have" + 0.010*"brother"
+2018-07-31 11:06:27,730 gensim.models.ldamodel INFO topic #6 (0.100): 0.017*"for" + 0.016*"with" + 0.016*"from" + 0.015*"we" + 0.014*"not" + 0.013*"be" + 0.011*"wa" + 0.011*"who" + 0.009*"will" + 0.009*"people"
+2018-07-31 11:06:27,730 gensim.models.ldamodel INFO topic #4 (0.100): 0.025*"be" + 0.021*"for" + 0.018*"with" + 0.014*"he" + 0.013*"his" + 0.013*"not" + 0.012*"from" + 0.011*"people" + 0.011*"by" + 0.011*"wa"
+2018-07-31 11:06:27,731 gensim.models.ldamodel INFO topic #7 (0.100): 0.019*"for" + 0.019*"be" + 0.018*"with" + 0.016*"he" + 0.016*"not" + 0.016*"god" + 0.014*"wa" + 0.012*"his" + 0.012*"by" + 0.011*"have"
+2018-07-31 11:06:27,731 gensim.models.ldamodel INFO topic #2 (0.100): 0.030*"for" + 0.025*"with" + 0.021*"god" + 0.017*"he" + 0.017*"we" + 0.014*"not" + 0.013*"his" + 0.012*"be" + 0.012*"from" + 0.010*"him"
+2018-07-31 11:06:27,731 gensim.models.ldamodel INFO topic diff=3.472826, rho=1.000000
+2018-07-31 11:06:27,742 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 11 documents, updating model once every 11 documents, evaluating perplexity every 11 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 11:06:27,743 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 11:06:27,746 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 11:06:27,761 gensim.models.ldamodel INFO -11.608 per-word bound, 3121.3 perplexity estimate based on a held-out corpus of 11 documents with 4938 words
+2018-07-31 11:06:27,762 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #11/11
+2018-07-31 11:06:27,762 gensim.models.ldamodel DEBUG performing inference on a chunk of 11 documents
+2018-07-31 11:06:27,769 gensim.models.ldamodel DEBUG 5/11 documents converged within 50 iterations
+2018-07-31 11:06:27,769 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 11:06:27,770 gensim.models.ldamodel INFO merging changes from 11 documents into a model of 55 documents
+2018-07-31 11:06:27,775 gensim.models.ldamodel INFO topic #2 (0.100): 0.027*"for" + 0.022*"with" + 0.020*"god" + 0.015*"he" + 0.015*"we" + 0.013*"not" + 0.012*"his" + 0.011*"be" + 0.011*"from" + 0.009*"him"
+2018-07-31 11:06:27,775 gensim.models.ldamodel INFO topic #6 (0.100): 0.015*"for" + 0.014*"with" + 0.014*"from" + 0.013*"we" + 0.012*"not" + 0.011*"be" + 0.010*"wa" + 0.010*"who" + 0.008*"will" + 0.008*"people"
+2018-07-31 11:06:27,775 gensim.models.ldamodel INFO topic #9 (0.100): 0.020*"with" + 0.020*"for" + 0.020*"be" + 0.019*"not" + 0.018*"we" + 0.016*"will" + 0.016*"he" + 0.016*"from" + 0.015*"who" + 0.013*"have"
+2018-07-31 11:06:27,775 gensim.models.ldamodel INFO topic #1 (0.100): 0.015*"be" + 0.014*"with" + 0.013*"not" + 0.013*"for" + 0.012*"he" + 0.010*"from" + 0.010*"we" + 0.010*"by" + 0.009*"will" + 0.008*"who"
+2018-07-31 11:06:27,776 gensim.models.ldamodel INFO topic #5 (0.100): 0.017*"be" + 0.016*"with" + 0.014*"not" + 0.014*"for" + 0.013*"we" + 0.011*"he" + 0.010*"will" + 0.010*"him" + 0.009*"have" + 0.009*"brother"
+2018-07-31 11:06:27,776 gensim.models.ldamodel INFO topic diff=0.895460, rho=0.447214
+2018-07-31 11:06:27,776 gensim.utils INFO saving LdaState object under C:/Users/597543/scitext-explorer/LDA_model.state, separately None
+2018-07-31 11:06:27,776 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 11:06:27,779 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 11:06:27,781 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 11:06:27,781 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 11:06:27,784 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 11:06:27,786 gensim.utils INFO saving LdaModel object under C:/Users/597543/scitext-explorer/LDA_model, separately ['expElogbeta', 'sstats']
+2018-07-31 11:06:27,786 gensim.utils INFO storing np array 'expElogbeta' to C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy
+2018-07-31 11:06:27,793 gensim.utils INFO not storing attribute state
+2018-07-31 11:06:27,793 gensim.utils INFO not storing attribute dispatcher
+2018-07-31 11:06:27,793 gensim.utils INFO not storing attribute id2word
+2018-07-31 11:06:27,793 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 11:06:27,796 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 11:06:27,797 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 11:09:21,266 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 11:09:21,266 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 11:09:21,266 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 11:09:21,267 gensim.utils INFO loading expElogbeta from C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 11:09:21,267 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 11:09:21,267 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 11:09:21,268 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 11:09:21,268 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 11:09:21,268 gensim.utils INFO loading LdaState object from C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 11:09:21,268 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 11:09:21,268 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 11:09:21,269 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 11:09:21,269 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 11:09:21,269 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 11:12:26,488 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 11:12:26,488 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 11:12:26,488 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 11:12:26,489 gensim.utils INFO loading expElogbeta from C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 11:12:26,490 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 11:12:26,490 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 11:12:26,490 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 11:12:26,490 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 11:12:26,490 gensim.utils INFO loading LdaState object from C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 11:12:26,490 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 11:12:26,491 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 11:12:26,492 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 11:12:26,492 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 11:12:26,492 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 11:14:40,632 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 11:14:40,655 gensim.corpora.dictionary INFO built Dictionary(4200 unique tokens: ['basis', 'be', 'beard', 'become', 'been']...) from 44 documents (total 36970 corpus positions)
+2018-07-31 11:14:40,673 gensim.models.ldamodel INFO using symmetric alpha at 0.1
+2018-07-31 11:14:40,673 gensim.models.ldamodel INFO using symmetric eta at 0.1
+2018-07-31 11:14:40,674 gensim.models.ldamodel INFO using serial LDA version on this node
+2018-07-31 11:14:40,678 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 44 documents, updating model once every 44 documents, evaluating perplexity every 44 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 11:14:40,678 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 11:14:40,682 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 11:14:40,794 gensim.models.ldamodel INFO -10.156 per-word bound, 1140.8 perplexity estimate based on a held-out corpus of 44 documents with 36970 words
+2018-07-31 11:14:40,794 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #44/44
+2018-07-31 11:14:40,794 gensim.models.ldamodel DEBUG performing inference on a chunk of 44 documents
+2018-07-31 11:14:40,886 gensim.models.ldamodel DEBUG 2/44 documents converged within 50 iterations
+2018-07-31 11:14:40,887 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 11:14:40,894 gensim.models.ldamodel INFO topic #7 (0.100): 0.016*"for" + 0.016*"with" + 0.014*"we" + 0.014*"be" + 0.012*"from" + 0.012*"god" + 0.011*"not" + 0.011*"will" + 0.010*"he" + 0.008*"by"
+2018-07-31 11:14:40,894 gensim.models.ldamodel INFO topic #1 (0.100): 0.023*"be" + 0.023*"for" + 0.021*"we" + 0.020*"with" + 0.017*"not" + 0.014*"he" + 0.014*"his" + 0.014*"god" + 0.013*"have" + 0.013*"from"
+2018-07-31 11:14:40,895 gensim.models.ldamodel INFO topic #6 (0.100): 0.023*"for" + 0.019*"not" + 0.018*"he" + 0.017*"with" + 0.014*"be" + 0.014*"we" + 0.013*"will" + 0.011*"his" + 0.011*"have" + 0.010*"from"
+2018-07-31 11:14:40,895 gensim.models.ldamodel INFO topic #0 (0.100): 0.022*"be" + 0.018*"for" + 0.018*"with" + 0.016*"we" + 0.016*"he" + 0.015*"not" + 0.014*"will" + 0.012*"from" + 0.011*"by" + 0.011*"who"
+2018-07-31 11:14:40,895 gensim.models.ldamodel INFO topic #9 (0.100): 0.014*"for" + 0.012*"not" + 0.012*"with" + 0.012*"be" + 0.012*"he" + 0.011*"god" + 0.011*"wa" + 0.011*"from" + 0.010*"we" + 0.010*"his"
+2018-07-31 11:14:40,895 gensim.models.ldamodel INFO topic diff=3.517425, rho=1.000000
+2018-07-31 11:14:40,910 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 11 documents, updating model once every 11 documents, evaluating perplexity every 11 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 11:14:40,911 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 11:14:40,914 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 11:14:40,930 gensim.models.ldamodel INFO -12.713 per-word bound, 6713.9 perplexity estimate based on a held-out corpus of 11 documents with 4289 words
+2018-07-31 11:14:40,930 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #11/11
+2018-07-31 11:14:40,930 gensim.models.ldamodel DEBUG performing inference on a chunk of 11 documents
+2018-07-31 11:14:40,938 gensim.models.ldamodel DEBUG 2/11 documents converged within 50 iterations
+2018-07-31 11:14:40,939 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 11:14:40,939 gensim.models.ldamodel INFO merging changes from 11 documents into a model of 55 documents
+2018-07-31 11:14:40,944 gensim.models.ldamodel INFO topic #9 (0.100): 0.012*"for" + 0.010*"not" + 0.010*"with" + 0.010*"be" + 0.010*"he" + 0.009*"god" + 0.009*"wa" + 0.009*"from" + 0.008*"we" + 0.008*"his"
+2018-07-31 11:14:40,945 gensim.models.ldamodel INFO topic #5 (0.100): 0.019*"be" + 0.017*"not" + 0.016*"with" + 0.013*"for" + 0.010*"he" + 0.010*"we" + 0.009*"by" + 0.009*"from" + 0.009*"him" + 0.008*"his"
+2018-07-31 11:14:40,945 gensim.models.ldamodel INFO topic #8 (0.100): 0.037*"for" + 0.023*"with" + 0.021*"not" + 0.020*"be" + 0.019*"god" + 0.015*"he" + 0.014*"we" + 0.011*"will" + 0.010*"by" + 0.010*"from"
+2018-07-31 11:14:40,945 gensim.models.ldamodel INFO topic #3 (0.100): 0.028*"be" + 0.022*"will" + 0.021*"for" + 0.019*"from" + 0.018*"with" + 0.015*"we" + 0.015*"not" + 0.015*"committee" + 0.015*"he" + 0.014*"his"
+2018-07-31 11:14:40,945 gensim.models.ldamodel INFO topic #1 (0.100): 0.027*"be" + 0.026*"for" + 0.020*"with" + 0.019*"we" + 0.016*"not" + 0.016*"will" + 0.015*"have" + 0.014*"god" + 0.012*"wa" + 0.011*"he"
+2018-07-31 11:14:40,945 gensim.models.ldamodel INFO topic diff=0.934617, rho=0.447214
+2018-07-31 11:14:40,945 gensim.utils INFO saving LdaState object under C:/Users/597543/scitext-explorer/LDA_model.state, separately None
+2018-07-31 11:14:40,946 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 11:14:40,946 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 11:14:40,948 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 11:14:40,948 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 11:14:40,949 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 11:14:40,952 gensim.utils INFO saving LdaModel object under C:/Users/597543/scitext-explorer/LDA_model, separately ['expElogbeta', 'sstats']
+2018-07-31 11:14:40,952 gensim.utils INFO storing np array 'expElogbeta' to C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy
+2018-07-31 11:14:40,953 gensim.utils INFO not storing attribute state
+2018-07-31 11:14:40,954 gensim.utils INFO not storing attribute dispatcher
+2018-07-31 11:14:40,954 gensim.utils INFO not storing attribute id2word
+2018-07-31 11:14:40,954 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 11:14:40,954 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 11:14:40,955 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 11:15:13,844 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 11:15:13,844 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 11:15:13,845 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 11:15:13,845 gensim.utils INFO loading expElogbeta from C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 11:15:13,846 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 11:15:13,846 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 11:15:13,846 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 11:15:13,846 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 11:15:13,846 gensim.utils INFO loading LdaState object from C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 11:15:13,846 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 11:15:13,846 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 11:15:13,847 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 11:15:13,848 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 11:15:13,848 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 11:23:07,986 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 11:23:08,008 gensim.corpora.dictionary INFO built Dictionary(4142 unique tokens: ['back', 'be', 'before', 'being', 'believe']...) from 44 documents (total 35426 corpus positions)
+2018-07-31 11:23:08,023 gensim.models.ldamodel INFO using symmetric alpha at 0.1
+2018-07-31 11:23:08,023 gensim.models.ldamodel INFO using symmetric eta at 0.1
+2018-07-31 11:23:08,024 gensim.models.ldamodel INFO using serial LDA version on this node
+2018-07-31 11:23:08,028 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 44 documents, updating model once every 44 documents, evaluating perplexity every 44 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 11:23:08,028 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 11:23:08,031 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 11:23:08,135 gensim.models.ldamodel INFO -10.175 per-word bound, 1156.1 perplexity estimate based on a held-out corpus of 44 documents with 35426 words
+2018-07-31 11:23:08,136 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #44/44
+2018-07-31 11:23:08,136 gensim.models.ldamodel DEBUG performing inference on a chunk of 44 documents
+2018-07-31 11:23:08,200 gensim.models.ldamodel DEBUG 2/44 documents converged within 50 iterations
+2018-07-31 11:23:08,201 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 11:23:08,208 gensim.models.ldamodel INFO topic #0 (0.100): 0.027*"for" + 0.016*"be" + 0.016*"with" + 0.015*"will" + 0.014*"we" + 0.011*"from" + 0.011*"not" + 0.011*"him" + 0.010*"god" + 0.010*"by"
+2018-07-31 11:23:08,208 gensim.models.ldamodel INFO topic #6 (0.100): 0.025*"for" + 0.023*"not" + 0.019*"be" + 0.018*"we" + 0.017*"with" + 0.014*"will" + 0.013*"wa" + 0.012*"he" + 0.012*"from" + 0.011*"have"
+2018-07-31 11:23:08,209 gensim.models.ldamodel INFO topic #3 (0.100): 0.016*"he" + 0.014*"for" + 0.014*"by" + 0.013*"his" + 0.013*"be" + 0.012*"not" + 0.012*"we" + 0.012*"will" + 0.011*"with" + 0.011*"brother"
+2018-07-31 11:23:08,209 gensim.models.ldamodel INFO topic #1 (0.100): 0.027*"for" + 0.024*"be" + 0.023*"with" + 0.016*"from" + 0.014*"not" + 0.013*"he" + 0.013*"his" + 0.011*"by" + 0.011*"we" + 0.011*"will"
+2018-07-31 11:23:08,209 gensim.models.ldamodel INFO topic #8 (0.100): 0.019*"be" + 0.015*"will" + 0.013*"he" + 0.013*"for" + 0.012*"we" + 0.012*"from" + 0.011*"not" + 0.010*"by" + 0.009*"have" + 0.008*"who"
+2018-07-31 11:23:08,209 gensim.models.ldamodel INFO topic diff=3.553915, rho=1.000000
+2018-07-31 11:23:08,223 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 11 documents, updating model once every 11 documents, evaluating perplexity every 11 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 11:23:08,223 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 11:23:08,226 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 11:23:08,243 gensim.models.ldamodel INFO -10.784 per-word bound, 1763.6 perplexity estimate based on a held-out corpus of 11 documents with 5767 words
+2018-07-31 11:23:08,243 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #11/11
+2018-07-31 11:23:08,243 gensim.models.ldamodel DEBUG performing inference on a chunk of 11 documents
+2018-07-31 11:23:08,253 gensim.models.ldamodel DEBUG 3/11 documents converged within 50 iterations
+2018-07-31 11:23:08,253 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 11:23:08,253 gensim.models.ldamodel INFO merging changes from 11 documents into a model of 55 documents
+2018-07-31 11:23:08,259 gensim.models.ldamodel INFO topic #9 (0.100): 0.021*"be" + 0.019*"not" + 0.018*"with" + 0.016*"from" + 0.015*"we" + 0.014*"for" + 0.014*"he" + 0.013*"will" + 0.012*"by" + 0.011*"god"
+2018-07-31 11:23:08,259 gensim.models.ldamodel INFO topic #3 (0.100): 0.014*"he" + 0.013*"for" + 0.012*"by" + 0.012*"his" + 0.012*"be" + 0.010*"not" + 0.010*"we" + 0.010*"will" + 0.010*"with" + 0.010*"brother"
+2018-07-31 11:23:08,259 gensim.models.ldamodel INFO topic #7 (0.100): 0.022*"we" + 0.021*"with" + 0.020*"god" + 0.019*"for" + 0.017*"he" + 0.014*"be" + 0.013*"not" + 0.012*"brother" + 0.012*"will" + 0.011*"have"
+2018-07-31 11:23:08,259 gensim.models.ldamodel INFO topic #2 (0.100): 0.018*"with" + 0.015*"will" + 0.013*"for" + 0.013*"he" + 0.011*"be" + 0.011*"have" + 0.009*"we" + 0.009*"not" + 0.009*"him" + 0.008*"by"
+2018-07-31 11:23:08,260 gensim.models.ldamodel INFO topic #8 (0.100): 0.016*"be" + 0.013*"will" + 0.011*"he" + 0.011*"for" + 0.011*"we" + 0.010*"from" + 0.009*"not" + 0.009*"by" + 0.007*"have" + 0.007*"who"
+2018-07-31 11:23:08,260 gensim.models.ldamodel INFO topic diff=0.905853, rho=0.447214
+2018-07-31 11:23:08,260 gensim.utils INFO saving LdaState object under C:\Users\597543\scitext-explorer\LDA_model.state, separately None
+2018-07-31 11:23:08,260 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:\\Users\\597543\\scitext-explorer\\LDA_model.state'}
+2018-07-31 11:23:08,261 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:\\Users\\597543\\scitext-explorer\\LDA_model.state'>}
+2018-07-31 11:23:08,263 gensim.utils INFO saved C:\Users\597543\scitext-explorer\LDA_model.state
+2018-07-31 11:23:08,263 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:\\Users\\597543\\scitext-explorer\\LDA_model.id2word'}
+2018-07-31 11:23:08,264 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:\\Users\\597543\\scitext-explorer\\LDA_model.id2word'>}
+2018-07-31 11:23:08,266 gensim.utils INFO saving LdaModel object under C:\Users\597543\scitext-explorer\LDA_model, separately ['expElogbeta', 'sstats']
+2018-07-31 11:23:08,266 gensim.utils INFO storing np array 'expElogbeta' to C:\Users\597543\scitext-explorer\LDA_model.expElogbeta.npy
+2018-07-31 11:23:08,268 gensim.utils INFO not storing attribute state
+2018-07-31 11:23:08,268 gensim.utils INFO not storing attribute dispatcher
+2018-07-31 11:23:08,268 gensim.utils INFO not storing attribute id2word
+2018-07-31 11:23:08,268 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:\\Users\\597543\\scitext-explorer\\LDA_model'}
+2018-07-31 11:23:08,269 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:\\Users\\597543\\scitext-explorer\\LDA_model'>}
+2018-07-31 11:23:08,269 gensim.utils INFO saved C:\Users\597543\scitext-explorer\LDA_model
+2018-07-31 11:23:08,454 matplotlib.font_manager DEBUG findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans ('C:\\Users\\597543\\AppData\\Local\\Continuum\\anaconda3\\Scripts\\Python\\lib\\site-packages\\matplotlib\\mpl-data\\fonts\\ttf\\DejaVuSans.ttf') with score of 0.050000
+2018-07-31 11:23:08,473 matplotlib.font_manager DEBUG findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=12.0 to DejaVu Sans ('C:\\Users\\597543\\AppData\\Local\\Continuum\\anaconda3\\Scripts\\Python\\lib\\site-packages\\matplotlib\\mpl-data\\fonts\\ttf\\DejaVuSans.ttf') with score of 0.050000
+2018-07-31 12:06:29,362 gensim.utils INFO loading LdaModel object from C:\Users\597543\scitext-explorer\LDA_model
+2018-07-31 12:06:29,362 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:\\Users\\597543\\scitext-explorer\\LDA_model'}
+2018-07-31 12:06:29,363 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:\\Users\\597543\\scitext-explorer\\LDA_model'>}
+2018-07-31 12:06:29,364 gensim.utils INFO loading expElogbeta from C:\Users\597543\scitext-explorer\LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 12:06:29,365 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 12:06:29,365 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 12:06:29,365 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 12:06:29,365 gensim.utils INFO loaded C:\Users\597543\scitext-explorer\LDA_model
+2018-07-31 12:06:29,365 gensim.utils INFO loading LdaState object from C:\Users\597543\scitext-explorer\LDA_model.state
+2018-07-31 12:06:29,365 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:\\Users\\597543\\scitext-explorer\\LDA_model.state'}
+2018-07-31 12:06:29,366 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:\\Users\\597543\\scitext-explorer\\LDA_model.state'>}
+2018-07-31 12:06:29,367 gensim.utils INFO loaded C:\Users\597543\scitext-explorer\LDA_model.state
+2018-07-31 12:06:29,367 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:\\Users\\597543\\scitext-explorer\\LDA_model.id2word'}
+2018-07-31 12:06:29,367 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:\\Users\\597543\\scitext-explorer\\LDA_model.id2word'>}
+2018-07-31 12:15:57,259 gensim.utils INFO loading LdaModel object from C:\Users\597543\scitext-explorer\LDA_model
+2018-07-31 12:15:57,259 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:\\Users\\597543\\scitext-explorer\\LDA_model'}
+2018-07-31 12:15:57,260 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:\\Users\\597543\\scitext-explorer\\LDA_model'>}
+2018-07-31 12:15:57,260 gensim.utils INFO loading expElogbeta from C:\Users\597543\scitext-explorer\LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 12:15:57,261 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 12:15:57,261 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 12:15:57,261 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 12:15:57,261 gensim.utils INFO loaded C:\Users\597543\scitext-explorer\LDA_model
+2018-07-31 12:15:57,261 gensim.utils INFO loading LdaState object from C:\Users\597543\scitext-explorer\LDA_model.state
+2018-07-31 12:15:57,261 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:\\Users\\597543\\scitext-explorer\\LDA_model.state'}
+2018-07-31 12:15:57,262 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:\\Users\\597543\\scitext-explorer\\LDA_model.state'>}
+2018-07-31 12:15:57,263 gensim.utils INFO loaded C:\Users\597543\scitext-explorer\LDA_model.state
+2018-07-31 12:15:57,263 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:\\Users\\597543\\scitext-explorer\\LDA_model.id2word'}
+2018-07-31 12:15:57,263 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:\\Users\\597543\\scitext-explorer\\LDA_model.id2word'>}
+2018-07-31 12:15:57,264 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 12:15:57,298 gensim.corpora.dictionary INFO built Dictionary(5704 unique tokens: ['abroad', 'abu', 'account', 'ack', 'activ']...) from 55 documents (total 50167 corpus positions)
+2018-07-31 12:20:39,010 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 12:20:39,038 gensim.corpora.dictionary INFO built Dictionary(5350 unique tokens: ['ab', 'abba', 'abd', 'abdallah', 'abid']...) from 44 documents (total 43130 corpus positions)
+2018-07-31 12:20:39,058 gensim.models.ldamodel INFO using symmetric alpha at 0.1
+2018-07-31 12:20:39,058 gensim.models.ldamodel INFO using symmetric eta at 0.1
+2018-07-31 12:20:39,059 gensim.models.ldamodel INFO using serial LDA version on this node
+2018-07-31 12:20:39,064 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 44 documents, updating model once every 44 documents, evaluating perplexity every 44 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 12:20:39,064 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 12:20:39,068 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 12:20:39,234 gensim.models.ldamodel INFO -10.513 per-word bound, 1460.9 perplexity estimate based on a held-out corpus of 44 documents with 43130 words
+2018-07-31 12:20:39,234 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #44/44
+2018-07-31 12:20:39,234 gensim.models.ldamodel DEBUG performing inference on a chunk of 44 documents
+2018-07-31 12:20:39,334 gensim.models.ldamodel DEBUG 2/44 documents converged within 50 iterations
+2018-07-31 12:20:39,335 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 12:20:39,343 gensim.models.ldamodel INFO topic #0 (0.100): 0.012*"al" + 0.009*"god" + 0.007*"allah" + 0.006*"would" + 0.006*"brother" + 0.005*"peopl" + 0.005*"page" + 0.005*"jihad" + 0.005*"us" + 0.005*"one"
+2018-07-31 12:20:39,343 gensim.models.ldamodel INFO topic #5 (0.100): 0.008*"al" + 0.006*"allah" + 0.006*"peopl" + 0.006*"god" + 0.006*"committe" + 0.005*"one" + 0.005*"muslim" + 0.005*"person" + 0.005*"mujahidin" + 0.004*"page"
+2018-07-31 12:20:39,343 gensim.models.ldamodel INFO topic #2 (0.100): 0.008*"brother" + 0.007*"god" + 0.006*"would" + 0.006*"one" + 0.006*"peopl" + 0.006*"allah" + 0.005*"muslim" + 0.005*"jihad" + 0.005*"al" + 0.005*"mujahidin"
+2018-07-31 12:20:39,343 gensim.models.ldamodel INFO topic #4 (0.100): 0.007*"god" + 0.007*"one" + 0.007*"peopl" + 0.007*"al" + 0.006*"islam" + 0.006*"jihad" + 0.006*"would" + 0.006*"muslim" + 0.005*"enemi" + 0.005*"us"
+2018-07-31 12:20:39,343 gensim.models.ldamodel INFO topic #6 (0.100): 0.009*"al" + 0.007*"us" + 0.007*"god" + 0.006*"brother" + 0.006*"allah" + 0.006*"peopl" + 0.005*"muslim" + 0.005*"one" + 0.005*"jihad" + 0.004*"would"
+2018-07-31 12:20:39,343 gensim.models.ldamodel INFO topic diff=3.151112, rho=1.000000
+2018-07-31 12:20:39,358 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 11 documents, updating model once every 11 documents, evaluating perplexity every 11 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 12:20:39,358 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 12:20:39,361 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 12:20:39,383 gensim.models.ldamodel INFO -12.974 per-word bound, 8046.5 perplexity estimate based on a held-out corpus of 11 documents with 6611 words
+2018-07-31 12:20:39,383 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #11/11
+2018-07-31 12:20:39,383 gensim.models.ldamodel DEBUG performing inference on a chunk of 11 documents
+2018-07-31 12:20:39,393 gensim.models.ldamodel DEBUG 0/11 documents converged within 50 iterations
+2018-07-31 12:20:39,393 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 12:20:39,393 gensim.models.ldamodel INFO merging changes from 11 documents into a model of 55 documents
+2018-07-31 12:20:39,401 gensim.models.ldamodel INFO topic #5 (0.100): 0.011*"repair" + 0.007*"al" + 0.005*"allah" + 0.005*"god" + 0.005*"peopl" + 0.005*"committe" + 0.004*"one" + 0.004*"muslim" + 0.004*"person" + 0.004*"mujahidin"
+2018-07-31 12:20:39,401 gensim.models.ldamodel INFO topic #4 (0.100): 0.009*"god" + 0.008*"one" + 0.007*"al" + 0.006*"peopl" + 0.006*"state" + 0.005*"us" + 0.005*"islam" + 0.005*"would" + 0.005*"muslim" + 0.005*"enemi"
+2018-07-31 12:20:39,401 gensim.models.ldamodel INFO topic #6 (0.100): 0.016*"diesel" + 0.007*"al" + 0.007*"fuel" + 0.006*"god" + 0.006*"us" + 0.005*"shaykh" + 0.005*"brother" + 0.005*"allah" + 0.004*"muhammad" + 0.004*"peopl"
+2018-07-31 12:20:39,401 gensim.models.ldamodel INFO topic #7 (0.100): 0.007*"al" + 0.007*"god" + 0.006*"allah" + 0.006*"us" + 0.005*"peopl" + 0.005*"muslim" + 0.004*"follow" + 0.004*"jihad" + 0.004*"egypt" + 0.004*"may"
+2018-07-31 12:20:39,401 gensim.models.ldamodel INFO topic #0 (0.100): 0.014*"god" + 0.011*"brother" + 0.010*"al" + 0.008*"would" + 0.007*"us" + 0.007*"one" + 0.006*"allah" + 0.005*"may" + 0.005*"page" + 0.005*"messag"
+2018-07-31 12:20:39,402 gensim.models.ldamodel INFO topic diff=1.007024, rho=0.447214
+2018-07-31 12:20:39,402 gensim.utils INFO saving LdaState object under C:/Users/597543/scitext-explorer/LDA_model.state, separately None
+2018-07-31 12:20:39,402 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 12:20:39,403 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 12:20:39,404 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 12:20:39,404 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 12:20:39,405 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 12:20:39,407 gensim.utils INFO saving LdaModel object under C:/Users/597543/scitext-explorer/LDA_model, separately ['expElogbeta', 'sstats']
+2018-07-31 12:20:39,408 gensim.utils INFO storing np array 'expElogbeta' to C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy
+2018-07-31 12:20:39,409 gensim.utils INFO not storing attribute state
+2018-07-31 12:20:39,409 gensim.utils INFO not storing attribute dispatcher
+2018-07-31 12:20:39,409 gensim.utils INFO not storing attribute id2word
+2018-07-31 12:20:39,409 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 12:20:39,410 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 12:20:39,410 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 12:23:32,939 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 12:23:32,939 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 12:23:32,939 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 12:23:32,940 gensim.utils INFO loading expElogbeta from C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 12:23:32,941 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 12:23:32,941 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 12:23:32,941 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 12:23:32,941 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 12:23:32,941 gensim.utils INFO loading LdaState object from C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 12:23:32,942 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 12:23:32,942 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 12:23:32,944 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 12:23:32,944 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 12:23:32,945 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 12:23:32,949 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 12:23:33,023 gensim.corpora.dictionary INFO built Dictionary(5704 unique tokens: ['abroad', 'abu', 'account', 'ack', 'activ']...) from 55 documents (total 50167 corpus positions)
+2018-07-31 12:58:39,162 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 12:58:39,162 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 12:58:39,162 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 12:58:39,163 gensim.utils INFO loading expElogbeta from C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 12:58:39,164 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 12:58:39,164 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 12:58:39,164 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 12:58:39,164 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 12:58:39,164 gensim.utils INFO loading LdaState object from C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 12:58:39,164 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 12:58:39,165 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 12:58:39,166 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 12:58:39,167 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 12:58:39,167 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 12:58:39,169 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 12:58:39,216 gensim.corpora.dictionary INFO built Dictionary(5704 unique tokens: ['abroad', 'abu', 'account', 'ack', 'activ']...) from 55 documents (total 50167 corpus positions)
+2018-07-31 12:59:16,453 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 12:59:16,454 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 12:59:16,454 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 12:59:16,454 gensim.utils INFO loading expElogbeta from C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 12:59:16,455 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 12:59:16,456 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 12:59:16,456 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 12:59:16,456 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 12:59:16,456 gensim.utils INFO loading LdaState object from C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 12:59:16,456 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 12:59:16,456 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 12:59:16,458 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 12:59:16,458 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 12:59:16,458 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 12:59:16,461 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 12:59:16,502 gensim.corpora.dictionary INFO built Dictionary(5704 unique tokens: ['abroad', 'abu', 'account', 'ack', 'activ']...) from 55 documents (total 50167 corpus positions)
+2018-07-31 13:02:08,024 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 13:02:08,024 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 13:02:08,024 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 13:02:08,025 gensim.utils INFO loading expElogbeta from C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 13:02:08,026 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 13:02:08,027 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 13:02:08,027 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 13:02:08,027 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 13:02:08,027 gensim.utils INFO loading LdaState object from C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 13:02:08,027 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 13:02:08,027 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 13:02:08,028 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 13:02:08,029 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 13:02:08,029 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 13:02:08,031 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 13:02:08,038 gensim.corpora.dictionary INFO built Dictionary(2259 unique tokens: ['abdullah', 'abi', 'afghan', 'afghanistan', 'age']...) from 14 documents (total 8726 corpus positions)
+2018-07-31 13:04:30,656 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 13:04:30,656 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 13:04:30,657 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 13:04:30,657 gensim.utils INFO loading expElogbeta from C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 13:04:30,658 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 13:04:30,658 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 13:04:30,658 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 13:04:30,658 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 13:04:30,658 gensim.utils INFO loading LdaState object from C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 13:04:30,658 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 13:04:30,658 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 13:04:30,660 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 13:04:30,660 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 13:04:30,660 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 13:04:30,663 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 13:04:30,698 gensim.corpora.dictionary INFO built Dictionary(5704 unique tokens: ['abroad', 'abu', 'account', 'ack', 'activ']...) from 55 documents (total 50167 corpus positions)
+2018-07-31 13:05:01,580 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 13:05:01,580 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 13:05:01,580 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 13:05:01,581 gensim.utils INFO loading expElogbeta from C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 13:05:01,581 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 13:05:01,581 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 13:05:01,582 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 13:05:01,582 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 13:05:01,582 gensim.utils INFO loading LdaState object from C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 13:05:01,582 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 13:05:01,582 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 13:05:01,583 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 13:05:01,583 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 13:05:01,584 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 13:05:01,585 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 13:05:01,622 gensim.corpora.dictionary INFO built Dictionary(5704 unique tokens: ['abroad', 'abu', 'account', 'ack', 'activ']...) from 55 documents (total 50167 corpus positions)
+2018-07-31 13:07:26,769 gensim.utils INFO loading LdaModel object from C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 13:07:26,769 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 13:07:26,770 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 13:07:26,770 gensim.utils INFO loading expElogbeta from C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy with mmap=None
+2018-07-31 13:07:26,771 gensim.utils INFO setting ignored attribute state to None
+2018-07-31 13:07:26,771 gensim.utils INFO setting ignored attribute dispatcher to None
+2018-07-31 13:07:26,771 gensim.utils INFO setting ignored attribute id2word to None
+2018-07-31 13:07:26,771 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 13:07:26,772 gensim.utils INFO loading LdaState object from C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 13:07:26,772 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 13:07:26,772 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 13:07:26,774 gensim.utils INFO loaded C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 13:07:26,774 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'rb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 13:07:26,774 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'rb', 'fileobj': <_io.BufferedReader name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 13:07:26,776 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 13:07:26,827 gensim.corpora.dictionary INFO built Dictionary(5704 unique tokens: ['abroad', 'abu', 'account', 'ack', 'activ']...) from 55 documents (total 50167 corpus positions)
+2018-07-31 14:09:47,787 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 14:09:47,816 gensim.corpora.dictionary INFO built Dictionary(5200 unique tokens: ['abandon', 'accordingli', 'achiev', 'acious', 'action']...) from 44 documents (total 39355 corpus positions)
+2018-07-31 14:09:47,836 gensim.models.ldamodel INFO using symmetric alpha at 0.1
+2018-07-31 14:09:47,836 gensim.models.ldamodel INFO using symmetric eta at 0.1
+2018-07-31 14:09:47,837 gensim.models.ldamodel INFO using serial LDA version on this node
+2018-07-31 14:09:47,842 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 44 documents, updating model once every 44 documents, evaluating perplexity every 44 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 14:09:47,842 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 14:09:47,846 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 14:09:47,996 gensim.models.ldamodel INFO -10.578 per-word bound, 1529.1 perplexity estimate based on a held-out corpus of 44 documents with 39355 words
+2018-07-31 14:09:47,996 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #44/44
+2018-07-31 14:09:47,996 gensim.models.ldamodel DEBUG performing inference on a chunk of 44 documents
+2018-07-31 14:09:48,083 gensim.models.ldamodel DEBUG 0/44 documents converged within 50 iterations
+2018-07-31 14:09:48,084 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 14:09:48,091 gensim.models.ldamodel INFO topic #7 (0.100): 0.013*"god" + 0.010*"brother" + 0.008*"us" + 0.008*"islam" + 0.007*"one" + 0.006*"would" + 0.006*"al" + 0.006*"allah" + 0.005*"peopl" + 0.005*"may"
+2018-07-31 14:09:48,091 gensim.models.ldamodel INFO topic #9 (0.100): 0.007*"al" + 0.006*"one" + 0.006*"peopl" + 0.006*"allah" + 0.006*"brother" + 0.005*"would" + 0.005*"us" + 0.005*"islam" + 0.004*"jihad" + 0.004*"countri"
+2018-07-31 14:09:48,091 gensim.models.ldamodel INFO topic #5 (0.100): 0.009*"allah" + 0.006*"al" + 0.006*"peopl" + 0.005*"one" + 0.005*"brother" + 0.005*"muslim" + 0.005*"jihad" + 0.005*"page" + 0.004*"would" + 0.004*"must"
+2018-07-31 14:09:48,092 gensim.models.ldamodel INFO topic #8 (0.100): 0.009*"al" + 0.008*"god" + 0.007*"brother" + 0.006*"islam" + 0.006*"us" + 0.006*"allah" + 0.005*"egypt" + 0.005*"muslim" + 0.005*"one" + 0.005*"peopl"
+2018-07-31 14:09:48,092 gensim.models.ldamodel INFO topic #1 (0.100): 0.011*"al" + 0.007*"brother" + 0.007*"egypt" + 0.006*"page" + 0.005*"peopl" + 0.005*"one" + 0.005*"muslim" + 0.005*"allah" + 0.005*"god" + 0.004*"would"
+2018-07-31 14:09:48,092 gensim.models.ldamodel INFO topic diff=3.198960, rho=1.000000
+2018-07-31 14:09:48,107 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 11 documents, updating model once every 11 documents, evaluating perplexity every 11 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 14:09:48,108 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 14:09:48,111 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 14:09:48,135 gensim.models.ldamodel INFO -10.914 per-word bound, 1929.3 perplexity estimate based on a held-out corpus of 11 documents with 10117 words
+2018-07-31 14:09:48,135 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #11/11
+2018-07-31 14:09:48,135 gensim.models.ldamodel DEBUG performing inference on a chunk of 11 documents
+2018-07-31 14:09:48,144 gensim.models.ldamodel DEBUG 6/11 documents converged within 50 iterations
+2018-07-31 14:09:48,145 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 14:09:48,145 gensim.models.ldamodel INFO merging changes from 11 documents into a model of 55 documents
+2018-07-31 14:09:48,151 gensim.models.ldamodel INFO topic #4 (0.100): 0.011*"allah" + 0.011*"al" + 0.007*"us" + 0.006*"brother" + 0.005*"one" + 0.005*"god" + 0.004*"peopl" + 0.004*"islam" + 0.004*"muslim" + 0.004*"page"
+2018-07-31 14:09:48,151 gensim.models.ldamodel INFO topic #7 (0.100): 0.021*"god" + 0.009*"peopl" + 0.008*"committe" + 0.008*"jihad" + 0.008*"brother" + 0.008*"would" + 0.007*"person" + 0.007*"amir" + 0.007*"us" + 0.006*"one"
+2018-07-31 14:09:48,152 gensim.models.ldamodel INFO topic #8 (0.100): 0.008*"al" + 0.007*"god" + 0.007*"brother" + 0.005*"islam" + 0.005*"us" + 0.005*"allah" + 0.005*"egypt" + 0.005*"muslim" + 0.004*"one" + 0.004*"peopl"
+2018-07-31 14:09:48,152 gensim.models.ldamodel INFO topic #1 (0.100): 0.010*"al" + 0.006*"brother" + 0.006*"egypt" + 0.005*"page" + 0.005*"peopl" + 0.005*"one" + 0.004*"god" + 0.004*"muslim" + 0.004*"allah" + 0.004*"would"
+2018-07-31 14:09:48,152 gensim.models.ldamodel INFO topic #0 (0.100): 0.008*"al" + 0.007*"peopl" + 0.007*"one" + 0.006*"allah" + 0.005*"islam" + 0.005*"muslim" + 0.005*"page" + 0.004*"would" + 0.004*"brother" + 0.004*"e"
+2018-07-31 14:09:48,152 gensim.models.ldamodel INFO topic diff=0.905515, rho=0.447214
+2018-07-31 14:09:48,152 gensim.utils INFO saving LdaState object under C:/Users/597543/scitext-explorer/LDA_model.state, separately None
+2018-07-31 14:09:48,152 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 14:09:48,153 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 14:09:48,154 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 14:09:48,154 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 14:09:48,155 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 14:09:48,157 gensim.utils INFO saving LdaModel object under C:/Users/597543/scitext-explorer/LDA_model, separately ['expElogbeta', 'sstats']
+2018-07-31 14:09:48,157 gensim.utils INFO storing np array 'expElogbeta' to C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy
+2018-07-31 14:09:48,158 gensim.utils INFO not storing attribute state
+2018-07-31 14:09:48,158 gensim.utils INFO not storing attribute dispatcher
+2018-07-31 14:09:48,158 gensim.utils INFO not storing attribute id2word
+2018-07-31 14:09:48,158 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 14:09:48,159 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 14:09:48,159 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model
+2018-07-31 16:10:57,365 gensim.corpora.dictionary INFO adding document #0 to Dictionary(0 unique tokens: [])
+2018-07-31 16:10:57,396 gensim.corpora.dictionary INFO built Dictionary(6162 unique tokens: ['abroad', 'abu', 'account', 'acks', 'active']...) from 44 documents (total 43267 corpus positions)
+2018-07-31 16:10:57,417 gensim.models.ldamodel INFO using symmetric alpha at 0.1
+2018-07-31 16:10:57,417 gensim.models.ldamodel INFO using symmetric eta at 0.1
+2018-07-31 16:10:57,418 gensim.models.ldamodel INFO using serial LDA version on this node
+2018-07-31 16:10:57,425 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 44 documents, updating model once every 44 documents, evaluating perplexity every 44 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 16:10:57,425 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 16:10:57,430 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 16:10:57,596 gensim.models.ldamodel INFO -10.860 per-word bound, 1858.8 perplexity estimate based on a held-out corpus of 44 documents with 43267 words
+2018-07-31 16:10:57,596 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #44/44
+2018-07-31 16:10:57,596 gensim.models.ldamodel DEBUG performing inference on a chunk of 44 documents
+2018-07-31 16:10:57,695 gensim.models.ldamodel DEBUG 1/44 documents converged within 50 iterations
+2018-07-31 16:10:57,695 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 16:10:57,711 gensim.models.ldamodel INFO topic #4 (0.100): 0.009*"allah" + 0.008*"al" + 0.007*"people" + 0.006*"jihad" + 0.006*"brother" + 0.005*"page" + 0.005*"muslim" + 0.005*"god" + 0.005*"would" + 0.005*"one"
+2018-07-31 16:10:57,711 gensim.models.ldamodel INFO topic #3 (0.100): 0.011*"al" + 0.008*"allah" + 0.006*"brother" + 0.006*"people" + 0.005*"say" + 0.005*"egypt" + 0.005*"muslim" + 0.005*"one" + 0.004*"god" + 0.004*"u"
+2018-07-31 16:10:57,711 gensim.models.ldamodel INFO topic #9 (0.100): 0.007*"people" + 0.006*"u" + 0.006*"allah" + 0.006*"god" + 0.006*"brother" + 0.006*"one" + 0.006*"al" + 0.005*"muslim" + 0.005*"would" + 0.004*"page"
+2018-07-31 16:10:57,711 gensim.models.ldamodel INFO topic #0 (0.100): 0.010*"god" + 0.007*"al" + 0.007*"would" + 0.006*"brother" + 0.006*"one" + 0.005*"people" + 0.005*"allah" + 0.005*"jihad" + 0.005*"say" + 0.005*"u"
+2018-07-31 16:10:57,711 gensim.models.ldamodel INFO topic #8 (0.100): 0.009*"people" + 0.009*"al" + 0.007*"committee" + 0.006*"god" + 0.006*"u" + 0.006*"brother" + 0.006*"muslim" + 0.006*"would" + 0.006*"mujahidin" + 0.006*"page"
+2018-07-31 16:10:57,711 gensim.models.ldamodel INFO topic diff=3.182181, rho=1.000000
+2018-07-31 16:10:57,711 gensim.models.ldamodel INFO running online (single-pass) LDA training, 10 topics, 1 passes over the supplied corpus of 11 documents, updating model once every 11 documents, evaluating perplexity every 11 documents, iterating 50x with a convergence threshold of 0.001000
+2018-07-31 16:10:57,711 gensim.models.ldamodel WARNING too few updates, training might not converge; consider increasing the number of passes or iterations to improve accuracy
+2018-07-31 16:10:57,727 gensim.models.ldamodel DEBUG bound: at document #0
+2018-07-31 16:10:57,749 gensim.models.ldamodel INFO -13.700 per-word bound, 13304.2 perplexity estimate based on a held-out corpus of 11 documents with 6327 words
+2018-07-31 16:10:57,749 gensim.models.ldamodel INFO PROGRESS: pass 0, at document #11/11
+2018-07-31 16:10:57,749 gensim.models.ldamodel DEBUG performing inference on a chunk of 11 documents
+2018-07-31 16:10:57,749 gensim.models.ldamodel DEBUG 1/11 documents converged within 50 iterations
+2018-07-31 16:10:57,749 gensim.models.ldamodel DEBUG updating topics
+2018-07-31 16:10:57,749 gensim.models.ldamodel INFO merging changes from 11 documents into a model of 55 documents
+2018-07-31 16:10:57,765 gensim.models.ldamodel INFO topic #6 (0.100): 0.015*"god" + 0.009*"al" + 0.007*"u" + 0.006*"would" + 0.006*"brother" + 0.006*"one" + 0.005*"jihad" + 0.005*"muslim" + 0.005*"people" + 0.004*"may"
+2018-07-31 16:10:57,765 gensim.models.ldamodel INFO topic #1 (0.100): 0.017*"god" + 0.011*"brother" + 0.008*"jihad" + 0.007*"one" + 0.007*"u" + 0.006*"may" + 0.006*"say" + 0.006*"upon" + 0.006*"would" + 0.005*"allah"
+2018-07-31 16:10:57,765 gensim.models.ldamodel INFO topic #8 (0.100): 0.012*"god" + 0.011*"al" + 0.008*"u" + 0.007*"people" + 0.007*"e" + 0.006*"one" + 0.006*"muslim" + 0.006*"upon" + 0.006*"opinion" + 0.005*"brother"
+2018-07-31 16:10:57,765 gensim.models.ldamodel INFO topic #3 (0.100): 0.009*"al" + 0.007*"allah" + 0.005*"brother" + 0.005*"people" + 0.005*"say" + 0.004*"egypt" + 0.004*"muslim" + 0.004*"one" + 0.004*"god" + 0.004*"u"
+2018-07-31 16:10:57,765 gensim.models.ldamodel INFO topic #2 (0.100): 0.006*"muslim" + 0.006*"al" + 0.006*"allah" + 0.006*"brother" + 0.005*"would" + 0.005*"jihad" + 0.004*"page" + 0.004*"one" + 0.004*"country" + 0.004*"god"
+2018-07-31 16:10:57,765 gensim.models.ldamodel INFO topic diff=1.061306, rho=0.447214
+2018-07-31 16:10:57,765 gensim.utils INFO saving LdaState object under C:/Users/597543/scitext-explorer/LDA_model.state, separately None
+2018-07-31 16:10:57,765 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.state'}
+2018-07-31 16:10:57,765 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.state'>}
+2018-07-31 16:10:57,765 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model.state
+2018-07-31 16:10:57,765 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model.id2word'}
+2018-07-31 16:10:57,765 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model.id2word'>}
+2018-07-31 16:10:57,765 gensim.utils INFO saving LdaModel object under C:/Users/597543/scitext-explorer/LDA_model, separately ['expElogbeta', 'sstats']
+2018-07-31 16:10:57,765 gensim.utils INFO storing np array 'expElogbeta' to C:/Users/597543/scitext-explorer/LDA_model.expElogbeta.npy
+2018-07-31 16:10:57,765 gensim.utils INFO not storing attribute state
+2018-07-31 16:10:57,765 gensim.utils INFO not storing attribute dispatcher
+2018-07-31 16:10:57,765 gensim.utils INFO not storing attribute id2word
+2018-07-31 16:10:57,765 smart_open.smart_open_lib DEBUG {'kw': {}, 'mode': 'wb', 'uri': 'C:/Users/597543/scitext-explorer/LDA_model'}
+2018-07-31 16:10:57,765 smart_open.smart_open_lib DEBUG encoding_wrapper: {'errors': 'strict', 'encoding': None, 'mode': 'wb', 'fileobj': <_io.BufferedWriter name='C:/Users/597543/scitext-explorer/LDA_model'>}
+2018-07-31 16:10:57,765 gensim.utils INFO saved C:/Users/597543/scitext-explorer/LDA_model

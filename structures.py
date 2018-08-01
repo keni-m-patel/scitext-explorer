@@ -1,16 +1,3 @@
-
-
-# MAKE CORPUS NOT A PARENT AND MAKE IT A CONTROLLER CLASS THAT 
-# TAKES IN ONE CONFIG FILE AND SPITS OUT AN OBJ BASED ON DOC TYPE
-'''
-todo:
-1) test DOTCSV class
-2) make DotXML? do microsoft word stuff
-3) HTML parsing 
-4) 
-
-'''
-
 import os
 import ntpath
 import utilities
@@ -34,7 +21,6 @@ class Corpus(object):
         self.config = utilities.get_config(config_file) # read the config file and set the log_file name
         self.path = self.config['directory']
         self.files = glob.glob(self.path + '*')
-        self.doc_ids = []
         if group_by:
             self.grouping = group_by
         else:
@@ -68,13 +54,6 @@ class Corpus(object):
         else:
             print('\n\n ERROR: filetype not set or filetype is not recognized/compatible\n\n')
             print('filetypes found: \n\n', filetype)
-
-
-    def get_file_names(self):
-        return [os.path.splitext(ntpath.basename(f))[0] for f in self.files]
-
-    # def __log(self):
-    #     logger.info('Data Map created for: ' + ', '.join(self.config['files']))
     
 
 
@@ -224,24 +203,30 @@ class DotCSV(DotTXT):
         for csv_file, f in zip(self.data_map, self.files):
             reader = csv.reader(csv_file, delimiter=',')
             if self.grouping == "row":
+                row_num = 0
                 for row in reader:
+                    row_num +=1
                     # print('ROW: \n', row)
                     row_cells = ""
                     for cell in row:
                         # print('cell: \n', cell)
                         row_cells += ' ' + cell + ' '
                     # print('row_cells:\n', row_cells)
-
-                    yield Preprocessor(row_cells,'./config/preprocessing.yaml', self.files).run()
+                    self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0] + '-' + str(row_num))
+                    yield Preprocessor(row_cells,'./config/preprocessing.yaml').run()
 
             elif self.grouping == "col":
                 columns = zip(*reader)
                 col_text = ""
+                col_num = 0
                 for column in columns:
+                        col_num += 1
                         # print ('COLUMN:\n\n', column )
                         for cell in column:
                             col_text += ' ' + cell + ' '
+                        self.doc_ids.append(os.path.splitext(ntpath.basename(f))[0] + '-' + str(col_num))
                         yield Preprocessor(col_text,'./config/preprocessing.yaml').run()
+                        
         self.__read_data(self.files) # get data   
 
             
