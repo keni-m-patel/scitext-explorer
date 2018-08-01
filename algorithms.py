@@ -167,7 +167,6 @@ class BagOfWords(VectorSpaceModels):
         dtm_array = sum(self.dtm.toarray())  # [sum(x) for x in zip(list1, list2)]
 
         self.output = {word:freq for word,freq in zip(sorted_vocab, dtm_array)}
-        self.output
 
 
 class WordFreq(VectorSpaceModels):
