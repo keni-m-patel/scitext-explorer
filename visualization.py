@@ -1,5 +1,4 @@
 
-
 import inspect
 import utilities
 import matplotlib.pyplot as plt
@@ -9,61 +8,62 @@ from sklearn.manifold import TSNE
 
 import pandas as pd
 
-from bokeh.io import output_notebook, show
-from bokeh.plotting import figure
-from bokeh.models import ColumnDataSource, HoverTool, BoxSelectTool, CrosshairTool, SaveTool
-
-
 from collections import Counter
 
 
 
 class Visualization(object):
 
-    def __init__(self, config_file, config_file_alg, alg_ran, doc_ids):
+    def __init__(self, config_file, config_file_alg, alg):
         #self.corpus = data
         #pass # because the next line doesn't actually work yet, need to build a preprocessing.yaml file
         self.config = utilities.get_config(config_file)
         self.config_alg = utilities.get_config(config_file_alg)
-        self.alg_ran=alg_ran
-        self.doc_names = doc_ids
-        print('\n\n\n\nRunning the following visualization:\n\n')
-        print(self.config)
+        self.alg_ran=alg.results
+        self.doc_names = alg.doc_ids
+        
         
     def __iter__(self):
         for item in self.corpus:
             yield item
 
     def run(self):
-        result_dict = {}
+        
+        print('\n\n\n\nRunning the following visualization:\n\n')
+        print(self.config)
+        
+        self.result_dict = {}
             
         if self.config['kmean_hist'] and self.config_alg['latent_semantic_analysis']:
             k = kmean_hist(self.alg_ran, self.doc_names)
             k.run()
-            result_dict['kmean_hist'] = k.output
+            self.result_dict['kmean_hist'] = k.output
 
   
             if self.config['tsne']:
                 t = tsne(self.alg_ran, self.doc_names, k.dtm_lsa)
                 t.run()
-                result_dict['tsne'] = t.output
+                self.result_dict['tsne'] = t.output
                 
-                if self.config['export_scatter_plot_data']:
+                if self.config['export_scatter_plot_excel_data']:
                     sp = File_Export()
-                    sp.export_scatter_plot(t.output, k.clusters_and_names)
+                    sp.export_scatter_plot_excel_data(t.output, k.clusters_and_names)
                     
                 if self.config['export_bokeh']:
                     b = File_Export()
                     b.export_bokeh( t.output, k.models, t.output)
                     
     
-        if self.config['export_word_cloud_data'] and self.config_alg['word_frequency_table']:
+        if self.config['export_word_cloud_excel_data'] and self.config_alg['word_frequency_table']:
             wc = File_Export() #,self.corpus):                   ###GET THIS TO WORK
-            wc.export_word_cloud(self.alg_ran)
+            wc.export_word_cloud_excel_data(self.alg_ran)
         
+        if self.config['export_bar_graph_excel_data'] and self.config_alg['word_frequency_table']:
+            bg = File_Export() #,self.corpus):                   ###GET THIS TO WORK
+            bg.export_bar_graph_excel_data(self.alg_ran)
         
         output_text = ""
-        for vis,result in result_dict.items():
+        for vis,result in self.result_dict.items():
             output_text += "\n\nvisualization: {}\n\nresult:\n\n {}\n\n".format(vis,result)
 
         #print(output_text)
@@ -189,13 +189,13 @@ class File_Export(VectorSpaceModels):
         #super().__init__(doc_names) #corpus)
         result_dict = None
     
-    def export_word_cloud(self, result_dict): #, alg.wordfreq):
+    def export_word_cloud_excel_data(self, result_dict):
         
         self.word_frequency = result_dict['word_frequency']
         # Create a Pandas Excel writer using XlsxWriter as the engine.
         writer = pd.ExcelWriter('word_cloud_data.xlsx', engine='xlsxwriter')
         #bow_max.to_excel(writer, sheet_name='Sheet1')
-        self.word_frequency.to_excel(writer, sheet_name='Sheet1')
+        self.word_frequency.to_excel(writer)
         # Get the xlsxwriter objects from the dataframe writer object.
 
         #worksheet = writer.sheets['Sheet1']
@@ -204,9 +204,24 @@ class File_Export(VectorSpaceModels):
         
 
         print("word_cloud_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
-    
         
-    def export_scatter_plot(self, x_and_y, clusters_and_names):
+    def export_bar_graph_excel_data(self, result_dict):
+        
+        
+        self.bar_graph = result_dict['word_frequency'][:10]
+        # Create a Pandas Excel writer using XlsxWriter as the engine.
+        writer = pd.ExcelWriter('bar_graph_data.xlsx', engine='xlsxwriter')
+        #bow_max.to_excel(writer, sheet_name='Sheet1')
+        self.bar_graph.to_excel(writer, index = False)
+        # Get the xlsxwriter objects from the dataframe writer object.
+
+        #worksheet = writer.sheets['Sheet1']
+        # Close the Pandas Excel writer and output the Excel file.
+        writer.save()
+        print("bar_graph_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
+
+        
+    def export_scatter_plot_excel_data(self, x_and_y, clusters_and_names):
         
         self.x_and_y = x_and_y
         self.clusters_and_names = clusters_and_names
@@ -228,7 +243,6 @@ class File_Export(VectorSpaceModels):
 
     def export_bokeh(self, x_and_y, models, output):
        
-        max_clusters = 9
         clusters =  models
         base = {'x': output[0].tolist(), 
                 'y': output[1].tolist(),
@@ -242,4 +256,3 @@ class File_Export(VectorSpaceModels):
         df = pd.DataFrame(base)[column_order]
         
         df.to_excel('Bokeh_Test.xlsx', index = False)
-
