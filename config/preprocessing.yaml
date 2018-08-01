@@ -1,3 +1,128 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6e3050e52750caa79a83a9f98da12a90beb87f0011ea97361893c2f7e7039236
-size 2263
+
+
+
+#To undergo no preprocesssing and ignore all the following preprocessing actions set to False
+
+
+undergo_preprocess: True
+
+
+
+
+
+#To use english stopword list from nltk set to True. If set to False uses no stopwords unless added manually in this config file
+
+
+
+default_stop_list: True
+
+
+
+
+
+#All the following lists must be in format ['a','an','at']
+
+#Leave list blank if you do not wish to undergo any changes
+
+#To replace current stopword list with a brand new one enter words into the blank list below
+
+
+
+
+new_stop_set_list: []
+
+
+
+
+
+# To add stopwords to the current list of stopwords enter words into the blank list below
+
+
+
+add_stop_list: []
+
+
+
+
+
+# To remove stopwords to the current list of stopwords enter words into the blank list 
+
+
+remove_stop_list: []
+
+
+# To use stopword list set to True. To use no stopword list set to False.
+
+
+
+use_stop_list: True
+
+
+
+# To use regex to find and remove custom patterns, 
+# enter a string below representing the rule for experessions to be removed, 
+
+# otherwise, set to None
+
+# ex. '\ba\b\s+'
+
+
+
+regex_stopwords: '\ba\b\s+'
+
+
+
+
+#To lowercase all letters set to True, NOTE: must turn on for lemmatizing
+
+
+
+lowercase: True
+
+
+
+
+# To use use only alphabetical letters set to True, NOTE: must turn on for lemmatizing
+
+
+
+alpha_only: True
+
+
+
+
+
+# Note: NOT able to do both stemming and lemmatization 
+# Would suggestion picking one method
+
+# Automatically lemmatizes if both are set to True
+
+
+
+# To undergo stemming for tokenized words choose either PorterStemmer() or SnowballStemmer from nltk and set to True. If not, set to False.
+# Stemming is the process for reducing inflected words to their word stem, base or root form by chopping off word endings
+
+# Example: dropping --> drop
+
+SnowballStemmer: False
+
+
+
+PorterStemmer: False
+
+
+
+
+# To undergo lemmatization for tokenized words set to True. If not set to False
+
+# NOTE: lemmatizer requires lowercasing, please run with lowercasing set to True.
+
+# Uses WordNetLemmatizer() from nltk
+
+# Lemmatization is the process of grouping together the different inflected forms of a word so they can be analysed as a single item by using vocabulary and part of speech rules
+
+# Example run --> ran
+
+
+
+lemmatize: True
