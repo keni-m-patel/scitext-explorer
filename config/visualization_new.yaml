@@ -1,0 +1,60 @@
+#Exports data to an excel doc in the same folder as scitext explorer
+
+#Excel doc can be used with Tableau to create a word cloud
+
+#Note: Only works when Bag of Words and Word Frequency Table are both set to True in algorithms.yaml
+
+#bow_hist: True
+
+
+
+export_word_cloud_excel_data: True
+
+
+
+#Exports data to an excel doc in the same folder as scitext explorer
+
+#Excel doc can be used with Tableau to create a word cloud
+
+
+export_bar_graph_excel_data: False
+
+#Exports data to an excel doc in the same folder as scitext explorer
+
+#Excel doc can be used with Tableau to create a word cloud
+
+#Note: Only works when Latent Semantic Analysis is set to True in algorithms.yaml
+
+
+
+export_scatter_plot_excel_data: False
+
+
+
+#Outputs .png histogram of corpus clusters
+
+#Requirements Kmeans
+
+kmean_hist: True
+
+
+
+
+
+#Outputs (X, Y) coordinates of documents for visualization, through dimensionality reduction
+
+#Requirements Kmeans
+
+tsne: True
+
+#to use bokeh interactive plots open bokeh pynb file after running main.py
+
+#Bokeh interative plot gives users interactive scatterplot
+
+export_bokeh: True
+
+
+
+
+
+# do T or F to turn on or off

@@ -1,0 +1,14 @@
+# this is the master config file. 
+
+# To select a config file to be inputted as a corpus object, list the config file below.
+
+config_files: 
+  
+# examples:
+  
+#- './config/data/text_files.yaml'
+  
+- './config/data/pdf_files.yaml'
+ 
+#- './config/data/csv_files.yaml'
+  
