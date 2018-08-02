@@ -11,33 +11,33 @@ latent_semantic_analysis: False
 
 
 
-#Gives top 5 concepts for each document in relation to corpus
-#Requirements LSA to work
+# Gives top 5 concepts for each document in relation to corpus
+# Requirements LSA to work
 
 LSA_Concepts: False
 
 
 
-#Outputs corpus clusters
-#Requirements LSA
-#If running kmeans enter a number for the maximum amount of clusters, if not enter False
-#Number of docs must be greater than number of clusters
-#Ex -> kmeans: False or kmeans: 6
+# Outputs corpus clusters
+# Requirements LSA
+# If running kmeans enter a number for the maximum amount of clusters, if not enter False
+# Number of docs must be greater than number of clusters
+# Ex -> kmeans: False or kmeans: 6
 
 kmeans: False
 
 
 
-#Process corpus for term frequency inverse document frequency
+# Process corpus for term frequency inverse document frequency
 
 tf_idf: False
 
 
-#Shows how much each topic is represented in each document
-#Needs bag_of_words
-#Change empty list into list with objects: config for training data location, percentage into training data, number of topics
-
-#Example: LDA:
+# Shows how much each topic is represented in each document
+# Needs bag_of_words
+# Change empty list into list with objects: config for training data location, percentage into training data, number of topics
+ 
+# Example: LDA:
 
 #	-'config/data/LDA_training/'    (if want to use a pretrained model stored in a file or save a new trained model, enter path)
 
@@ -47,9 +47,9 @@ tf_idf: False
 
 #	-10		     		(enter number of topics, if preset model is used it is already set in pretrained model)
 
-LDA: ['C:\Users\597543\scitext-explorer\LDA_model',True,.8,10]
+# LDA: ['C:\Users\597543\scitext-explorer\LDA_model',True,.8,10]
 
-
+LDA: False
 
 
 
@@ -59,8 +59,8 @@ bag_of_words: False
 
 
 
-#Gives a table of words with their frequency
-#Only works when bag_of_words is True
+# Gives a table of words with their frequency
+# Only works when bag_of_words is True
 
 word_frequency_table: False
 
