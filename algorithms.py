@@ -61,14 +61,10 @@ class Algorithm(object):
         
          #if named entities chosen, named entities is returned as the data output
         
-        if not self.config['named_entities'] and self.config['corpi_to_named_entities']:
-            warnings.warn("NEED NAMED ENTITIES TO CHANGE CORPI TO NAMED ENTITIES ONLY")
         
         if self.config['named_entities']:
             ner = Named_Entity_Recognition(self.corpi)
             ner.run()
-            if self.config['corpi_to_named_entities']:
-                self.corpi = ner.output
             result_dict['named_entities'] = ner.output
             
             
@@ -349,7 +345,8 @@ class LDA(TopicModels):
         
         other_corpus = [common_dictionary.doc2bow(token) for token in tokens]
         
-     
+        for doc in other_corpus:
+            print(doc)
         #self.output = map(lambda x: self.lda[x], other_corpus)
         self.output = [self.lda[doc] for doc in other_corpus]
         
