@@ -91,7 +91,7 @@ class Algorithm(object):
                 result_dict['LSA_Concepts'] = c.output
             
             if self.config['kmeans']:
-                k = kmeans(self.corpi, l.dtm_lsa)
+                k = kmeans(self.corpi, l.dtm_lsa, self.config['kmeans'])
                 k.run()
                 result_dict['kmeans'] = k.output
              
@@ -247,16 +247,15 @@ class kmeans(VectorSpaceModels):
     """Initiates k-means: clustering data according to means."""
     
 
-    def __init__(self, corpi, dtm_lsa):
+    def __init__(self, corpi, dtm_lsa, config):
         super().__init__(corpi) 
         self.dtm_lsa = dtm_lsa
+        self.max_clusters = config
         
     def run(self):
         """Function of k-means that fits data into matrix and clusters the data."""
-        
         km_dict = dict()
-        max_clusters = 5
-        for index in range(2,max_clusters + 1):
+        for index in range(2,self.max_clusters + 1):
             km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
             km.fit(self.dtm_lsa)
             clusters = km.labels_.tolist()
@@ -350,6 +349,7 @@ class LDA(TopicModels):
         
         other_corpus = [common_dictionary.doc2bow(token) for token in tokens]
         
+     
         #self.output = map(lambda x: self.lda[x], other_corpus)
         self.output = [self.lda[doc] for doc in other_corpus]
         
@@ -375,7 +375,7 @@ class Named_Entity_Recognition(TopicModels):
         
         print('\n\n\n\nRunning the following algorithm: \nNamed_Entity_Recognition\n\n')
         
-        for item in self.corpus:
+        for item in self.corpi:
                 chunked_docs = []
                 chunked = ne_chunk(pos_tag(word_tokenize(item)))
                 chunked_docs.append(chunked)

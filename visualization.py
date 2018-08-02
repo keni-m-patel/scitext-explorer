@@ -35,7 +35,7 @@ class Visualization(object):
         self.result_dict = {}
             
         if self.config['kmean_hist'] and self.config_alg['latent_semantic_analysis']:
-            k = kmean_hist(self.alg_ran, self.doc_names)
+            k = kmean_hist(self.alg_ran, self.config_alg['kmeans'], self.doc_names)
             k.run()
             self.result_dict['kmean_hist'] = k.output
 
@@ -51,7 +51,7 @@ class Visualization(object):
                     
                 if self.config['export_bokeh']:
                     b = File_Export()
-                    b.export_bokeh( t.output, k.models, t.output)
+                    b.export_bokeh( t.output, k.models, t.output, self.doc_names)
                     
     
         if self.config['export_word_cloud_excel_data'] and self.config_alg['word_frequency_table']:
@@ -88,33 +88,23 @@ class VectorSpaceModels(object):
                                8: '#ff7f00',
                                9: '#cab2d6',
                                10: 'gray'}
-        self.cluster_names =  {0: 'Cluster 0', 
-                               1: 'Cluster 1', 
-                               2: 'Cluster 2', 
-                               3: 'Cluster 3',
-                               4: 'Cluster 4',
-                               5: 'Cluster 5',
-                               6: 'Cluster 6',
-                               7: 'Cluster 7',
-                               8: 'Cluster 8',
-                               9: 'Cluster 9',
-                               10: 'Cluster 10'}
+       
 class kmean_hist(VectorSpaceModels):
     """Plots histogram of clusters"""
-    def __init__(self, result_dict, doc_names): #,corpus):
+    def __init__(self, result_dict, config_alg, doc_names): #,corpus):
         super().__init__(doc_names)      
         
         self.dtm_lsa = result_dict['latent_semantic_analysis']['dtm_lsa']  
+        self.max_clusters = config_alg
         
     def run(self):
             km_dict = dict()
 
             self.models = dict()
             color_dict = dict()
-            max_clusters = 9
     
 
-            for index in range(2,max_clusters + 1):
+            for index in range(2,self.max_clusters + 1):
                 km = KMeans(n_clusters = index,  init = 'k-means++', max_iter = 1000, random_state = 1423)
                 km.fit(self.dtm_lsa)
                 clusters = km.labels_.tolist()
@@ -126,12 +116,13 @@ class kmean_hist(VectorSpaceModels):
                                      'Document Cluster Id': clusters,
                                      'Cluster Colors': [self.cluster_colors[cluster] for cluster in clusters],
                                      'Frame': pd.DataFrame({'Document Name': self.doc_names, 'Cluster': clusters})}
-                
+
             self.output = self.models
             
 
             color_dict[index] = [self.cluster_colors[cluster] for cluster in clusters] 
             self.clusters_and_names = self.models[index]['Frame']
+            
             background = 'purple'
             accent = 'purple'
             font_size = 10.0
@@ -243,13 +234,13 @@ class File_Export(VectorSpaceModels):
         writer.save()
         print("scatter_plot_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
 
-    def export_bokeh(self, x_and_y, models, output):
+    def export_bokeh(self, x_and_y, models, output, doc_names):
         '''Creates an excel file for a Bokeh ScatterPlot'''
 
         clusters =  models
-        base = {'x': output[0].tolist(), 
-                'y': output[1].tolist(),
-                'docname': [self.doc_names]}
+        base = {'x': output.ix[:,0].tolist(), 
+                'y': output.ix[:,1].tolist(),
+                'docname': doc_names}
        
         for key,val in sorted(clusters.items()):
            
