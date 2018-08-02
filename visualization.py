@@ -100,6 +100,7 @@ class VectorSpaceModels(object):
                                9: 'Cluster 9',
                                10: 'Cluster 10'}
 class kmean_hist(VectorSpaceModels):
+    """Plots histogram of clusters"""
     def __init__(self, result_dict, doc_names): #,corpus):
         super().__init__(doc_names)      
         
@@ -163,6 +164,7 @@ class kmean_hist(VectorSpaceModels):
                 index += 1
 
 class tsne(kmean_hist):
+    """Initiates tsne for demsionality reduction"""
     def __init__(self, result_dict, doc_names, dtm_lsa):
         #super().__init__(doc_names)      
         
@@ -187,10 +189,10 @@ class File_Export(VectorSpaceModels):
 
     def __init__(self):
         #super().__init__(doc_names) #corpus)
-        result_dict = None
+        self.result_dict = None
     
     def export_word_cloud_excel_data(self, result_dict):
-        
+        '''Creates an excel file for a Tableau WordCloud'''
         self.word_frequency = result_dict['word_frequency']
         # Create a Pandas Excel writer using XlsxWriter as the engine.
         writer = pd.ExcelWriter('word_cloud_data.xlsx', engine='xlsxwriter')
@@ -206,7 +208,8 @@ class File_Export(VectorSpaceModels):
         print("word_cloud_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
         
     def export_bar_graph_excel_data(self, result_dict):
-        
+        '''Creates an excel file for a Tableau Bar Graph'''
+
         
         self.bar_graph = result_dict['word_frequency'][:10]
         # Create a Pandas Excel writer using XlsxWriter as the engine.
@@ -219,10 +222,9 @@ class File_Export(VectorSpaceModels):
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
         print("bar_graph_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
-
-        
+       
     def export_scatter_plot_excel_data(self, x_and_y, clusters_and_names):
-        
+        '''Creates an excel file for a Tableau ScatterPlot'''
         self.x_and_y = x_and_y
         self.clusters_and_names = clusters_and_names
         self.clusters_and_names.columns = ['docnames', 'cluster']
@@ -242,11 +244,12 @@ class File_Export(VectorSpaceModels):
         print("scatter_plot_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
 
     def export_bokeh(self, x_and_y, models, output):
-       
+        '''Creates an excel file for a Bokeh ScatterPlot'''
+
         clusters =  models
         base = {'x': output[0].tolist(), 
                 'y': output[1].tolist(),
-                'docname': ['Doc ' + str(i).zfill(2) for i in range(len(output))]}
+                'docname': [self.doc_names]}
        
         for key,val in sorted(clusters.items()):
            
