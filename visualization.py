@@ -227,7 +227,6 @@ class File_Export(VectorSpaceModels):
         writer = pd.ExcelWriter('scatter_plot_data.xlsx', engine='xlsxwriter')
        
         # Get the xlsxwriter objects from the dataframe writer object.
-        self.scatter_plot_data.to_excel(writer, sheet_name='Sheet1')
 
 
         # Close the Pandas Excel writer and output the Excel file.
@@ -243,7 +242,7 @@ class File_Export(VectorSpaceModels):
                 'docname': doc_names}
        
         for key,val in sorted(clusters.items()):
-           
+             
             base[key] = [pair for pair in zip(val['Document Cluster Id'],val['Cluster Colors'])]
         
         column_order = ['docname','x','y'] + sorted(list(clusters.keys()))

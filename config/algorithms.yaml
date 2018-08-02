@@ -3,16 +3,11 @@
 
 named_entities: False
 
-#Changes corpi to only Named Entities for ALL of the following algorithms
-#Only works when named_entities is turned on
-
-corpi_to_named_entities: False
-
 
 #Process Tfidf results through SVD and gives a matrix
 #Requirements tf_idf 
 
-latent_semantic_analysis: True
+latent_semantic_analysis: False
 
 
 
@@ -25,8 +20,11 @@ LSA_Concepts: False
 
 #Outputs corpus clusters
 #Requirements LSA
+#If running kmeans enter a number for the maximum amount of clusters, if not enter False
+#Number of docs must be greater than number of clusters
+#Ex -> kmeans: False or kmeans: 6
 
-kmeans: True
+kmeans: False
 
 
 
@@ -49,7 +47,7 @@ tf_idf: False
 
 #	-10		     		(enter number of topics, if preset model is used it is already set in pretrained model)
 
-LDA: ['C:\Users\597543\scitext-explorer\LDA_model',False,.8,10]
+LDA: ['C:\Users\597543\scitext-explorer\LDA_model',True,.8,10]
 
 
 

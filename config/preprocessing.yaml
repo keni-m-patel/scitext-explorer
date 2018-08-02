@@ -39,7 +39,7 @@ new_stop_set_list: []
 
 
 
-add_stop_list: []
+add_stop_list: ['get','be']
 
 
 
