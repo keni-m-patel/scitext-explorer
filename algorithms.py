@@ -315,46 +315,32 @@ class LDA(TopicModels):
         #tokenize corpi
         
         tokens = [word_tokenize(text) for text in self.corpi]
-        
-        
-        file = datapath(self.settings[0])  
-        
-        if self.settings[1]:
+        common_dictionary = Dictionary(tokens)
+        bow = [common_dictionary.doc2bow(token) for token in tokens]
+  
+        if self.settings[0]:
             
             # Load a potentially pretrained model from disk.
-            self.lda = LdaModel.load(file)
+            self.lda = LdaModel.load(datapath(self.settings[0]))
+            self.lda.update(bow)
             
-            common_dictionary = Dictionary(tokens)
+            if self.settings[2]:
+                self.lda.save('lda_model')
             
+    
         else:
             
-            random.shuffle(tokens)
+            common_corpus = [common_dictionary.doc2bow(text) for text in tokens]
             
-            doc_num = int(len(tokens)*self.settings[2])
-            train_data = tokens[:doc_num]
-            tokens = tokens[doc_num:]
+            self.lda = gensim.models.ldamodel.LdaModel(common_corpus, num_topics=self.settings[1], id2word = common_dictionary)
+            
+        
+        self.output = [self.lda[doc] for doc in bow]
+        
+        self.topics = self.lda.show_topics(self.settings[1], formatted = False)
+        
 
-            
-            
-            common_dictionary = Dictionary(train_data)
-        
-            common_corpus = [common_dictionary.doc2bow(text) for text in train_data]
-            
-            # Train the model on the corpus.
-            self.lda = gensim.models.ldamodel.LdaModel(common_corpus, num_topics=self.settings[3], id2word = common_dictionary)
-        
-        other_corpus = [common_dictionary.doc2bow(token) for token in tokens]
-        
-        for doc in other_corpus:
-            print(doc)
-        #self.output = map(lambda x: self.lda[x], other_corpus)
-        self.output = [self.lda[doc] for doc in other_corpus]
-        
-            
-        self.topics = self.lda.show_topics(self.settings[3], formatted = False)
-            
-        self.lda.update(other_corpus)
-        self.lda.save(file)
+
         
 
 class Named_Entity_Recognition(TopicModels):
