@@ -33,23 +33,20 @@ kmeans: False
 tf_idf: False
 
 
-# Shows how much each topic is represented in each document
-# Needs bag_of_words
-# Change empty list into list with objects: config for training data location, percentage into training data, number of topics
- 
-# Example: LDA:
+#Shows how much each topic is represented in each document
+#Needs bag_of_words
+#Change empty list into list with objects: config for training data location, percentage into training data, number of topics
+#LDA: [path, Use_Pretrained_Model, Pct_Of_Training, Num_Of_Topics, Update_Model, Save_Model]
 
-#	-'config/data/LDA_training/'    (if want to use a pretrained model stored in a file or save a new trained model, enter path)
+#	-path (string)				If want to use a pretrained model stored in a file, enter path. If want to create new model, set to False
 
-#	-False				(if want to use a pretrained model, set to True. if want to partition data and use new model set to False)
+#	-Num_Of_Topics (Integer)		Enter number of topics, If preset model is used it is already set in pretrained model
 
-#	-.8 		     		(if want to set training test data, enter number from 0 - 1, will not work if second item of list is set to True)
+#	-Save_Model (BOOL)		         If want to save model, set to True. If not, set to False
 
-#	-10		     		(enter number of topics, if preset model is used it is already set in pretrained model)
+LDA: ['C:\Users\597667\scitext-explorer\LDA_model', 3, False]
 
-# LDA: ['C:\Users\597543\scitext-explorer\LDA_model',True,.8,10]
 
-LDA: False
 
 
 
