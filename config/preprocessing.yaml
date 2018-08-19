@@ -4,7 +4,7 @@
 #To undergo no preprocesssing and ignore all the following preprocessing actions set to False
 
 
-undergo_preprocess: True
+undergo_preprocess: False
 
 
 
@@ -14,7 +14,7 @@ undergo_preprocess: True
 
 
 
-default_stop_list: True
+default_stop_list: False
 
 
 
@@ -39,7 +39,7 @@ new_stop_set_list: []
 
 
 
-add_stop_list: ['get','be']
+#add_stop_list: ['get','be']
 
 
 
@@ -55,7 +55,7 @@ remove_stop_list: []
 
 
 
-use_stop_list: True
+use_stop_list: False
 
 
 

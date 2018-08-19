@@ -7,7 +7,7 @@ named_entities: False
 #Process Tfidf results through SVD and gives a matrix
 #Requirements tf_idf 
 
-latent_semantic_analysis: False
+latent_semantic_analysis: True
 
 
 

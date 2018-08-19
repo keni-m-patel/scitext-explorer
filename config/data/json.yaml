@@ -1,11 +1,9 @@
 
 # directory: /Users/sonjalindberg/Documents/Github/scitext-explorer/test/data/BinLaden
 
-directory: /Users/Brendan Gochett/scitext-explorer/test/data/tweets/Sample_tweets/
+directory: /Users/kenipatel/scitext-explorer/test/data/json/
 
 files:
-        -capstone_sample_twitter_dataset.json
-        -capstone_sample_twitter_dataset2.json
-        -capstone_sample_twitter_dataset3.json
-        
-group_by: 'tweet'        
+    - BinLaden_Corpus2.json
+
+group_by: 'keys'

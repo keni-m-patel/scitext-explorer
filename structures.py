@@ -2,15 +2,11 @@ import os
 import ntpath
 import utilities
 import logging
-import decorators
 import json
 from PyPDF2 import PdfFileReader as PDFR
 import csv
 from preprocess import Preprocessor
 import glob
-import urllib.request as ur
-
-
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +16,7 @@ class Corpus(object):
     def __init__(self, config_file, group_by=None):
         self.config = utilities.get_config(config_file) # read the config file and set the log_file name
         self.path = self.config['directory']
-        self.files = glob.glob(self.path + '*')
+        self.files = glob.glob(self.path + '/*')
         if group_by:
             self.grouping = group_by
         else:
@@ -32,7 +28,6 @@ class Corpus(object):
     def __call__(self):
 
         filetype = set([ext for filename,ext in [os.path.splitext(file) for file in self.files]])
-        # print('\n\n\nfile type: \n\n', filetype, '\n\n')
         
         if filetype == {'.txt'}:
             t = DotTXT(self.files, self.grouping)
@@ -40,7 +35,6 @@ class Corpus(object):
 
         elif filetype == {'.pdf'}:
             p = DotPDF(self.files, self.grouping)
-            #self.doc_ids.extend(p.doc_ids)
             return p
 
         elif filetype == {'.csv'}:
@@ -48,14 +42,13 @@ class Corpus(object):
             return c
         
         elif filetype == {'.json'}:
-            j = Tweets(self.files, self.grouping)
+            j = JSON(self.files, self.grouping)
             return j
 
         else:
             print('\n\n ERROR: filetype not set or filetype is not recognized/compatible\n\n')
             print('filetypes found: \n\n', filetype)
     
-
 
 class DotPDF(object):
     '''
@@ -105,9 +98,6 @@ class DotPDF(object):
                     yield Preprocessor(page_text,'./config/preprocessing.yaml').run()
 
             self.__read_data(self.files) # get data    
-            
-       
-
     
     def __len__(self):
         # we may want to do some introspection of our data objects; how many records
@@ -265,8 +255,41 @@ class DotCSV(DotTXT):
         else:
             print('ERROR: NON-CSV PASSED TO CSV CLASS')      
 
-class Tweets(object):
+class JSON(object):
+    
+    def __init__(self, files, group_by = 'keys'):
+        self.files = files
+        self.doc_ids = []
+        self.__read_data(self.files)
+        self.grouping = group_by
+        self.msg_flag = 1
+        
+    def __iter__(self):
+        for doc in self.data_map:
+            data = json.load(doc)
+            for docname, content in data.items():                                              
+                self.doc_ids.append(docname)  
+                yield content
+                #yield Preprocessor(content,'./config/preprocessing.yaml').run()
+        self.__read_data(self.files)
 
+    def __len__(self):
+        L=0
+        for doc in self.data_map:
+            data = json.load(doc)
+            L += len(data.keys())
+        return L
+
+    def __read_data(self, files):
+        filetype = set([ext for filename,ext in [os.path.splitext(doc) for doc in self.files]])
+        self.filetype = filetype
+        if filetype == {'.json'}:
+            self.data_map = map(lambda x: open(os.path.join('', x),'r'), self.files)
+        else:
+            print("ERROR: NON-JSON PASSED TO TWEET CLASS")
+    
+
+class Tweets(object):
     
     def __init__(self, files, group_by = 'tweet'):
         self.files = files
@@ -293,7 +316,6 @@ class Tweets(object):
 
     def __len__(self):
         pass
-
 
     def __read_data(self, files):
         filetype = set([ext for filename,ext in [os.path.splitext(doc) for doc in self.files]])
