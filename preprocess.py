@@ -1,6 +1,3 @@
-
-
-
 import utilities
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -9,9 +6,6 @@ from nltk import pos_tag
 import re
 import warnings
 
-
-
-
 class Preprocessor(object):
 
 
@@ -19,7 +13,6 @@ class Preprocessor(object):
     
 
     def __init__(self, data, config_file):
-        
         #data represents a single doc (or page, tweet, ect.)
         self.data = data
         
@@ -28,10 +21,7 @@ class Preprocessor(object):
         
         self.regex = self.config['regex_stopwords']
         
-   
     def run(self):
-                
-                
         #if choose not to undergo preprocess automatically returns data unchanged
         #if NER selected, returns named entities for the data
         if not self.config['undergo_preprocess']:

@@ -1,16 +1,9 @@
-
-import inspect
 import utilities
 import matplotlib.pyplot as plt
-
 from sklearn.cluster import KMeans
 from sklearn.manifold import TSNE
-
 import pandas as pd
-
 from collections import Counter
-
-
 
 class Visualization(object):
 

@@ -1,9 +1,4 @@
-
-
-
-import inspect
 import utilities
-
 import warnings
 
 from sklearn.feature_extraction.text import CountVectorizer
@@ -20,16 +15,12 @@ from nltk import ne_chunk, pos_tag
 from nltk.tree import Tree
 from nltk.tokenize import word_tokenize
 
-
-
 import gensim
 from gensim.models import LdaModel
 from gensim.corpora.dictionary import Dictionary
 from gensim.test.utils import datapath
 
 import random
-
-
 
 class Algorithm(object):
     """Reads the algorithm config file to see the selected algorithm(s)."""
@@ -61,7 +52,6 @@ class Algorithm(object):
         
          #if named entities chosen, named entities is returned as the data output
         
-        
         if self.config['named_entities']:
             ner = Named_Entity_Recognition(self.corpi)
             ner.run()
@@ -74,8 +64,6 @@ class Algorithm(object):
         if not self.config['latent_semantic_analysis'] and self.config['kmeans']:
             warnings.warn("NEED LATENT SEMANTIC ANALYSIS TO RUN KMEANS")
      
-        
-
         if self.config['latent_semantic_analysis']:
             l = LatentSemanticAnalysis(self.corpi, self.doc_ids)
             l.run()
@@ -90,11 +78,9 @@ class Algorithm(object):
                 k = kmeans(self.corpi, l.dtm_lsa, self.config['kmeans'])
                 k.run()
                 result_dict['kmeans'] = k.output
-             
-                
+                           
         if not self.config['bag_of_words'] and self.config['word_frequency_table']:
-            warnings.warn("NEED BAG OF WORDS TO RUN WORD FREQUENCY TABLE")
-            
+            warnings.warn("NEED BAG OF WORDS TO RUN WORD FREQUENCY TABLE")          
 
         if self.config['bag_of_words']:
             b = BagOfWords(self.corpi)
@@ -105,22 +91,18 @@ class Algorithm(object):
                 self.w = WordFreq(self.corpi, b.output)
                 self.w.run()
                 result_dict['word_frequency'] = self.w.output
-                
-            
+                           
         if self.config['tf_idf']:
             t = Tf_Idf(self.corpi)
             t.run()
             result_dict['tf_idf'] = t.output
-                
-        
+                   
         if self.config['LDA']:
             lda = LDA(self.corpi, self.config['LDA'])
             lda.run()
             result_dict['LDA'] = lda.output
             result_dict['LDA_Topics'] = lda.topics
        
-            
-
         output_text = ""
         self.results = result_dict
         for alg,result in result_dict.items():
@@ -238,7 +220,6 @@ class LSA_Concepts(VectorSpaceModels):
                 print(term[0])
             print (" ")
 
-            
 class kmeans(VectorSpaceModels): 
     """Initiates k-means: clustering data according to means."""
     
@@ -257,8 +238,6 @@ class kmeans(VectorSpaceModels):
             clusters = km.labels_.tolist()
             km_dict[index] = Counter(clusters)
             self.output = (index, Counter(clusters))
-
-
 
 class Tf_Idf(VectorSpaceModels):
     """Initiates Tf-Idf algorithm: compares word frequency in a collection of documents."""
@@ -287,10 +266,7 @@ class Tf_Idf(VectorSpaceModels):
         """Returns Data Table of doc-term matrix."""
         Tf_Idf_Table = pd.DataFrame(self.dtm.toarray())
         self.output = Tf_Idf_Table
-            
-    
-
-        
+                
 # Base class for Topic Models (Topic Modelingm Named Entity Recognition, etc.)
 class TopicModels(object):
     
@@ -354,8 +330,7 @@ class LDA(TopicModels):
         self.topics = self.lda.show_topics(self.settings[3], formatted = False)
             
         self.lda.update(other_corpus)
-        self.lda.save(file)
-        
+        self.lda.save(file)    
 
 class Named_Entity_Recognition(TopicModels):
     """Initiates NER: identifies categories such as names, organizations, locations, etc."""
@@ -399,5 +374,3 @@ class Named_Entity_Recognition(TopicModels):
        
         #Replace 'the_word' with * 'the_word' * -> "highlight" it
         #filedata.replace(the_word,  "*" + the_word + '*')
-
-
