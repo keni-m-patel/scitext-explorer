@@ -187,13 +187,11 @@ class File_Export(VectorSpaceModels):
         #worksheet = writer.sheets['Sheet1']
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
-        
-
+    
         print("word_cloud_data.xlsx can be found in the scitext-explorer file and is ready to be used in Tableau")
         
     def export_bar_graph_excel_data(self, result_dict):
         '''Creates an excel file for a Tableau Bar Graph'''
-
         
         self.bar_graph = result_dict['word_frequency'][:10]
         # Create a Pandas Excel writer using XlsxWriter as the engine.
@@ -220,7 +218,6 @@ class File_Export(VectorSpaceModels):
         writer = pd.ExcelWriter('scatter_plot_data.xlsx', engine='xlsxwriter')
        
         # Get the xlsxwriter objects from the dataframe writer object.
-
 
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
